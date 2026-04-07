@@ -1,6 +1,0 @@
-[INFO] [1772107895.158222188] [map_auto_saver]: Periodic auto-save enabled: every 20.0s -> /home/tkddn647/test/maps
-[INFO] [1772107916.630670751] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/sim_map_20260226_211156.pbstream
-[INFO] [1772107916.683087853] [map_auto_saver]: Map saved successfully.
-[INFO] [1772107916.683788820] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/sim_map_20260226_211156.png + .yaml
-[INFO] [1772107917.302195715] [map_auto_saver]: ROS map export succeeded.
-[INFO] [1772107933.994354011] [map_auto_saver]: KeyboardInterrupt received. Attempting shutdown save...

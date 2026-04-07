@@ -1,1 +1,0 @@
-/home/tkddn647/test/src/localization_layer/config/cartographer_2d_mapping_lidar_only.lua

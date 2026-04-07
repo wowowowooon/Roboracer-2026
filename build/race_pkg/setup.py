@@ -1,1 +1,0 @@
-/home/tkddn647/test/src/race_pkg/setup.py

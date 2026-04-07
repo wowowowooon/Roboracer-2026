@@ -1,3 +1,0 @@
-[INFO] [1772105423.533650925] [sim_fake_sensor_publisher]: Loaded centerline CSV path with 1103 points, length=421.04 m
-[INFO] [1772105423.624060509] [sim_fake_sensor_publisher]: Centerline aligned to map. shift=(-0.035, -0.070) m
-[INFO] [1772105423.668012504] [sim_fake_sensor_publisher]: Fake sensor publisher started. world_type=map

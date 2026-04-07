@@ -1,6 +1,0 @@
-[INFO] [1772435002.193020465] [map_auto_saver]: Periodic auto-save enabled: every 20.0s -> /home/tkddn647/test/maps
-[INFO] [1772435026.470498147] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/sim_map_20260302_160346.pbstream
-[INFO] [1772435026.483274735] [map_auto_saver]: Map saved successfully.
-[INFO] [1772435042.184017945] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/sim_map_20260302_160402.pbstream
-[INFO] [1772435042.201821516] [map_auto_saver]: Map saved successfully.
-[INFO] [1772435051.573061205] [map_auto_saver]: KeyboardInterrupt received. Attempting shutdown save...

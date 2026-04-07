@@ -1,5 +1,0 @@
-[console_scripts]
-ebimu_driver = ebimu_pkg.ebimu_driver:main
-ebimu_publisher = ebimu_pkg.ebimu_publisher:main
-ebimu_subscriber = ebimu_pkg.ebimu_subscriber:main
-

@@ -1,5 +1,0 @@
-[INFO] [1772005237.153386529] [map_auto_saver]: Periodic auto-save enabled: every 20.0s -> /home/tkddn647/test/maps
-[INFO] [1772005257.143147788] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/fake_hwless_map_20260225_164057.pbstream
-[ERROR] [1772005317.144570141] [map_auto_saver]: Map save failed or timed out.
-[INFO] [1772005317.145348587] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/fake_hwless_map_20260225_164157.pbstream
-[INFO] [1772005328.627351479] [map_auto_saver]: KeyboardInterrupt received. Attempting shutdown save...

@@ -1,4 +1,0 @@
-[INFO] [1772433033.022665865] [sim_fake_sensor_publisher]: Loaded centerline CSV path with 716 points, length=228.14 m
-[INFO] [1772433033.023115117] [sim_fake_sensor_publisher]: Waypoint heading offset=0.000 rad
-[INFO] [1772433033.095082924] [sim_fake_sensor_publisher]: Centerline aligned to map. shift=(5.390, 1.180) m
-[INFO] [1772433033.125823309] [sim_fake_sensor_publisher]: Fake sensor publisher started. world_type=map

@@ -1,0 +1,8 @@
+# ROS/colcon generated artifacts
+build/
+install/
+log/
+
+# Python cache
+__pycache__/
+*.pyc

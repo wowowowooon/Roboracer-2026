@@ -1,1 +1,0 @@
-/home/tkddn647/test/src/localization_layer/config/map_builder.lua

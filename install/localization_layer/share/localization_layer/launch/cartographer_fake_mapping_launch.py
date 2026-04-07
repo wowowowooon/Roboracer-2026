@@ -1,1 +1,0 @@
-/home/tkddn647/test/src/localization_layer/launch/cartographer_fake_mapping_launch.py

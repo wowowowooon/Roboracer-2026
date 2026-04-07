@@ -1,1 +1,0 @@
-/home/tkddn647/test/build/race_layer/ament_cmake_environment_hooks/local_setup.bash

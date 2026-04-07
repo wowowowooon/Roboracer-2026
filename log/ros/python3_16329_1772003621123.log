@@ -1,6 +1,0 @@
-[INFO] [1772003621.214483759] [map_auto_saver]: Periodic auto-save enabled: every 10.0s -> /home/tkddn647/test/maps
-[INFO] [1772003631.204285328] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/fake_hwless_map_20260225_161351.pbstream
-[ERROR] [1772003646.207094714] [map_auto_saver]: Map save failed or timed out.
-[INFO] [1772003646.208680849] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/fake_hwless_map_20260225_161406.pbstream
-[ERROR] [1772003661.211095687] [map_auto_saver]: Map save failed or timed out.
-[INFO] [1772003661.211885844] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/fake_hwless_map_20260225_161421.pbstream

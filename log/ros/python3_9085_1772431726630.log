@@ -1,1 +1,0 @@
-[INFO] [1772431726.710202996] [local_planner]: Local planner: rec=/recommended_path, obs=/static_obstacles, fgm=/fgm_target -> /local_path, avoid_threshold=0.7m, use_fgm=True, forward_cone=80.0deg

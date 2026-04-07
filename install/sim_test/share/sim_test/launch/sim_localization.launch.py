@@ -1,1 +1,0 @@
-/home/tkddn647/test/src/sim_test/launch/sim_localization.launch.py

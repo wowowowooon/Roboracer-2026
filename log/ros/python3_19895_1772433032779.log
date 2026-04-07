@@ -1,6 +1,0 @@
-[INFO] [1772433032.855044367] [map_auto_saver]: Periodic auto-save enabled: every 30.0s -> /home/tkddn647/test/maps
-[INFO] [1772433068.712073045] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/Austin_sim_20260302_153108.pbstream
-[INFO] [1772433068.848551822] [map_auto_saver]: Map saved successfully.
-[INFO] [1772433098.766809493] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/Austin_sim_20260302_153138.pbstream
-[INFO] [1772433092.974761391] [map_auto_saver]: Map saved successfully.
-[INFO] [1772433100.485993719] [map_auto_saver]: KeyboardInterrupt received. Attempting shutdown save...

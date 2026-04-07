@@ -1,6 +1,0 @@
-Invoking command in '/home/tkddn647/test/build/sllidar_ros2': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/tkddn647/test/src/sllidar_ros2 -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/tkddn647/test/install/sllidar_ros2
-Invoked command in '/home/tkddn647/test/build/sllidar_ros2' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/tkddn647/test/src/sllidar_ros2 -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/tkddn647/test/install/sllidar_ros2
-Invoking command in '/home/tkddn647/test/build/sllidar_ros2': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/tkddn647/test/build/sllidar_ros2 -- -j12 -l12
-Invoked command in '/home/tkddn647/test/build/sllidar_ros2' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/tkddn647/test/build/sllidar_ros2 -- -j12 -l12
-Invoking command in '/home/tkddn647/test/build/sllidar_ros2': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/tkddn647/test/build/sllidar_ros2
-Invoked command in '/home/tkddn647/test/build/sllidar_ros2' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/tkddn647/test/build/sllidar_ros2
