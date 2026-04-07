@@ -491,6 +491,24 @@ namespace sl {
         ///
         ///Note: The function will stop scan if speed is DEFAULT_MOTOR_SPEED.
         virtual sl_result setMotorSpeed(sl_u16 speed = DEFAULT_MOTOR_SPEED) = 0;
+
+        /// Set desired scan rotation frequency (Hz) through lidar configuration command.
+        /// This is device/firmware dependent and may return OPERATION_NOT_SUPPORT.
+        virtual sl_result setDesiredScanFrequency(float hz, sl_u32 timeoutInMs = DEFAULT_TIMEOUT)
+        {
+            (void)hz;
+            (void)timeoutInMs;
+            return SL_RESULT_OPERATION_NOT_SUPPORT;
+        }
+
+        /// Get desired scan rotation frequency (Hz) from lidar configuration command.
+        /// This is device/firmware dependent and may return OPERATION_NOT_SUPPORT.
+        virtual sl_result getDesiredScanFrequency(float& hz, sl_u32 timeoutInMs = DEFAULT_TIMEOUT)
+        {
+            (void)timeoutInMs;
+            hz = 0.0f;
+            return SL_RESULT_OPERATION_NOT_SUPPORT;
+        }
         
         /// Get the motor information of the RPLIDAR include the max speed, min speed, desired speed.
         /// 

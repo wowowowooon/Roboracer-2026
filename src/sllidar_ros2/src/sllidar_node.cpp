@@ -47,6 +47,7 @@
 #define DEG2RAD(x) ((x)*M_PI/180.)
 
 #define ROS2VERSION "1.0.1"
+#define LIDAR_S_SERIES_MINUM_MAJOR_ID 5
 
 using namespace sl;
 
@@ -119,6 +120,7 @@ class SLlidarNode : public rclcpp::Node
         RCLCPP_INFO(this->get_logger(),"SLLidar S/N: %s",sn_str);
         RCLCPP_INFO(this->get_logger(),"Firmware Ver: %d.%02d",devinfo.firmware_version>>8, devinfo.firmware_version & 0xFF);
         RCLCPP_INFO(this->get_logger(),"Hardware Rev: %d",(int)devinfo.hardware_version);
+        device_model = devinfo.model;
         return true;
     }
 
@@ -305,7 +307,17 @@ public:
         start_motor_service = this->create_service<std_srvs::srv::Empty>("start_motor", 
                                 std::bind(&SLlidarNode::start_motor,this,std::placeholders::_1,std::placeholders::_2));
 
-        drv->setMotorSpeed();
+        bool scan_frequency_tunning_after_scan = false;
+        if ((device_model >> 4) > LIDAR_S_SERIES_MINUM_MAJOR_ID) {
+            scan_frequency_tunning_after_scan = true;
+            RCLCPP_INFO(this->get_logger(), "scan frequency tuning after first scan is enabled (model major id: %d)", device_model >> 4);
+        }
+
+        if (!scan_frequency_tunning_after_scan) {
+            drv->setMotorSpeed(600);
+        } else {
+            drv->setMotorSpeed();
+        }
 
         LidarScanMode current_scan_mode;
         if (scan_mode.empty()) {
@@ -365,6 +377,16 @@ public:
             scan_duration = (end_scan_time - start_scan_time).seconds();
 
             if (op_result == SL_RESULT_OK) {
+                if (scan_frequency_tunning_after_scan) {
+                    const sl_u16 requested_rpm = static_cast<sl_u16>(scan_frequency * 60.0f);
+                    RCLCPP_INFO(this->get_logger(), "set lidar scan frequency to %.1f Hz (%.1f rpm)", scan_frequency, scan_frequency * 60.0f);
+                    auto speed_result = drv->setMotorSpeed(requested_rpm);
+                    if (SL_IS_FAIL(speed_result)) {
+                        RCLCPP_WARN(this->get_logger(), "Failed to apply tuned motor speed (%u rpm): %08x", requested_rpm, speed_result);
+                    }
+                    scan_frequency_tunning_after_scan = false;
+                    continue;
+                }
                 op_result = drv->ascendScanData(nodes, count);
                 float angle_min = DEG2RAD(0.0f);
                 float angle_max = DEG2RAD(360.0f);
@@ -460,6 +482,7 @@ public:
     size_t angle_compensate_multiple = 1;//it stand of angle compensate at per 1 degree
     std::string scan_mode;
     float scan_frequency;
+    sl_u8 device_model = 0;
 
     ILidarDriver * drv;    
 };
@@ -480,4 +503,3 @@ int main(int argc, char * argv[])
   rclcpp::shutdown();
   return ret;
 }
-

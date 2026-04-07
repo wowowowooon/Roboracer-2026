@@ -1,0 +1,35 @@
+-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/tkddn647/test/build/race_layer
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/tkddn647/test/install/race_layer/lib/race_layer/path_following.py
+-- Symlinking: /home/tkddn647/test/install/race_layer/lib/race_layer/static_node.py
+-- Symlinking: /home/tkddn647/test/install/race_layer/lib/race_layer/FGM_node.py
+-- Symlinking: /home/tkddn647/test/install/race_layer/lib/race_layer/local.py
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/launch/.gitkeep
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/launch/FGM_node.py
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/launch/__pycache__/centerline.cpython-310.pyc
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/launch/centerline.py
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/launch/local.py
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/launch/make_csv.py
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/launch/path_following.py
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/launch/race_layer.launch.py
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/launch/static_node.py
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/ament_index/resource_index/package_run_dependencies/race_layer
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/ament_index/resource_index/parent_prefix_path/race_layer
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/environment/ament_prefix_path.sh
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/environment/ament_prefix_path.dsv
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/environment/path.sh
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/environment/path.dsv
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/local_setup.bash
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/local_setup.sh
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/local_setup.zsh
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/local_setup.dsv
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/package.dsv
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/ament_index/resource_index/packages/race_layer
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/cmake/race_layerConfig.cmake
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/cmake/race_layerConfig-version.cmake
+-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/package.xml

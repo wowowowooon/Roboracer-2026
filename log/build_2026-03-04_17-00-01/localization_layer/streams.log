@@ -1,0 +1,38 @@
+[30.035s] Invoking command in '/home/tkddn647/test/build/localization_layer': AMENT_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/tkddn647/test/build/localization_layer -- -j12 -l12
+[60.042s] Invoked command in '/home/tkddn647/test/build/localization_layer' returned '0': AMENT_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/tkddn647/test/build/localization_layer -- -j12 -l12
+[60.056s] Invoking command in '/home/tkddn647/test/build/localization_layer': AMENT_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/tkddn647/test/build/localization_layer
+[60.066s] -- Install configuration: ""
+[60.066s] -- Execute custom install script
+[60.067s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/__pycache__/cartographer_fake_localization_launch.cpython-310.pyc
+[60.067s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/__pycache__/cartographer_fake_mapping_launch.cpython-310.pyc
+[60.067s] -- Symlinking: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/__pycache__/cartographer_mapping_launch.cpython-310.pyc
+[60.079s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/cartographer_fake_localization_launch.py
+[60.079s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/cartographer_fake_mapping_launch.py
+[60.079s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/cartographer_localization_launch.py
+[60.080s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/cartographer_mapping_launch.py
+[60.080s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/cartographer_2d_localization.lua
+[60.080s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/cartographer_2d_mapping.lua
+[60.080s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/cartographer_2d_mapping_lidar_only.lua
+[60.081s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/map_builder.lua
+[60.081s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/map_builder_mapping.lua
+[60.082s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/pose_graph.lua
+[60.082s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/pose_graph_mapping.lua
+[60.082s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/trajectory_builder.lua
+[60.083s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/lib/localization_layer/map_auto_saver.py
+[60.083s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/lib/localization_layer/fake_sensor_publisher.py
+[60.083s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/ament_index/resource_index/package_run_dependencies/localization_layer
+[60.083s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/ament_index/resource_index/parent_prefix_path/localization_layer
+[60.083s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/environment/ament_prefix_path.sh
+[60.083s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/environment/ament_prefix_path.dsv
+[60.083s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/environment/path.sh
+[60.083s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/environment/path.dsv
+[60.083s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/local_setup.bash
+[60.083s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/local_setup.sh
+[60.083s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/local_setup.zsh
+[60.083s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/local_setup.dsv
+[60.083s] -- Symlinking: /home/tkddn647/test/install/localization_layer/share/localization_layer/package.dsv
+[60.096s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/ament_index/resource_index/packages/localization_layer
+[60.097s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/cmake/localization_layerConfig.cmake
+[60.097s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/cmake/localization_layerConfig-version.cmake
+[60.097s] -- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/package.xml
+[90.073s] Invoked command in '/home/tkddn647/test/build/localization_layer' returned '0': AMENT_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/tkddn647/test/build/localization_layer

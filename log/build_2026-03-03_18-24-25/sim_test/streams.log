@@ -1,0 +1,34 @@
+[30.019s] Invoking command in '/home/tkddn647/test/build/sim_test': AMENT_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/tkddn647/test/build/sim_test -- -j12 -l12
+[30.085s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[30.343s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[30.523s] -- Configuring done
+[30.545s] -- Generating done
+[30.552s] -- Build files have been written to: /home/tkddn647/test/build/sim_test
+[30.605s] Invoked command in '/home/tkddn647/test/build/sim_test' returned '0': AMENT_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/tkddn647/test/build/sim_test -- -j12 -l12
+[30.615s] Invoking command in '/home/tkddn647/test/build/sim_test': AMENT_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/tkddn647/test/build/sim_test
+[30.633s] -- Install configuration: ""
+[30.634s] -- Execute custom install script
+[30.635s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/launch/__pycache__/sim_localization.launch.cpython-310.pyc
+[30.636s] -- Symlinking: /home/tkddn647/test/install/sim_test/share/sim_test/launch/__pycache__/sim_mapping.launch.cpython-310.pyc
+[30.656s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/launch/sim_localization.launch.py
+[30.657s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/launch/sim_mapping.launch.py
+[30.657s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/config/sim_sensor_params.yaml
+[30.658s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/config/sim_sensor_params_localization.yaml
+[30.658s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/config/sim_sensor_params_mapping.yaml
+[30.659s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/lib/sim_test/sim_fake_sensor_publisher.py
+[30.669s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/ament_index/resource_index/package_run_dependencies/sim_test
+[30.670s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/ament_index/resource_index/parent_prefix_path/sim_test
+[30.671s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/environment/ament_prefix_path.sh
+[30.671s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/environment/ament_prefix_path.dsv
+[30.672s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/environment/path.sh
+[30.672s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/environment/path.dsv
+[30.673s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/local_setup.bash
+[30.673s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/local_setup.sh
+[30.674s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/local_setup.zsh
+[30.674s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/local_setup.dsv
+[30.675s] -- Symlinking: /home/tkddn647/test/install/sim_test/share/sim_test/package.dsv
+[30.698s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/ament_index/resource_index/packages/sim_test
+[30.698s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/cmake/sim_testConfig.cmake
+[30.699s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/cmake/sim_testConfig-version.cmake
+[30.699s] -- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/package.xml
+[60.012s] Invoked command in '/home/tkddn647/test/build/sim_test' returned '0': AMENT_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/tkddn647/test/build/sim_test

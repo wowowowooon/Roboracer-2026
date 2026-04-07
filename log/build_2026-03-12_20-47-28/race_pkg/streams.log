@@ -1,0 +1,31 @@
+[31.571s] Invoking command in '/home/tkddn647/test/build/race_pkg': PYTHONPATH=/home/tkddn647/test/build/race_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/tkddn647/test/install/race_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/tkddn647/test/build/race_pkg/build --no-deps symlink_data
+[32.025s] running develop
+[32.321s] running egg_info
+[32.321s] creating race_pkg.egg-info
+[32.322s] writing race_pkg.egg-info/PKG-INFO
+[32.323s] writing dependency_links to race_pkg.egg-info/dependency_links.txt
+[32.323s] writing entry points to race_pkg.egg-info/entry_points.txt
+[32.323s] writing requirements to race_pkg.egg-info/requires.txt
+[32.324s] writing top-level names to race_pkg.egg-info/top_level.txt
+[32.331s] writing manifest file 'race_pkg.egg-info/SOURCES.txt'
+[32.334s] reading manifest file 'race_pkg.egg-info/SOURCES.txt'
+[32.335s] writing manifest file 'race_pkg.egg-info/SOURCES.txt'
+[32.338s] running build_ext
+[32.338s] Creating /home/tkddn647/test/install/race_pkg/lib/python3.10/site-packages/race-pkg.egg-link (link to .)
+[32.340s] Installing centerline_publisher script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+[32.341s] Installing fgm_node script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+[32.341s] Installing local_planner script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+[32.342s] Installing scan_rate_adapter script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+[32.342s] Installing static_obstacle_detector script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+[32.343s] 
+[32.343s] Installed /home/tkddn647/test/build/race_pkg
+[32.344s] running symlink_data
+[32.344s] creating /home/tkddn647/test/install/race_pkg/share/ament_index
+[32.344s] creating /home/tkddn647/test/install/race_pkg/share/ament_index/resource_index
+[32.344s] creating /home/tkddn647/test/install/race_pkg/share/ament_index/resource_index/packages
+[32.345s] symbolically linking /home/tkddn647/test/build/race_pkg/resource/race_pkg -> /home/tkddn647/test/install/race_pkg/share/ament_index/resource_index/packages
+[32.346s] symbolically linking /home/tkddn647/test/build/race_pkg/package.xml -> /home/tkddn647/test/install/race_pkg/share/race_pkg
+[32.346s] creating /home/tkddn647/test/install/race_pkg/share/race_pkg/launch
+[32.347s] symbolically linking /home/tkddn647/test/build/race_pkg/launch/f1tenth_drive.launch.py -> /home/tkddn647/test/install/race_pkg/share/race_pkg/launch
+[32.348s] creating /home/tkddn647/test/install/race_pkg/share/race_pkg/config
+[32.398s] Invoked command in '/home/tkddn647/test/build/race_pkg' returned '0': PYTHONPATH=/home/tkddn647/test/build/race_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/tkddn647/test/install/race_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/tkddn647/test/build/race_pkg/build --no-deps symlink_data

@@ -29,6 +29,8 @@ def generate_launch_description():
     centerline_offset_y_m = LaunchConfiguration("centerline_offset_y_m")
     sensor_params_file = LaunchConfiguration("sensor_params_file")
     map_path_speed_mps = LaunchConfiguration("map_path_speed_mps")
+    scan_range_max = LaunchConfiguration("scan_range_max")
+    map_single_wall_inset_m = LaunchConfiguration("map_single_wall_inset_m")
     enable_external_static_tf = LaunchConfiguration("enable_external_static_tf")
     enable_mapping = LaunchConfiguration("enable_mapping")
 
@@ -49,7 +51,9 @@ def generate_launch_description():
         DeclareLaunchArgument("centerline_offset_x_m", default_value="0.0"),
         DeclareLaunchArgument("centerline_offset_y_m", default_value="0.0"),
         DeclareLaunchArgument("sensor_params_file", default_value=default_params),
-        DeclareLaunchArgument("map_path_speed_mps", default_value="0.12"),
+        DeclareLaunchArgument("map_path_speed_mps", default_value="0.07"),
+        DeclareLaunchArgument("scan_range_max", default_value="30.0"),
+        DeclareLaunchArgument("map_single_wall_inset_m", default_value="7.0"),
         DeclareLaunchArgument(
             "enable_external_static_tf",
             default_value="false",
@@ -90,10 +94,11 @@ def generate_launch_description():
                     "imu_rate_hz": 15.0,
                     "odom_rate_hz": 15.0,
                     "state_rate_hz": 60.0,
-                    "scan_range_max": 8.0,
+                    "scan_range_max": scan_range_max,
                     "scan_angle_min_deg": -135.0,
                     "scan_angle_max_deg": 135.0,
                     "scan_angle_increment_deg": 1.0,
+                    "map_single_wall_inset_m": map_single_wall_inset_m,
                     "map_path_speed_mps": map_path_speed_mps,
                     "map_use_pure_pursuit": False,
                     "map_use_waypoint_heading": False,
@@ -123,7 +128,7 @@ def generate_launch_description():
                         "map_file_prefix": map_file_prefix,
                         "save_interval_sec": save_interval_sec,
                         "save_on_shutdown": "true",
-                        "export_ros_map": "false",
+                        "export_ros_map": "true",
                         "export_ros_map_on_shutdown": "true",
                         "use_sim_time": "false",
                         "imu_topic": "/unused_imu",

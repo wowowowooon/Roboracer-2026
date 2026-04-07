@@ -1,0 +1,7 @@
+[console_scripts]
+centerline_publisher = race_pkg.planning.centerline_publisher:main
+fgm_node = race_pkg.planning.fgm_node:main
+local_planner = race_pkg.planning.local_planner:main
+scan_rate_adapter = race_pkg.perception.scan_rate_adapter:main
+static_obstacle_detector = race_pkg.perception.static_obstacle_detector:main
+

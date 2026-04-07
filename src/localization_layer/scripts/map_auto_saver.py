@@ -7,6 +7,7 @@ from datetime import datetime
 
 import rclpy
 from cartographer_ros_msgs.srv import WriteState
+from PIL import Image
 from rclpy.node import Node
 
 
@@ -29,6 +30,7 @@ class MapAutoSaver(Node):
         self.declare_parameter('export_ros_map_on_shutdown', False)
         self.declare_parameter('shutdown_write_state_timeout_sec', 4.0)
         self.declare_parameter('shutdown_ros_map_timeout_sec', 2.0)
+        self.declare_parameter('pbstream_to_ros_map_resolution', 0.05)
 
         self.map_save_dir = self.get_parameter('map_save_dir').get_parameter_value().string_value
         if not os.path.isabs(self.map_save_dir):
@@ -58,6 +60,9 @@ class MapAutoSaver(Node):
         ).get_parameter_value().double_value
         self.shutdown_ros_map_timeout_sec = self.get_parameter(
             'shutdown_ros_map_timeout_sec'
+        ).get_parameter_value().double_value
+        self.pbstream_to_ros_map_resolution = self.get_parameter(
+            'pbstream_to_ros_map_resolution'
         ).get_parameter_value().double_value
 
         os.makedirs(self.map_save_dir, exist_ok=True)
@@ -127,6 +132,77 @@ class MapAutoSaver(Node):
         )
         return False
 
+    def _save_ros_map_from_pbstream(
+        self,
+        map_filestem: str,
+        pbstream_path: str,
+        reason: str,
+        timeout_sec: float,
+    ) -> bool:
+        if timeout_sec <= 0.0:
+            return False
+
+        out_filestem = f'{map_filestem}_rosmap'
+        cmd = [
+            'ros2',
+            'run',
+            'cartographer_ros',
+            'cartographer_pbstream_to_ros_map',
+            '-pbstream_filename',
+            pbstream_path,
+            '-map_filestem',
+            out_filestem,
+            '-resolution',
+            f'{self.pbstream_to_ros_map_resolution:.6f}',
+        ]
+        env = os.environ.copy()
+        env['ROS_LOG_DIR'] = self.ros_log_dir
+
+        self.get_logger().warn(
+            f'Falling back to pbstream->ros_map export ({reason}) -> {out_filestem}.yaml'
+        )
+        try:
+            completed = subprocess.run(
+                cmd,
+                check=False,
+                timeout=timeout_sec,
+                env=env,
+                capture_output=True,
+                text=True,
+            )
+        except subprocess.TimeoutExpired:
+            self.get_logger().error('pbstream_to_ros_map timed out.')
+            return False
+        except Exception as exc:
+            self.get_logger().error(f'Failed to run pbstream_to_ros_map: {exc}')
+            return False
+
+        if completed.returncode != 0:
+            self.get_logger().error(
+                f'pbstream_to_ros_map failed (code={completed.returncode}). '
+                f'stdout="{completed.stdout.strip()}" stderr="{completed.stderr.strip()}"'
+            )
+            return False
+
+        # cartographer tool writes .pgm + .yaml. Convert to .png when requested.
+        if self.ros_map_format.strip().lower() == 'png':
+            pgm_path = f'{out_filestem}.pgm'
+            png_path = f'{out_filestem}.png'
+            yaml_path = f'{out_filestem}.yaml'
+            try:
+                Image.open(pgm_path).save(png_path)
+                with open(yaml_path, 'r', encoding='utf-8') as f:
+                    yaml_text = f.read()
+                yaml_text = yaml_text.replace(os.path.basename(pgm_path), os.path.basename(png_path))
+                with open(yaml_path, 'w', encoding='utf-8') as f:
+                    f.write(yaml_text)
+            except Exception as exc:
+                self.get_logger().error(f'Failed to convert fallback map to png: {exc}')
+                return False
+
+        self.get_logger().info('Fallback ROS map export from pbstream succeeded.')
+        return True
+
     def save_map(
         self,
         reason: str,
@@ -182,7 +258,13 @@ class MapAutoSaver(Node):
             if future.done() and future.result() is not None:
                 self.get_logger().info('Map saved successfully.')
                 if export_ros_map:
-                    self._save_ros_map(map_filestem, reason, ros_map_timeout_sec)
+                    if not self._save_ros_map(map_filestem, reason, ros_map_timeout_sec):
+                        self._save_ros_map_from_pbstream(
+                            map_filestem,
+                            output_path,
+                            reason,
+                            ros_map_timeout_sec,
+                        )
                 return True
 
             self.get_logger().error('Map save failed or timed out.')

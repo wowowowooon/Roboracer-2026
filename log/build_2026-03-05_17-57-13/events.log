@@ -1,0 +1,336 @@
+[0.000000] (-) TimerEvent: {}
+[0.000091] (-) JobUnselected: {'identifier': 'ebimu_pkg'}
+[0.000170] (-) JobUnselected: {'identifier': 'localization_layer'}
+[0.000221] (-) JobUnselected: {'identifier': 'race_layer'}
+[0.000450] (-) JobUnselected: {'identifier': 'race_pkg'}
+[0.000476] (-) JobUnselected: {'identifier': 'sensor_layer'}
+[0.000523] (-) JobUnselected: {'identifier': 'sllidar_ros2'}
+[0.000569] (-) JobUnselected: {'identifier': 'tf_manager_cpp'}
+[0.000965] (sim_test) JobQueued: {'identifier': 'sim_test', 'dependencies': OrderedDict([('ebimu_pkg', '/home/tkddn647/test/install/ebimu_pkg'), ('sllidar_ros2', '/home/tkddn647/test/install/sllidar_ros2'), ('tf_manager_cpp', '/home/tkddn647/test/install/tf_manager_cpp'), ('sensor_layer', '/home/tkddn647/test/install/sensor_layer'), ('localization_layer', '/home/tkddn647/test/install/localization_layer')])}
+[0.001364] (sim_test) JobStarted: {'identifier': 'sim_test'}
+[0.102253] (-) TimerEvent: {}
+[0.202782] (-) TimerEvent: {}
+[0.277202] (sim_test) JobProgress: {'identifier': 'sim_test', 'progress': 'cmake'}
+[0.277884] (sim_test) JobProgress: {'identifier': 'sim_test', 'progress': 'build'}
+[0.278593] (sim_test) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/tkddn647/test/build/sim_test', '--', '-j12', '-l12'], 'cwd': '/home/tkddn647/test/build/sim_test', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_CI', '1'), ('USER', 'tkddn647'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/out/nls.messages.json","locale":"en","availableLanguages":{}}'), ('VSCODE_WSL_EXT_LOCATION', '/mnt/c/Users/user/.vscode/extensions/ms-vscode-remote.remote-wsl-0.81.9'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('DEBUG', 'release'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/tkddn647'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-6ee32954-5be2-416a-98dc-d4000790885a.sock'), ('ROS_PYTHON_VERSION', '3'), ('PAGER', 'cat'), ('LC_CTYPE', 'C.UTF-8'), ('NO_COLOR', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', ''), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('APPLICATION_INSIGHTS_NO_STATSBEAT', 'true'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'tkddn647'), ('NAME', 'DESKTOP-6JKVHB4'), ('WSL_INTEROP', '/run/WSL/667_interop'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '1'), ('PATH', '/home/tkddn647/.local/bin:/home/tkddn647/.codex/tmp/arg0/codex-arg0m7rG39:/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/bin/remote-cli:/home/tkddn647/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Python314/Scripts/:/mnt/c/Python314/:/mnt/c/Program Files (x86)/STMicroelectronics/stlink_server:/mnt/c/ST/STM32CubeCLT_1.20.0:/mnt/c/ST/STM32CubeCLT_1.20.0/CMake/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/st-arm-clang/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/Ninja/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/GNU-tools-for-STM32/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STLink-gdb-server/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STM32CubeProgrammer/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2025a/bin:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/cursor/resources/app/bin:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/user/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/user/AppData/Roaming/npm:/snap/bin:/home/tkddn647/.vscode-server/extensions/openai.chatgpt-0.5.79-linux-x64/bin/linux-x86_64'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('CODEX_SANDBOX_NETWORK_DISABLED', '1'), ('LANG', 'en_US.UTF-8'), ('GH_PAGER', 'cat'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ELECTRON_RUN_AS_NODE', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CODEX_THREAD_ID', '019cb703-da4a-7ea1-8a67-5671dd4063bf'), ('GIT_PAGER', 'cat'), ('PWD', '/home/tkddn647/test/build/sim_test'), ('LC_ALL', 'C.UTF-8'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble')]), 'shell': False}
+[0.303189] (-) TimerEvent: {}
+[0.405457] (-) TimerEvent: {}
+[0.513256] (-) TimerEvent: {}
+[0.621054] (-) TimerEvent: {}
+[0.724787] (-) TimerEvent: {}
+[0.825223] (-) TimerEvent: {}
+[0.930781] (-) TimerEvent: {}
+[1.032978] (-) TimerEvent: {}
+[1.134781] (-) TimerEvent: {}
+[1.236300] (-) TimerEvent: {}
+[1.337988] (-) TimerEvent: {}
+[1.439588] (-) TimerEvent: {}
+[1.541279] (-) TimerEvent: {}
+[1.644205] (-) TimerEvent: {}
+[1.745933] (-) TimerEvent: {}
+[1.847486] (-) TimerEvent: {}
+[1.949565] (-) TimerEvent: {}
+[2.051134] (-) TimerEvent: {}
+[2.152694] (-) TimerEvent: {}
+[2.254067] (-) TimerEvent: {}
+[2.355647] (-) TimerEvent: {}
+[2.457452] (-) TimerEvent: {}
+[2.559019] (-) TimerEvent: {}
+[2.660697] (-) TimerEvent: {}
+[2.762457] (-) TimerEvent: {}
+[2.863122] (-) TimerEvent: {}
+[2.965265] (-) TimerEvent: {}
+[3.065638] (-) TimerEvent: {}
+[3.166006] (-) TimerEvent: {}
+[3.266398] (-) TimerEvent: {}
+[3.368792] (-) TimerEvent: {}
+[3.471011] (-) TimerEvent: {}
+[3.573144] (-) TimerEvent: {}
+[3.675076] (-) TimerEvent: {}
+[3.776905] (-) TimerEvent: {}
+[3.878539] (-) TimerEvent: {}
+[3.980895] (-) TimerEvent: {}
+[4.082520] (-) TimerEvent: {}
+[4.184288] (-) TimerEvent: {}
+[4.286248] (-) TimerEvent: {}
+[4.388039] (-) TimerEvent: {}
+[4.490216] (-) TimerEvent: {}
+[4.592094] (-) TimerEvent: {}
+[4.693914] (-) TimerEvent: {}
+[4.795621] (-) TimerEvent: {}
+[4.897423] (-) TimerEvent: {}
+[4.998548] (-) TimerEvent: {}
+[5.100671] (-) TimerEvent: {}
+[5.202268] (-) TimerEvent: {}
+[5.304154] (-) TimerEvent: {}
+[5.405792] (-) TimerEvent: {}
+[5.507478] (-) TimerEvent: {}
+[5.607879] (-) TimerEvent: {}
+[5.708502] (-) TimerEvent: {}
+[5.811782] (-) TimerEvent: {}
+[5.913638] (-) TimerEvent: {}
+[6.015118] (-) TimerEvent: {}
+[6.118290] (-) TimerEvent: {}
+[6.220951] (-) TimerEvent: {}
+[6.322986] (-) TimerEvent: {}
+[6.424728] (-) TimerEvent: {}
+[6.525887] (-) TimerEvent: {}
+[6.627846] (-) TimerEvent: {}
+[6.729718] (-) TimerEvent: {}
+[6.831369] (-) TimerEvent: {}
+[6.933133] (-) TimerEvent: {}
+[7.034252] (-) TimerEvent: {}
+[7.135927] (-) TimerEvent: {}
+[7.237814] (-) TimerEvent: {}
+[7.339553] (-) TimerEvent: {}
+[7.441432] (-) TimerEvent: {}
+[7.542270] (-) TimerEvent: {}
+[7.644011] (-) TimerEvent: {}
+[7.745830] (-) TimerEvent: {}
+[7.847483] (-) TimerEvent: {}
+[7.949256] (-) TimerEvent: {}
+[8.049716] (-) TimerEvent: {}
+[8.151708] (-) TimerEvent: {}
+[8.253555] (-) TimerEvent: {}
+[8.355302] (-) TimerEvent: {}
+[8.457180] (-) TimerEvent: {}
+[8.558832] (-) TimerEvent: {}
+[8.661091] (-) TimerEvent: {}
+[8.762749] (-) TimerEvent: {}
+[8.864480] (-) TimerEvent: {}
+[8.966066] (-) TimerEvent: {}
+[9.068011] (-) TimerEvent: {}
+[9.169850] (-) TimerEvent: {}
+[9.271541] (-) TimerEvent: {}
+[9.373367] (-) TimerEvent: {}
+[9.475017] (-) TimerEvent: {}
+[9.576615] (-) TimerEvent: {}
+[9.679187] (-) TimerEvent: {}
+[9.782811] (-) TimerEvent: {}
+[9.888369] (-) TimerEvent: {}
+[9.994010] (-) TimerEvent: {}
+[10.099607] (-) TimerEvent: {}
+[10.202711] (-) TimerEvent: {}
+[10.308140] (-) TimerEvent: {}
+[10.413761] (-) TimerEvent: {}
+[10.519500] (-) TimerEvent: {}
+[10.625616] (-) TimerEvent: {}
+[10.731339] (-) TimerEvent: {}
+[10.836856] (-) TimerEvent: {}
+[10.942498] (-) TimerEvent: {}
+[11.048133] (-) TimerEvent: {}
+[11.150213] (-) TimerEvent: {}
+[11.255488] (-) TimerEvent: {}
+[11.361210] (-) TimerEvent: {}
+[11.466873] (-) TimerEvent: {}
+[11.572574] (-) TimerEvent: {}
+[11.676217] (-) TimerEvent: {}
+[11.781644] (-) TimerEvent: {}
+[11.887261] (-) TimerEvent: {}
+[11.992857] (-) TimerEvent: {}
+[12.096965] (-) TimerEvent: {}
+[12.201796] (-) TimerEvent: {}
+[12.307424] (-) TimerEvent: {}
+[12.412647] (-) TimerEvent: {}
+[12.518377] (-) TimerEvent: {}
+[12.624078] (-) TimerEvent: {}
+[12.729783] (-) TimerEvent: {}
+[12.835718] (-) TimerEvent: {}
+[12.941400] (-) TimerEvent: {}
+[13.047049] (-) TimerEvent: {}
+[13.152723] (-) TimerEvent: {}
+[13.253203] (-) TimerEvent: {}
+[13.354794] (-) TimerEvent: {}
+[13.456209] (-) TimerEvent: {}
+[13.557731] (-) TimerEvent: {}
+[13.659724] (-) TimerEvent: {}
+[13.761671] (-) TimerEvent: {}
+[13.863694] (-) TimerEvent: {}
+[13.965343] (-) TimerEvent: {}
+[14.065840] (-) TimerEvent: {}
+[14.167202] (-) TimerEvent: {}
+[14.268722] (-) TimerEvent: {}
+[14.370269] (-) TimerEvent: {}
+[14.472015] (-) TimerEvent: {}
+[14.573554] (-) TimerEvent: {}
+[14.675283] (-) TimerEvent: {}
+[14.776733] (-) TimerEvent: {}
+[14.878478] (-) TimerEvent: {}
+[14.979885] (-) TimerEvent: {}
+[15.081365] (-) TimerEvent: {}
+[15.183038] (-) TimerEvent: {}
+[15.283443] (-) TimerEvent: {}
+[15.383786] (-) TimerEvent: {}
+[15.485238] (-) TimerEvent: {}
+[15.586803] (-) TimerEvent: {}
+[15.688249] (-) TimerEvent: {}
+[15.789729] (-) TimerEvent: {}
+[15.891473] (-) TimerEvent: {}
+[15.993016] (-) TimerEvent: {}
+[16.094622] (-) TimerEvent: {}
+[16.195956] (-) TimerEvent: {}
+[16.297471] (-) TimerEvent: {}
+[16.399086] (-) TimerEvent: {}
+[16.500505] (-) TimerEvent: {}
+[16.601997] (-) TimerEvent: {}
+[16.703738] (-) TimerEvent: {}
+[16.805283] (-) TimerEvent: {}
+[16.907044] (-) TimerEvent: {}
+[17.009151] (-) TimerEvent: {}
+[17.110862] (-) TimerEvent: {}
+[17.212346] (-) TimerEvent: {}
+[17.313948] (-) TimerEvent: {}
+[17.414542] (-) TimerEvent: {}
+[17.523265] (-) TimerEvent: {}
+[17.631984] (-) TimerEvent: {}
+[17.740487] (-) TimerEvent: {}
+[17.846034] (-) TimerEvent: {}
+[17.954687] (-) TimerEvent: {}
+[18.063364] (-) TimerEvent: {}
+[18.172059] (-) TimerEvent: {}
+[18.280810] (-) TimerEvent: {}
+[18.388945] (-) TimerEvent: {}
+[18.495258] (-) TimerEvent: {}
+[18.598927] (-) TimerEvent: {}
+[18.707707] (-) TimerEvent: {}
+[18.808181] (-) TimerEvent: {}
+[18.917011] (-) TimerEvent: {}
+[19.025220] (-) TimerEvent: {}
+[19.125648] (-) TimerEvent: {}
+[19.226082] (-) TimerEvent: {}
+[19.326418] (-) TimerEvent: {}
+[19.426730] (-) TimerEvent: {}
+[19.527120] (-) TimerEvent: {}
+[19.627453] (-) TimerEvent: {}
+[19.733317] (-) TimerEvent: {}
+[19.834163] (-) TimerEvent: {}
+[19.939469] (-) TimerEvent: {}
+[20.045152] (-) TimerEvent: {}
+[20.150830] (-) TimerEvent: {}
+[20.256547] (-) TimerEvent: {}
+[20.358525] (-) TimerEvent: {}
+[20.463932] (-) TimerEvent: {}
+[20.569589] (-) TimerEvent: {}
+[20.675443] (-) TimerEvent: {}
+[20.781112] (-) TimerEvent: {}
+[20.883236] (-) TimerEvent: {}
+[20.988457] (-) TimerEvent: {}
+[21.093729] (-) TimerEvent: {}
+[21.199369] (-) TimerEvent: {}
+[21.305065] (-) TimerEvent: {}
+[21.409148] (-) TimerEvent: {}
+[21.509654] (-) TimerEvent: {}
+[21.613208] (-) TimerEvent: {}
+[21.719053] (-) TimerEvent: {}
+[21.824487] (-) TimerEvent: {}
+[21.929252] (-) TimerEvent: {}
+[22.034767] (-) TimerEvent: {}
+[22.140418] (-) TimerEvent: {}
+[22.246107] (-) TimerEvent: {}
+[22.350753] (-) TimerEvent: {}
+[22.456739] (-) TimerEvent: {}
+[22.558632] (-) TimerEvent: {}
+[22.664232] (-) TimerEvent: {}
+[22.769357] (-) TimerEvent: {}
+[22.871615] (-) TimerEvent: {}
+[22.977248] (-) TimerEvent: {}
+[23.082883] (-) TimerEvent: {}
+[23.187616] (-) TimerEvent: {}
+[23.293150] (-) TimerEvent: {}
+[23.393933] (-) TimerEvent: {}
+[23.499055] (-) TimerEvent: {}
+[23.599411] (-) TimerEvent: {}
+[23.703166] (-) TimerEvent: {}
+[23.808754] (-) TimerEvent: {}
+[23.914630] (-) TimerEvent: {}
+[24.020516] (-) TimerEvent: {}
+[24.126442] (-) TimerEvent: {}
+[24.232289] (-) TimerEvent: {}
+[24.338066] (-) TimerEvent: {}
+[24.438662] (-) TimerEvent: {}
+[24.544139] (-) TimerEvent: {}
+[24.646098] (-) TimerEvent: {}
+[24.751575] (-) TimerEvent: {}
+[24.857463] (-) TimerEvent: {}
+[24.958319] (-) TimerEvent: {}
+[25.063745] (-) TimerEvent: {}
+[25.169494] (-) TimerEvent: {}
+[25.275313] (-) TimerEvent: {}
+[25.381148] (-) TimerEvent: {}
+[25.483449] (-) TimerEvent: {}
+[25.588999] (-) TimerEvent: {}
+[25.689471] (-) TimerEvent: {}
+[25.790229] (-) TimerEvent: {}
+[25.891934] (-) TimerEvent: {}
+[25.993010] (-) TimerEvent: {}
+[26.098435] (-) TimerEvent: {}
+[26.199706] (-) TimerEvent: {}
+[26.305167] (-) TimerEvent: {}
+[26.406764] (-) TimerEvent: {}
+[26.509460] (-) TimerEvent: {}
+[26.611048] (-) TimerEvent: {}
+[26.716632] (-) TimerEvent: {}
+[26.818416] (-) TimerEvent: {}
+[26.922340] (-) TimerEvent: {}
+[27.024305] (-) TimerEvent: {}
+[27.129897] (-) TimerEvent: {}
+[27.232197] (-) TimerEvent: {}
+[27.337842] (-) TimerEvent: {}
+[27.440760] (-) TimerEvent: {}
+[27.544151] (-) TimerEvent: {}
+[27.647275] (-) TimerEvent: {}
+[27.747621] (-) TimerEvent: {}
+[27.848309] (-) TimerEvent: {}
+[27.949886] (-) TimerEvent: {}
+[28.051734] (-) TimerEvent: {}
+[28.153469] (-) TimerEvent: {}
+[28.255136] (-) TimerEvent: {}
+[28.356927] (-) TimerEvent: {}
+[28.457941] (-) TimerEvent: {}
+[28.559440] (-) TimerEvent: {}
+[28.661078] (-) TimerEvent: {}
+[28.763034] (-) TimerEvent: {}
+[28.863350] (-) TimerEvent: {}
+[28.963649] (-) TimerEvent: {}
+[29.064070] (-) TimerEvent: {}
+[29.164452] (-) TimerEvent: {}
+[29.264824] (-) TimerEvent: {}
+[29.365209] (-) TimerEvent: {}
+[29.465555] (-) TimerEvent: {}
+[29.565897] (-) TimerEvent: {}
+[29.666214] (-) TimerEvent: {}
+[29.766514] (-) TimerEvent: {}
+[29.866797] (-) TimerEvent: {}
+[29.967215] (-) TimerEvent: {}
+[30.030314] (sim_test) CommandEnded: {'returncode': 0}
+[30.031732] (sim_test) JobProgress: {'identifier': 'sim_test', 'progress': 'install'}
+[30.041829] (sim_test) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/tkddn647/test/build/sim_test'], 'cwd': '/home/tkddn647/test/build/sim_test', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_CI', '1'), ('USER', 'tkddn647'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/out/nls.messages.json","locale":"en","availableLanguages":{}}'), ('VSCODE_WSL_EXT_LOCATION', '/mnt/c/Users/user/.vscode/extensions/ms-vscode-remote.remote-wsl-0.81.9'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('DEBUG', 'release'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/tkddn647'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-6ee32954-5be2-416a-98dc-d4000790885a.sock'), ('ROS_PYTHON_VERSION', '3'), ('PAGER', 'cat'), ('LC_CTYPE', 'C.UTF-8'), ('NO_COLOR', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', ''), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('APPLICATION_INSIGHTS_NO_STATSBEAT', 'true'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'tkddn647'), ('NAME', 'DESKTOP-6JKVHB4'), ('WSL_INTEROP', '/run/WSL/667_interop'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '1'), ('PATH', '/home/tkddn647/.local/bin:/home/tkddn647/.codex/tmp/arg0/codex-arg0m7rG39:/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/bin/remote-cli:/home/tkddn647/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Python314/Scripts/:/mnt/c/Python314/:/mnt/c/Program Files (x86)/STMicroelectronics/stlink_server:/mnt/c/ST/STM32CubeCLT_1.20.0:/mnt/c/ST/STM32CubeCLT_1.20.0/CMake/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/st-arm-clang/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/Ninja/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/GNU-tools-for-STM32/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STLink-gdb-server/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STM32CubeProgrammer/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2025a/bin:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/cursor/resources/app/bin:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/user/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/user/AppData/Roaming/npm:/snap/bin:/home/tkddn647/.vscode-server/extensions/openai.chatgpt-0.5.79-linux-x64/bin/linux-x86_64'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('CODEX_SANDBOX_NETWORK_DISABLED', '1'), ('LANG', 'en_US.UTF-8'), ('GH_PAGER', 'cat'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ELECTRON_RUN_AS_NODE', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CODEX_THREAD_ID', '019cb703-da4a-7ea1-8a67-5671dd4063bf'), ('GIT_PAGER', 'cat'), ('PWD', '/home/tkddn647/test/build/sim_test'), ('LC_ALL', 'C.UTF-8'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble')]), 'shell': False}
+[30.050778] (sim_test) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[30.051651] (sim_test) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[30.052082] (sim_test) StdoutLine: {'line': b'-- Symlinking: /home/tkddn647/test/install/sim_test/share/sim_test/launch/__pycache__/sim_localization.launch.cpython-310.pyc\n'}
+[30.063427] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/launch/__pycache__/sim_mapping.launch.cpython-310.pyc\n'}
+[30.063768] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/launch/sim_localization.launch.py\n'}
+[30.063830] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/launch/sim_mapping.launch.py\n'}
+[30.064168] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/config/sim_sensor_params.yaml\n'}
+[30.064248] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/config/sim_sensor_params_localization.yaml\n'}
+[30.064411] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/config/sim_sensor_params_mapping.yaml\n'}
+[30.064702] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/lib/sim_test/sim_fake_sensor_publisher.py\n'}
+[30.064886] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/ament_index/resource_index/package_run_dependencies/sim_test\n'}
+[30.065096] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/ament_index/resource_index/parent_prefix_path/sim_test\n'}
+[30.065383] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/environment/ament_prefix_path.sh\n'}
+[30.065785] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/environment/ament_prefix_path.dsv\n'}
+[30.065882] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/environment/path.sh\n'}
+[30.066038] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/environment/path.dsv\n'}
+[30.066194] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/local_setup.bash\n'}
+[30.066349] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/local_setup.sh\n'}
+[30.066603] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/local_setup.zsh\n'}
+[30.066901] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/local_setup.dsv\n'}
+[30.067064] (sim_test) StdoutLine: {'line': b'-- Symlinking: /home/tkddn647/test/install/sim_test/share/sim_test/package.dsv\n'}
+[30.067331] (-) TimerEvent: {}
+[30.077734] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/ament_index/resource_index/packages/sim_test\n'}
+[30.078161] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/cmake/sim_testConfig.cmake\n'}
+[30.078275] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/cmake/sim_testConfig-version.cmake\n'}
+[30.078434] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/package.xml\n'}
+[30.082285] (sim_test) CommandEnded: {'returncode': 0}
+[30.099752] (sim_test) JobEnded: {'identifier': 'sim_test', 'rc': 0}
+[30.100769] (-) EventReactorShutdown: {}

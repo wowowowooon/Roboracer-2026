@@ -1,2 +1,1 @@
-source;share/race_layer/environment/ament_prefix_path.sh
-source;share/race_layer/environment/path.sh
+/home/tkddn647/test/build/race_layer/ament_cmake_environment_hooks/local_setup.dsv

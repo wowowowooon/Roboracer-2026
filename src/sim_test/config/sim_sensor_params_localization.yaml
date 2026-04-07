@@ -1,15 +1,15 @@
 /**:
   ros__parameters:
-    lidar_rate_hz: 8.0
-    imu_rate_hz: 8.0
-    odom_rate_hz: 8.0
+    lidar_rate_hz: 15.0
+    imu_rate_hz: 15.0
+    odom_rate_hz: 15.0
     state_rate_hz: 50.0
 
     scan_range_min: 0.05
     scan_range_max: 8.0
-    scan_angle_min_deg: -80.0
-    scan_angle_max_deg: 80.0
-    scan_angle_increment_deg: 2.0
+    scan_angle_min_deg: -135.0
+    scan_angle_max_deg: 135.0
+    scan_angle_increment_deg: 1.0
 
     scan_noise_std_m: 0.0
     scan_dropout_ratio: 0.0

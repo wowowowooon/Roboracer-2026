@@ -1,0 +1,422 @@
+[0.000000] (-) TimerEvent: {}
+[0.000411] (-) JobUnselected: {'identifier': 'ebimu_pkg'}
+[0.000514] (-) JobUnselected: {'identifier': 'race_pkg'}
+[0.000553] (-) JobUnselected: {'identifier': 'sensor_layer'}
+[0.000583] (-) JobUnselected: {'identifier': 'sllidar_ros2'}
+[0.000610] (-) JobUnselected: {'identifier': 'tf_manager_cpp'}
+[0.000699] (race_layer) JobQueued: {'identifier': 'race_layer', 'dependencies': OrderedDict()}
+[0.000823] (localization_layer) JobQueued: {'identifier': 'localization_layer', 'dependencies': OrderedDict([('ebimu_pkg', '/home/tkddn647/test/install/ebimu_pkg'), ('sllidar_ros2', '/home/tkddn647/test/install/sllidar_ros2'), ('tf_manager_cpp', '/home/tkddn647/test/install/tf_manager_cpp'), ('sensor_layer', '/home/tkddn647/test/install/sensor_layer')])}
+[0.000949] (sim_test) JobQueued: {'identifier': 'sim_test', 'dependencies': OrderedDict([('ebimu_pkg', '/home/tkddn647/test/install/ebimu_pkg'), ('sllidar_ros2', '/home/tkddn647/test/install/sllidar_ros2'), ('tf_manager_cpp', '/home/tkddn647/test/install/tf_manager_cpp'), ('sensor_layer', '/home/tkddn647/test/install/sensor_layer'), ('localization_layer', '/home/tkddn647/test/install/localization_layer')])}
+[0.001061] (localization_layer) JobStarted: {'identifier': 'localization_layer'}
+[0.015060] (race_layer) JobStarted: {'identifier': 'race_layer'}
+[0.098767] (-) TimerEvent: {}
+[0.199330] (-) TimerEvent: {}
+[0.299937] (-) TimerEvent: {}
+[0.377308] (race_layer) JobProgress: {'identifier': 'race_layer', 'progress': 'cmake'}
+[0.380059] (race_layer) JobProgress: {'identifier': 'race_layer', 'progress': 'build'}
+[0.381287] (race_layer) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/tkddn647/test/build/race_layer', '--', '-j12', '-l12'], 'cwd': '/home/tkddn647/test/build/race_layer', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_CI', '1'), ('USER', 'tkddn647'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/out/nls.messages.json","locale":"en","availableLanguages":{}}'), ('VSCODE_WSL_EXT_LOCATION', '/mnt/c/Users/user/.vscode/extensions/ms-vscode-remote.remote-wsl-0.81.9'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('DEBUG', 'release'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/tkddn647'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-6ee32954-5be2-416a-98dc-d4000790885a.sock'), ('ROS_PYTHON_VERSION', '3'), ('PAGER', 'cat'), ('LC_CTYPE', 'C.UTF-8'), ('NO_COLOR', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', ''), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('APPLICATION_INSIGHTS_NO_STATSBEAT', 'true'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'tkddn647'), ('NAME', 'DESKTOP-6JKVHB4'), ('WSL_INTEROP', '/run/WSL/667_interop'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '1'), ('PATH', '/home/tkddn647/.local/bin:/home/tkddn647/.codex/tmp/arg0/codex-arg0m7rG39:/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/bin/remote-cli:/home/tkddn647/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Python314/Scripts/:/mnt/c/Python314/:/mnt/c/Program Files (x86)/STMicroelectronics/stlink_server:/mnt/c/ST/STM32CubeCLT_1.20.0:/mnt/c/ST/STM32CubeCLT_1.20.0/CMake/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/st-arm-clang/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/Ninja/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/GNU-tools-for-STM32/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STLink-gdb-server/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STM32CubeProgrammer/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2025a/bin:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/cursor/resources/app/bin:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/user/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/user/AppData/Roaming/npm:/snap/bin:/home/tkddn647/.vscode-server/extensions/openai.chatgpt-0.5.79-linux-x64/bin/linux-x86_64'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('CODEX_SANDBOX_NETWORK_DISABLED', '1'), ('LANG', 'en_US.UTF-8'), ('GH_PAGER', 'cat'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ELECTRON_RUN_AS_NODE', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CODEX_THREAD_ID', '019cb703-da4a-7ea1-8a67-5671dd4063bf'), ('GIT_PAGER', 'cat'), ('PWD', '/home/tkddn647/test/build/race_layer'), ('LC_ALL', 'C.UTF-8'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.386831] (localization_layer) JobProgress: {'identifier': 'localization_layer', 'progress': 'cmake'}
+[0.387579] (localization_layer) JobProgress: {'identifier': 'localization_layer', 'progress': 'build'}
+[0.389096] (localization_layer) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/tkddn647/test/build/localization_layer', '--', '-j12', '-l12'], 'cwd': '/home/tkddn647/test/build/localization_layer', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_CI', '1'), ('USER', 'tkddn647'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/out/nls.messages.json","locale":"en","availableLanguages":{}}'), ('VSCODE_WSL_EXT_LOCATION', '/mnt/c/Users/user/.vscode/extensions/ms-vscode-remote.remote-wsl-0.81.9'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('DEBUG', 'release'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/tkddn647'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-6ee32954-5be2-416a-98dc-d4000790885a.sock'), ('ROS_PYTHON_VERSION', '3'), ('PAGER', 'cat'), ('LC_CTYPE', 'C.UTF-8'), ('NO_COLOR', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', ''), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('APPLICATION_INSIGHTS_NO_STATSBEAT', 'true'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'tkddn647'), ('NAME', 'DESKTOP-6JKVHB4'), ('WSL_INTEROP', '/run/WSL/667_interop'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '1'), ('PATH', '/home/tkddn647/.local/bin:/home/tkddn647/.codex/tmp/arg0/codex-arg0m7rG39:/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/bin/remote-cli:/home/tkddn647/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Python314/Scripts/:/mnt/c/Python314/:/mnt/c/Program Files (x86)/STMicroelectronics/stlink_server:/mnt/c/ST/STM32CubeCLT_1.20.0:/mnt/c/ST/STM32CubeCLT_1.20.0/CMake/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/st-arm-clang/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/Ninja/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/GNU-tools-for-STM32/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STLink-gdb-server/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STM32CubeProgrammer/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2025a/bin:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/cursor/resources/app/bin:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/user/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/user/AppData/Roaming/npm:/snap/bin:/home/tkddn647/.vscode-server/extensions/openai.chatgpt-0.5.79-linux-x64/bin/linux-x86_64'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('CODEX_SANDBOX_NETWORK_DISABLED', '1'), ('LANG', 'en_US.UTF-8'), ('GH_PAGER', 'cat'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ELECTRON_RUN_AS_NODE', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CODEX_THREAD_ID', '019cb703-da4a-7ea1-8a67-5671dd4063bf'), ('GIT_PAGER', 'cat'), ('PWD', '/home/tkddn647/test/build/localization_layer'), ('LC_ALL', 'C.UTF-8'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble')]), 'shell': False}
+[0.401103] (-) TimerEvent: {}
+[0.471292] (race_layer) CommandEnded: {'returncode': 0}
+[0.473900] (race_layer) JobProgress: {'identifier': 'race_layer', 'progress': 'install'}
+[0.494598] (race_layer) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/tkddn647/test/build/race_layer'], 'cwd': '/home/tkddn647/test/build/race_layer', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_CI', '1'), ('USER', 'tkddn647'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/out/nls.messages.json","locale":"en","availableLanguages":{}}'), ('VSCODE_WSL_EXT_LOCATION', '/mnt/c/Users/user/.vscode/extensions/ms-vscode-remote.remote-wsl-0.81.9'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('DEBUG', 'release'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/tkddn647'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-6ee32954-5be2-416a-98dc-d4000790885a.sock'), ('ROS_PYTHON_VERSION', '3'), ('PAGER', 'cat'), ('LC_CTYPE', 'C.UTF-8'), ('NO_COLOR', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', ''), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('APPLICATION_INSIGHTS_NO_STATSBEAT', 'true'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'tkddn647'), ('NAME', 'DESKTOP-6JKVHB4'), ('WSL_INTEROP', '/run/WSL/667_interop'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '1'), ('PATH', '/home/tkddn647/.local/bin:/home/tkddn647/.codex/tmp/arg0/codex-arg0m7rG39:/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/bin/remote-cli:/home/tkddn647/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Python314/Scripts/:/mnt/c/Python314/:/mnt/c/Program Files (x86)/STMicroelectronics/stlink_server:/mnt/c/ST/STM32CubeCLT_1.20.0:/mnt/c/ST/STM32CubeCLT_1.20.0/CMake/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/st-arm-clang/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/Ninja/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/GNU-tools-for-STM32/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STLink-gdb-server/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STM32CubeProgrammer/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2025a/bin:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/cursor/resources/app/bin:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/user/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/user/AppData/Roaming/npm:/snap/bin:/home/tkddn647/.vscode-server/extensions/openai.chatgpt-0.5.79-linux-x64/bin/linux-x86_64'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('CODEX_SANDBOX_NETWORK_DISABLED', '1'), ('LANG', 'en_US.UTF-8'), ('GH_PAGER', 'cat'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ELECTRON_RUN_AS_NODE', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CODEX_THREAD_ID', '019cb703-da4a-7ea1-8a67-5671dd4063bf'), ('GIT_PAGER', 'cat'), ('PWD', '/home/tkddn647/test/build/race_layer'), ('LC_ALL', 'C.UTF-8'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.497506] (localization_layer) CommandEnded: {'returncode': 0}
+[0.498980] (localization_layer) JobProgress: {'identifier': 'localization_layer', 'progress': 'install'}
+[0.499731] (localization_layer) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/tkddn647/test/build/localization_layer'], 'cwd': '/home/tkddn647/test/build/localization_layer', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_CI', '1'), ('USER', 'tkddn647'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/out/nls.messages.json","locale":"en","availableLanguages":{}}'), ('VSCODE_WSL_EXT_LOCATION', '/mnt/c/Users/user/.vscode/extensions/ms-vscode-remote.remote-wsl-0.81.9'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('DEBUG', 'release'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/tkddn647'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-6ee32954-5be2-416a-98dc-d4000790885a.sock'), ('ROS_PYTHON_VERSION', '3'), ('PAGER', 'cat'), ('LC_CTYPE', 'C.UTF-8'), ('NO_COLOR', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', ''), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('APPLICATION_INSIGHTS_NO_STATSBEAT', 'true'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'tkddn647'), ('NAME', 'DESKTOP-6JKVHB4'), ('WSL_INTEROP', '/run/WSL/667_interop'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '1'), ('PATH', '/home/tkddn647/.local/bin:/home/tkddn647/.codex/tmp/arg0/codex-arg0m7rG39:/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/bin/remote-cli:/home/tkddn647/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Python314/Scripts/:/mnt/c/Python314/:/mnt/c/Program Files (x86)/STMicroelectronics/stlink_server:/mnt/c/ST/STM32CubeCLT_1.20.0:/mnt/c/ST/STM32CubeCLT_1.20.0/CMake/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/st-arm-clang/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/Ninja/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/GNU-tools-for-STM32/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STLink-gdb-server/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STM32CubeProgrammer/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2025a/bin:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/cursor/resources/app/bin:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/user/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/user/AppData/Roaming/npm:/snap/bin:/home/tkddn647/.vscode-server/extensions/openai.chatgpt-0.5.79-linux-x64/bin/linux-x86_64'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('CODEX_SANDBOX_NETWORK_DISABLED', '1'), ('LANG', 'en_US.UTF-8'), ('GH_PAGER', 'cat'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ELECTRON_RUN_AS_NODE', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CODEX_THREAD_ID', '019cb703-da4a-7ea1-8a67-5671dd4063bf'), ('GIT_PAGER', 'cat'), ('PWD', '/home/tkddn647/test/build/localization_layer'), ('LC_ALL', 'C.UTF-8'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble')]), 'shell': False}
+[0.502352] (-) TimerEvent: {}
+[0.511930] (race_layer) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[0.513153] (race_layer) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[0.513673] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/lib/race_layer/path_following.py\n'}
+[0.514225] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/lib/race_layer/static_node.py\n'}
+[0.514701] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/lib/race_layer/FGM_node.py\n'}
+[0.514857] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/lib/race_layer/local.py\n'}
+[0.516019] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/launch/.gitkeep\n'}
+[0.516168] (localization_layer) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[0.517412] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/launch/FGM_node.py\n'}
+[0.517772] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/launch/__pycache__/centerline.cpython-310.pyc\n'}
+[0.518203] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/launch/centerline.py\n'}
+[0.518571] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/launch/local.py\n'}
+[0.518977] (localization_layer) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[0.519436] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/launch/make_csv.py\n'}
+[0.519783] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/launch/path_following.py\n'}
+[0.520137] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/launch/race_layer.launch.py\n'}
+[0.520793] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/launch/static_node.py\n'}
+[0.521209] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/ament_index/resource_index/package_run_dependencies/race_layer\n'}
+[0.522397] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/ament_index/resource_index/parent_prefix_path/race_layer\n'}
+[0.522774] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/environment/ament_prefix_path.sh\n'}
+[0.523112] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/environment/ament_prefix_path.dsv\n'}
+[0.523440] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/environment/path.sh\n'}
+[0.523941] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/__pycache__/cartographer_fake_localization_launch.cpython-310.pyc\n'}
+[0.524436] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/__pycache__/cartographer_fake_mapping_launch.cpython-310.pyc\n'}
+[0.524780] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/__pycache__/cartographer_mapping_launch.cpython-310.pyc\n'}
+[0.525122] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/cartographer_fake_localization_launch.py\n'}
+[0.525490] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/cartographer_fake_mapping_launch.py\n'}
+[0.526300] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/cartographer_localization_launch.py\n'}
+[0.526708] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/launch/cartographer_mapping_launch.py\n'}
+[0.526829] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/environment/path.dsv\n'}
+[0.527169] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/local_setup.bash\n'}
+[0.527485] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/local_setup.sh\n'}
+[0.527806] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/local_setup.zsh\n'}
+[0.528122] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/local_setup.dsv\n'}
+[0.528854] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/cartographer_2d_localization.lua\n'}
+[0.528970] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/cartographer_2d_mapping.lua\n'}
+[0.529070] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/cartographer_2d_mapping_lidar_only.lua\n'}
+[0.529165] (race_layer) StdoutLine: {'line': b'-- Symlinking: /home/tkddn647/test/install/race_layer/share/race_layer/package.dsv\n'}
+[0.529406] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/map_builder.lua\n'}
+[0.529534] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/map_builder_mapping.lua\n'}
+[0.529643] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/pose_graph.lua\n'}
+[0.529761] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/pose_graph_mapping.lua\n'}
+[0.529859] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/config/trajectory_builder.lua\n'}
+[0.530129] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/lib/localization_layer/map_auto_saver.py\n'}
+[0.530320] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/lib/localization_layer/fake_sensor_publisher.py\n'}
+[0.530436] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/ament_index/resource_index/package_run_dependencies/localization_layer\n'}
+[0.530542] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/ament_index/resource_index/parent_prefix_path/localization_layer\n'}
+[0.530641] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/environment/ament_prefix_path.sh\n'}
+[0.530737] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/environment/ament_prefix_path.dsv\n'}
+[0.530830] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/environment/path.sh\n'}
+[0.530923] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/environment/path.dsv\n'}
+[0.531014] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/local_setup.bash\n'}
+[0.531102] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/local_setup.sh\n'}
+[0.531193] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/local_setup.zsh\n'}
+[0.531282] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/local_setup.dsv\n'}
+[0.531370] (localization_layer) StdoutLine: {'line': b'-- Symlinking: /home/tkddn647/test/install/localization_layer/share/localization_layer/package.dsv\n'}
+[0.546818] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/ament_index/resource_index/packages/race_layer\n'}
+[0.547502] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/cmake/race_layerConfig.cmake\n'}
+[0.547654] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/cmake/race_layerConfig-version.cmake\n'}
+[0.548034] (race_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/race_layer/share/race_layer/package.xml\n'}
+[0.549830] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/ament_index/resource_index/packages/localization_layer\n'}
+[0.550243] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/cmake/localization_layerConfig.cmake\n'}
+[0.551752] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/cmake/localization_layerConfig-version.cmake\n'}
+[0.552096] (localization_layer) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/localization_layer/share/localization_layer/package.xml\n'}
+[0.553888] (race_layer) CommandEnded: {'returncode': 0}
+[0.583331] (race_layer) JobEnded: {'identifier': 'race_layer', 'rc': 0}
+[0.585358] (localization_layer) CommandEnded: {'returncode': 0}
+[0.602584] (-) TimerEvent: {}
+[0.609203] (localization_layer) JobEnded: {'identifier': 'localization_layer', 'rc': 0}
+[0.612033] (sim_test) JobStarted: {'identifier': 'sim_test'}
+[0.702936] (-) TimerEvent: {}
+[0.803427] (-) TimerEvent: {}
+[0.908912] (-) TimerEvent: {}
+[1.010327] (-) TimerEvent: {}
+[1.068645] (sim_test) JobProgress: {'identifier': 'sim_test', 'progress': 'cmake'}
+[1.069715] (sim_test) JobProgress: {'identifier': 'sim_test', 'progress': 'build'}
+[1.070461] (sim_test) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/tkddn647/test/build/sim_test', '--', '-j12', '-l12'], 'cwd': '/home/tkddn647/test/build/sim_test', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_CI', '1'), ('USER', 'tkddn647'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/out/nls.messages.json","locale":"en","availableLanguages":{}}'), ('VSCODE_WSL_EXT_LOCATION', '/mnt/c/Users/user/.vscode/extensions/ms-vscode-remote.remote-wsl-0.81.9'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('DEBUG', 'release'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/tkddn647'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-6ee32954-5be2-416a-98dc-d4000790885a.sock'), ('ROS_PYTHON_VERSION', '3'), ('PAGER', 'cat'), ('LC_CTYPE', 'C.UTF-8'), ('NO_COLOR', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', ''), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('APPLICATION_INSIGHTS_NO_STATSBEAT', 'true'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'tkddn647'), ('NAME', 'DESKTOP-6JKVHB4'), ('WSL_INTEROP', '/run/WSL/667_interop'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '1'), ('PATH', '/home/tkddn647/.local/bin:/home/tkddn647/.codex/tmp/arg0/codex-arg0m7rG39:/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/bin/remote-cli:/home/tkddn647/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Python314/Scripts/:/mnt/c/Python314/:/mnt/c/Program Files (x86)/STMicroelectronics/stlink_server:/mnt/c/ST/STM32CubeCLT_1.20.0:/mnt/c/ST/STM32CubeCLT_1.20.0/CMake/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/st-arm-clang/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/Ninja/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/GNU-tools-for-STM32/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STLink-gdb-server/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STM32CubeProgrammer/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2025a/bin:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/cursor/resources/app/bin:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/user/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/user/AppData/Roaming/npm:/snap/bin:/home/tkddn647/.vscode-server/extensions/openai.chatgpt-0.5.79-linux-x64/bin/linux-x86_64'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('CODEX_SANDBOX_NETWORK_DISABLED', '1'), ('LANG', 'en_US.UTF-8'), ('GH_PAGER', 'cat'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ELECTRON_RUN_AS_NODE', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CODEX_THREAD_ID', '019cb703-da4a-7ea1-8a67-5671dd4063bf'), ('GIT_PAGER', 'cat'), ('PWD', '/home/tkddn647/test/build/sim_test'), ('LC_ALL', 'C.UTF-8'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble')]), 'shell': False}
+[1.112919] (-) TimerEvent: {}
+[1.145956] (sim_test) CommandEnded: {'returncode': 0}
+[1.147429] (sim_test) JobProgress: {'identifier': 'sim_test', 'progress': 'install'}
+[1.147968] (sim_test) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/tkddn647/test/build/sim_test'], 'cwd': '/home/tkddn647/test/build/sim_test', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_CI', '1'), ('USER', 'tkddn647'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/out/nls.messages.json","locale":"en","availableLanguages":{}}'), ('VSCODE_WSL_EXT_LOCATION', '/mnt/c/Users/user/.vscode/extensions/ms-vscode-remote.remote-wsl-0.81.9'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('DEBUG', 'release'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/tkddn647'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-6ee32954-5be2-416a-98dc-d4000790885a.sock'), ('ROS_PYTHON_VERSION', '3'), ('PAGER', 'cat'), ('LC_CTYPE', 'C.UTF-8'), ('NO_COLOR', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', ''), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('APPLICATION_INSIGHTS_NO_STATSBEAT', 'true'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'tkddn647'), ('NAME', 'DESKTOP-6JKVHB4'), ('WSL_INTEROP', '/run/WSL/667_interop'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '1'), ('PATH', '/home/tkddn647/.local/bin:/home/tkddn647/.codex/tmp/arg0/codex-arg0m7rG39:/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/bin/remote-cli:/home/tkddn647/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Python314/Scripts/:/mnt/c/Python314/:/mnt/c/Program Files (x86)/STMicroelectronics/stlink_server:/mnt/c/ST/STM32CubeCLT_1.20.0:/mnt/c/ST/STM32CubeCLT_1.20.0/CMake/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/st-arm-clang/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/Ninja/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/GNU-tools-for-STM32/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STLink-gdb-server/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STM32CubeProgrammer/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2025a/bin:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/cursor/resources/app/bin:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/user/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/user/AppData/Roaming/npm:/snap/bin:/home/tkddn647/.vscode-server/extensions/openai.chatgpt-0.5.79-linux-x64/bin/linux-x86_64'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('CODEX_SANDBOX_NETWORK_DISABLED', '1'), ('LANG', 'en_US.UTF-8'), ('GH_PAGER', 'cat'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ELECTRON_RUN_AS_NODE', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CODEX_THREAD_ID', '019cb703-da4a-7ea1-8a67-5671dd4063bf'), ('GIT_PAGER', 'cat'), ('PWD', '/home/tkddn647/test/build/sim_test'), ('LC_ALL', 'C.UTF-8'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble')]), 'shell': False}
+[1.163306] (sim_test) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[1.163946] (sim_test) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[1.164628] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/launch/__pycache__/sim_localization.launch.cpython-310.pyc\n'}
+[1.165324] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/launch/__pycache__/sim_mapping.launch.cpython-310.pyc\n'}
+[1.165453] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/launch/sim_localization.launch.py\n'}
+[1.165538] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/launch/sim_mapping.launch.py\n'}
+[1.166356] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/config/sim_sensor_params.yaml\n'}
+[1.166507] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/config/sim_sensor_params_localization.yaml\n'}
+[1.166600] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/config/sim_sensor_params_mapping.yaml\n'}
+[1.166876] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/lib/sim_test/sim_fake_sensor_publisher.py\n'}
+[1.167426] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/ament_index/resource_index/package_run_dependencies/sim_test\n'}
+[1.167669] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/ament_index/resource_index/parent_prefix_path/sim_test\n'}
+[1.168345] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/environment/ament_prefix_path.sh\n'}
+[1.168598] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/environment/ament_prefix_path.dsv\n'}
+[1.168869] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/environment/path.sh\n'}
+[1.169139] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/environment/path.dsv\n'}
+[1.169834] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/local_setup.bash\n'}
+[1.170003] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/local_setup.sh\n'}
+[1.170166] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/local_setup.zsh\n'}
+[1.170343] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/local_setup.dsv\n'}
+[1.170440] (sim_test) StdoutLine: {'line': b'-- Symlinking: /home/tkddn647/test/install/sim_test/share/sim_test/package.dsv\n'}
+[1.187183] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/ament_index/resource_index/packages/sim_test\n'}
+[1.187703] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/cmake/sim_testConfig.cmake\n'}
+[1.187885] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/cmake/sim_testConfig-version.cmake\n'}
+[1.188307] (sim_test) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sim_test/share/sim_test/package.xml\n'}
+[1.214693] (-) TimerEvent: {}
+[1.324135] (-) TimerEvent: {}
+[1.431745] (-) TimerEvent: {}
+[1.541312] (-) TimerEvent: {}
+[1.650724] (-) TimerEvent: {}
+[1.759166] (-) TimerEvent: {}
+[1.861440] (-) TimerEvent: {}
+[1.965944] (-) TimerEvent: {}
+[2.071006] (-) TimerEvent: {}
+[2.175774] (-) TimerEvent: {}
+[2.280402] (-) TimerEvent: {}
+[2.384135] (-) TimerEvent: {}
+[2.486468] (-) TimerEvent: {}
+[2.591001] (-) TimerEvent: {}
+[2.695468] (-) TimerEvent: {}
+[2.800707] (-) TimerEvent: {}
+[2.906005] (-) TimerEvent: {}
+[3.011138] (-) TimerEvent: {}
+[3.111713] (-) TimerEvent: {}
+[3.212786] (-) TimerEvent: {}
+[3.317121] (-) TimerEvent: {}
+[3.421563] (-) TimerEvent: {}
+[3.523585] (-) TimerEvent: {}
+[3.628167] (-) TimerEvent: {}
+[3.729427] (-) TimerEvent: {}
+[3.833943] (-) TimerEvent: {}
+[3.938420] (-) TimerEvent: {}
+[4.042812] (-) TimerEvent: {}
+[4.146761] (-) TimerEvent: {}
+[4.247377] (-) TimerEvent: {}
+[4.347913] (-) TimerEvent: {}
+[4.450033] (-) TimerEvent: {}
+[4.551995] (-) TimerEvent: {}
+[4.652851] (-) TimerEvent: {}
+[4.754004] (-) TimerEvent: {}
+[4.854510] (-) TimerEvent: {}
+[4.961360] (-) TimerEvent: {}
+[5.070338] (-) TimerEvent: {}
+[5.179298] (-) TimerEvent: {}
+[5.288665] (-) TimerEvent: {}
+[5.393169] (-) TimerEvent: {}
+[5.497624] (-) TimerEvent: {}
+[5.602510] (-) TimerEvent: {}
+[5.707107] (-) TimerEvent: {}
+[5.808552] (-) TimerEvent: {}
+[5.912916] (-) TimerEvent: {}
+[6.017551] (-) TimerEvent: {}
+[6.122282] (-) TimerEvent: {}
+[6.226910] (-) TimerEvent: {}
+[6.329099] (-) TimerEvent: {}
+[6.433734] (-) TimerEvent: {}
+[6.534594] (-) TimerEvent: {}
+[6.639381] (-) TimerEvent: {}
+[6.743767] (-) TimerEvent: {}
+[6.844411] (-) TimerEvent: {}
+[6.946951] (-) TimerEvent: {}
+[7.049654] (-) TimerEvent: {}
+[7.152399] (-) TimerEvent: {}
+[7.254685] (-) TimerEvent: {}
+[7.360895] (-) TimerEvent: {}
+[7.466638] (-) TimerEvent: {}
+[7.572767] (-) TimerEvent: {}
+[7.678815] (-) TimerEvent: {}
+[7.784738] (-) TimerEvent: {}
+[7.890595] (-) TimerEvent: {}
+[7.996474] (-) TimerEvent: {}
+[8.102370] (-) TimerEvent: {}
+[8.202926] (-) TimerEvent: {}
+[8.304228] (-) TimerEvent: {}
+[8.407628] (-) TimerEvent: {}
+[8.509140] (-) TimerEvent: {}
+[8.611787] (-) TimerEvent: {}
+[8.713760] (-) TimerEvent: {}
+[8.816750] (-) TimerEvent: {}
+[8.918312] (-) TimerEvent: {}
+[9.020111] (-) TimerEvent: {}
+[9.121246] (-) TimerEvent: {}
+[9.222066] (-) TimerEvent: {}
+[9.322588] (-) TimerEvent: {}
+[9.425375] (-) TimerEvent: {}
+[9.527532] (-) TimerEvent: {}
+[9.630322] (-) TimerEvent: {}
+[9.732942] (-) TimerEvent: {}
+[9.835018] (-) TimerEvent: {}
+[9.937488] (-) TimerEvent: {}
+[10.040063] (-) TimerEvent: {}
+[10.142561] (-) TimerEvent: {}
+[10.245194] (-) TimerEvent: {}
+[10.346037] (-) TimerEvent: {}
+[10.449321] (-) TimerEvent: {}
+[10.551822] (-) TimerEvent: {}
+[10.652844] (-) TimerEvent: {}
+[10.756069] (-) TimerEvent: {}
+[10.858924] (-) TimerEvent: {}
+[10.961263] (-) TimerEvent: {}
+[11.062634] (-) TimerEvent: {}
+[11.164628] (-) TimerEvent: {}
+[11.266764] (-) TimerEvent: {}
+[11.367979] (-) TimerEvent: {}
+[11.474686] (-) TimerEvent: {}
+[11.579282] (-) TimerEvent: {}
+[11.688091] (-) TimerEvent: {}
+[11.788726] (-) TimerEvent: {}
+[11.893172] (-) TimerEvent: {}
+[11.997975] (-) TimerEvent: {}
+[12.102629] (-) TimerEvent: {}
+[12.205441] (-) TimerEvent: {}
+[12.310851] (-) TimerEvent: {}
+[12.415499] (-) TimerEvent: {}
+[12.520094] (-) TimerEvent: {}
+[12.622960] (-) TimerEvent: {}
+[12.727803] (-) TimerEvent: {}
+[12.833028] (-) TimerEvent: {}
+[12.938358] (-) TimerEvent: {}
+[13.042930] (-) TimerEvent: {}
+[13.147893] (-) TimerEvent: {}
+[13.252486] (-) TimerEvent: {}
+[13.356255] (-) TimerEvent: {}
+[13.461103] (-) TimerEvent: {}
+[13.562592] (-) TimerEvent: {}
+[13.667229] (-) TimerEvent: {}
+[13.771889] (-) TimerEvent: {}
+[13.876465] (-) TimerEvent: {}
+[13.981042] (-) TimerEvent: {}
+[14.085581] (-) TimerEvent: {}
+[14.186421] (-) TimerEvent: {}
+[14.287043] (-) TimerEvent: {}
+[14.391403] (-) TimerEvent: {}
+[14.498039] (-) TimerEvent: {}
+[14.600778] (-) TimerEvent: {}
+[14.706966] (-) TimerEvent: {}
+[14.813537] (-) TimerEvent: {}
+[14.920068] (-) TimerEvent: {}
+[15.026450] (-) TimerEvent: {}
+[15.130626] (-) TimerEvent: {}
+[15.237051] (-) TimerEvent: {}
+[15.338047] (-) TimerEvent: {}
+[15.442119] (-) TimerEvent: {}
+[15.542677] (-) TimerEvent: {}
+[15.648391] (-) TimerEvent: {}
+[15.754287] (-) TimerEvent: {}
+[15.857309] (-) TimerEvent: {}
+[15.963557] (-) TimerEvent: {}
+[16.069952] (-) TimerEvent: {}
+[16.176520] (-) TimerEvent: {}
+[16.283295] (-) TimerEvent: {}
+[16.388412] (-) TimerEvent: {}
+[16.494812] (-) TimerEvent: {}
+[16.597483] (-) TimerEvent: {}
+[16.698271] (-) TimerEvent: {}
+[16.803997] (-) TimerEvent: {}
+[16.910384] (-) TimerEvent: {}
+[17.016406] (-) TimerEvent: {}
+[17.119296] (-) TimerEvent: {}
+[17.221581] (-) TimerEvent: {}
+[17.326951] (-) TimerEvent: {}
+[17.433306] (-) TimerEvent: {}
+[17.538994] (-) TimerEvent: {}
+[17.643417] (-) TimerEvent: {}
+[17.749110] (-) TimerEvent: {}
+[17.850188] (-) TimerEvent: {}
+[17.955986] (-) TimerEvent: {}
+[18.061640] (-) TimerEvent: {}
+[18.166383] (-) TimerEvent: {}
+[18.272495] (-) TimerEvent: {}
+[18.375728] (-) TimerEvent: {}
+[18.482513] (-) TimerEvent: {}
+[18.587232] (-) TimerEvent: {}
+[18.693588] (-) TimerEvent: {}
+[18.799396] (-) TimerEvent: {}
+[18.905026] (-) TimerEvent: {}
+[19.010698] (-) TimerEvent: {}
+[19.116349] (-) TimerEvent: {}
+[19.217214] (-) TimerEvent: {}
+[19.319768] (-) TimerEvent: {}
+[19.422489] (-) TimerEvent: {}
+[19.525392] (-) TimerEvent: {}
+[19.627777] (-) TimerEvent: {}
+[19.730314] (-) TimerEvent: {}
+[19.832860] (-) TimerEvent: {}
+[19.935155] (-) TimerEvent: {}
+[20.037963] (-) TimerEvent: {}
+[20.140304] (-) TimerEvent: {}
+[20.242542] (-) TimerEvent: {}
+[20.344886] (-) TimerEvent: {}
+[20.448120] (-) TimerEvent: {}
+[20.550598] (-) TimerEvent: {}
+[20.651159] (-) TimerEvent: {}
+[20.752964] (-) TimerEvent: {}
+[20.855152] (-) TimerEvent: {}
+[20.956999] (-) TimerEvent: {}
+[21.058845] (-) TimerEvent: {}
+[21.160411] (-) TimerEvent: {}
+[21.262092] (-) TimerEvent: {}
+[21.364108] (-) TimerEvent: {}
+[21.466565] (-) TimerEvent: {}
+[21.568342] (-) TimerEvent: {}
+[21.669454] (-) TimerEvent: {}
+[21.778002] (-) TimerEvent: {}
+[21.886932] (-) TimerEvent: {}
+[21.993290] (-) TimerEvent: {}
+[22.102184] (-) TimerEvent: {}
+[22.211067] (-) TimerEvent: {}
+[22.319902] (-) TimerEvent: {}
+[22.422008] (-) TimerEvent: {}
+[22.525249] (-) TimerEvent: {}
+[22.628065] (-) TimerEvent: {}
+[22.730700] (-) TimerEvent: {}
+[22.832781] (-) TimerEvent: {}
+[22.935518] (-) TimerEvent: {}
+[23.037960] (-) TimerEvent: {}
+[23.140097] (-) TimerEvent: {}
+[23.242217] (-) TimerEvent: {}
+[23.343341] (-) TimerEvent: {}
+[23.446350] (-) TimerEvent: {}
+[23.549105] (-) TimerEvent: {}
+[23.651489] (-) TimerEvent: {}
+[23.754457] (-) TimerEvent: {}
+[23.856536] (-) TimerEvent: {}
+[23.959020] (-) TimerEvent: {}
+[24.059562] (-) TimerEvent: {}
+[24.161073] (-) TimerEvent: {}
+[24.262581] (-) TimerEvent: {}
+[24.365003] (-) TimerEvent: {}
+[24.466929] (-) TimerEvent: {}
+[24.569285] (-) TimerEvent: {}
+[24.671175] (-) TimerEvent: {}
+[24.773548] (-) TimerEvent: {}
+[24.875722] (-) TimerEvent: {}
+[24.978148] (-) TimerEvent: {}
+[25.080178] (-) TimerEvent: {}
+[25.183020] (-) TimerEvent: {}
+[25.285493] (-) TimerEvent: {}
+[25.388277] (-) TimerEvent: {}
+[25.490506] (-) TimerEvent: {}
+[25.592825] (-) TimerEvent: {}
+[25.694557] (-) TimerEvent: {}
+[25.796845] (-) TimerEvent: {}
+[25.898761] (-) TimerEvent: {}
+[26.001235] (-) TimerEvent: {}
+[26.103255] (-) TimerEvent: {}
+[26.205621] (-) TimerEvent: {}
+[26.307750] (-) TimerEvent: {}
+[26.408425] (-) TimerEvent: {}
+[26.510922] (-) TimerEvent: {}
+[26.611564] (-) TimerEvent: {}
+[26.712728] (-) TimerEvent: {}
+[26.815099] (-) TimerEvent: {}
+[26.917524] (-) TimerEvent: {}
+[27.018604] (-) TimerEvent: {}
+[27.121259] (-) TimerEvent: {}
+[27.223695] (-) TimerEvent: {}
+[27.325696] (-) TimerEvent: {}
+[27.428059] (-) TimerEvent: {}
+[27.529925] (-) TimerEvent: {}
+[27.632319] (-) TimerEvent: {}
+[27.735053] (-) TimerEvent: {}
+[27.837493] (-) TimerEvent: {}
+[27.939734] (-) TimerEvent: {}
+[28.042202] (-) TimerEvent: {}
+[28.145227] (-) TimerEvent: {}
+[28.247762] (-) TimerEvent: {}
+[28.348354] (-) TimerEvent: {}
+[28.450618] (-) TimerEvent: {}
+[28.552669] (-) TimerEvent: {}
+[28.655343] (-) TimerEvent: {}
+[28.758467] (-) TimerEvent: {}
+[28.861237] (-) TimerEvent: {}
+[28.964292] (-) TimerEvent: {}
+[29.065009] (-) TimerEvent: {}
+[29.169433] (-) TimerEvent: {}
+[29.274357] (-) TimerEvent: {}
+[29.378633] (-) TimerEvent: {}
+[29.482920] (-) TimerEvent: {}
+[29.587124] (-) TimerEvent: {}
+[29.687966] (-) TimerEvent: {}
+[29.792329] (-) TimerEvent: {}
+[29.896661] (-) TimerEvent: {}
+[30.001389] (-) TimerEvent: {}
+[30.106200] (-) TimerEvent: {}
+[30.210650] (-) TimerEvent: {}
+[30.315473] (-) TimerEvent: {}
+[30.420022] (-) TimerEvent: {}
+[30.524264] (-) TimerEvent: {}
+[30.628816] (-) TimerEvent: {}
+[30.647594] (sim_test) CommandEnded: {'returncode': 0}
+[30.678223] (sim_test) JobEnded: {'identifier': 'sim_test', 'rc': 0}
+[30.679756] (-) EventReactorShutdown: {}

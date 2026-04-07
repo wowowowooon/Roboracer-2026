@@ -1,0 +1,18 @@
+[INFO] [1773380827.075591833] [map_auto_saver]: Periodic auto-save enabled: every 30.0s -> /home/tkddn647/test/maps
+[INFO] [1773380857.068377958] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/playground_wide_sim_fixed_20260313_144737.pbstream
+[INFO] [1773380857.072395416] [map_auto_saver]: Map saved successfully.
+[INFO] [1773380887.073873241] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/playground_wide_sim_fixed_20260313_144807.pbstream
+[INFO] [1773380887.076624639] [map_auto_saver]: Map saved successfully.
+[INFO] [1773380917.067903834] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/playground_wide_sim_fixed_20260313_144837.pbstream
+[INFO] [1773380917.070471933] [map_auto_saver]: Map saved successfully.
+[INFO] [1773380947.129240798] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/playground_wide_sim_fixed_20260313_144907.pbstream
+[INFO] [1773380947.131802333] [map_auto_saver]: Map saved successfully.
+[INFO] [1773380977.068209885] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/playground_wide_sim_fixed_20260313_144937.pbstream
+[INFO] [1773380977.070834958] [map_auto_saver]: Map saved successfully.
+[INFO] [1773381007.070568781] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/playground_wide_sim_fixed_20260313_145007.pbstream
+[INFO] [1773381007.072789854] [map_auto_saver]: Map saved successfully.
+[INFO] [1773381037.068150872] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/playground_wide_sim_fixed_20260313_145037.pbstream
+[INFO] [1773381037.070898754] [map_auto_saver]: Map saved successfully.
+[INFO] [1773381067.081809958] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/playground_wide_sim_fixed_20260313_145107.pbstream
+[INFO] [1773381067.113328210] [map_auto_saver]: Map saved successfully.
+[INFO] [1773381074.912911163] [map_auto_saver]: KeyboardInterrupt received. Attempting shutdown save...

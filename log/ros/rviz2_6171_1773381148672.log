@@ -1,0 +1,371 @@
+[INFO] [1773381150.801421780] [rviz2]: Stereo is NOT SUPPORTED
+[INFO] [1773381150.801568109] [rviz2]: OpenGl version: 4.2 (GLSL 4.2)
+[INFO] [1773381150.908538693] [rviz2]: Stereo is NOT SUPPORTED
+[INFO] [1773381156.494451806] [rviz2]: Trying to create a map of size 339 x 348 using 1 swatches
+[ERROR] [1773381156.523044369] [rviz2]: Vertex Program:rviz/glsl120/indexed_8bit_image.vert Fragment Program:rviz/glsl120/indexed_8bit_image.frag GLSL link result : 
+active samplers with a different type refer to the same texture image unit
+[INFO] [1773381156.532238580] [rviz2]: Trying to create a map of size 344 x 354 using 1 swatches
+[INFO] [1773381156.559550147] [rviz2]: Trying to create a map of size 352 x 365 using 1 swatches
+[INFO] [1773381156.597566130] [rviz2]: Trying to create a map of size 357 x 370 using 1 swatches
+[INFO] [1773381156.625976224] [rviz2]: Trying to create a map of size 361 x 376 using 1 swatches
+[INFO] [1773381156.658183919] [rviz2]: Trying to create a map of size 365 x 381 using 1 swatches
+[INFO] [1773381157.680720277] [rviz2]: Trying to create a map of size 369 x 386 using 1 swatches
+[INFO] [1773381158.766209787] [rviz2]: Trying to create a map of size 374 x 392 using 1 swatches
+[INFO] [1773381159.856434237] [rviz2]: Trying to create a map of size 377 x 397 using 1 swatches
+[INFO] [1773381160.943034452] [rviz2]: Trying to create a map of size 381 x 403 using 1 swatches
+[INFO] [1773381162.030919309] [rviz2]: Trying to create a map of size 385 x 407 using 1 swatches
+[INFO] [1773381163.119873022] [rviz2]: Trying to create a map of size 388 x 412 using 1 swatches
+[INFO] [1773381164.174729140] [rviz2]: Trying to create a map of size 392 x 417 using 1 swatches
+[INFO] [1773381165.264645088] [rviz2]: Trying to create a map of size 395 x 422 using 1 swatches
+[INFO] [1773381166.352316477] [rviz2]: Trying to create a map of size 398 x 427 using 1 swatches
+[INFO] [1773381167.444764392] [rviz2]: Trying to create a map of size 402 x 432 using 1 swatches
+[INFO] [1773381168.529470075] [rviz2]: Trying to create a map of size 405 x 437 using 1 swatches
+[INFO] [1773381169.710644644] [rviz2]: Trying to create a map of size 408 x 442 using 1 swatches
+[INFO] [1773381170.702253120] [rviz2]: Trying to create a map of size 410 x 447 using 1 swatches
+[INFO] [1773381171.760464563] [rviz2]: Trying to create a map of size 413 x 453 using 1 swatches
+[INFO] [1773381172.976175473] [rviz2]: Trying to create a map of size 415 x 458 using 1 swatches
+[INFO] [1773381174.032594118] [rviz2]: Trying to create a map of size 418 x 464 using 1 swatches
+[INFO] [1773381175.024084342] [rviz2]: Trying to create a map of size 420 x 469 using 1 swatches
+[INFO] [1773381176.110314467] [rviz2]: Trying to create a map of size 422 x 475 using 1 swatches
+[INFO] [1773381177.199564532] [rviz2]: Trying to create a map of size 424 x 480 using 1 swatches
+[INFO] [1773381178.291748574] [rviz2]: Trying to create a map of size 426 x 486 using 1 swatches
+[INFO] [1773381179.474949922] [rviz2]: Trying to create a map of size 427 x 492 using 1 swatches
+[INFO] [1773381180.432610809] [rviz2]: Trying to create a map of size 428 x 498 using 1 swatches
+[INFO] [1773381181.520100315] [rviz2]: Trying to create a map of size 430 x 504 using 1 swatches
+[INFO] [1773381180.207138818] [rviz2]: Trying to create a map of size 431 x 510 using 1 swatches
+[INFO] [1773381181.357692468] [rviz2]: Trying to create a map of size 431 x 512 using 1 swatches
+[INFO] [1773381183.439886988] [rviz2]: Trying to create a map of size 432 x 513 using 1 swatches
+[INFO] [1773381184.525960479] [rviz2]: Trying to create a map of size 433 x 519 using 1 swatches
+[INFO] [1773381185.586824843] [rviz2]: Trying to create a map of size 433 x 525 using 1 swatches
+[INFO] [1773381186.671263866] [rviz2]: Trying to create a map of size 434 x 531 using 1 swatches
+[INFO] [1773381187.758418140] [rviz2]: Trying to create a map of size 435 x 537 using 1 swatches
+[INFO] [1773381188.847908408] [rviz2]: Trying to create a map of size 435 x 543 using 1 swatches
+[INFO] [1773381189.934712430] [rviz2]: Trying to create a map of size 435 x 549 using 1 swatches
+[INFO] [1773381190.991912053] [rviz2]: Trying to create a map of size 435 x 555 using 1 swatches
+[INFO] [1773381192.110923800] [rviz2]: Trying to create a map of size 435 x 561 using 1 swatches
+[INFO] [1773381193.165532939] [rviz2]: Trying to create a map of size 435 x 567 using 1 swatches
+[INFO] [1773381194.252985930] [rviz2]: Trying to create a map of size 435 x 573 using 1 swatches
+[INFO] [1773381195.343541658] [rviz2]: Trying to create a map of size 435 x 579 using 1 swatches
+[INFO] [1773381196.435048281] [rviz2]: Trying to create a map of size 435 x 585 using 1 swatches
+[INFO] [1773381197.518983363] [rviz2]: Trying to create a map of size 435 x 591 using 1 swatches
+[INFO] [1773381198.574387350] [rviz2]: Trying to create a map of size 435 x 597 using 1 swatches
+[INFO] [1773381199.663281665] [rviz2]: Trying to create a map of size 435 x 602 using 1 swatches
+[INFO] [1773381200.846461366] [rviz2]: Trying to create a map of size 435 x 608 using 1 swatches
+[INFO] [1773381201.839289258] [rviz2]: Trying to create a map of size 435 x 615 using 1 swatches
+[INFO] [1773381202.924849417] [rviz2]: Trying to create a map of size 435 x 621 using 1 swatches
+[INFO] [1773381204.013917866] [rviz2]: Trying to create a map of size 435 x 626 using 1 swatches
+[INFO] [1773381205.101223852] [rviz2]: Trying to create a map of size 435 x 633 using 1 swatches
+[INFO] [1773381206.159936376] [rviz2]: Trying to create a map of size 435 x 639 using 1 swatches
+[INFO] [1773381207.246109263] [rviz2]: Trying to create a map of size 435 x 645 using 1 swatches
+[INFO] [1773381208.334090617] [rviz2]: Trying to create a map of size 435 x 651 using 1 swatches
+[INFO] [1773381209.423747563] [rviz2]: Trying to create a map of size 435 x 657 using 1 swatches
+[INFO] [1773381210.509722295] [rviz2]: Trying to create a map of size 435 x 662 using 1 swatches
+[INFO] [1773381211.601942414] [rviz2]: Trying to create a map of size 435 x 668 using 1 swatches
+[INFO] [1773381210.137965895] [rviz2]: Trying to create a map of size 435 x 674 using 1 swatches
+[INFO] [1773381211.323424325] [rviz2]: Trying to create a map of size 435 x 676 using 1 swatches
+[INFO] [1773381213.372087214] [rviz2]: Trying to create a map of size 435 x 678 using 1 swatches
+[INFO] [1773381214.460881148] [rviz2]: Trying to create a map of size 435 x 683 using 1 swatches
+[INFO] [1773381215.545116319] [rviz2]: Trying to create a map of size 435 x 689 using 1 swatches
+[INFO] [1773381216.635129024] [rviz2]: Trying to create a map of size 435 x 694 using 1 swatches
+[INFO] [1773381217.722349506] [rviz2]: Trying to create a map of size 435 x 700 using 1 swatches
+[INFO] [1773381218.813232965] [rviz2]: Trying to create a map of size 435 x 705 using 1 swatches
+[INFO] [1773381219.867083504] [rviz2]: Trying to create a map of size 435 x 711 using 1 swatches
+[INFO] [1773381220.954725392] [rviz2]: Trying to create a map of size 435 x 717 using 1 swatches
+[INFO] [1773381222.041501982] [rviz2]: Trying to create a map of size 435 x 722 using 1 swatches
+[INFO] [1773381223.131354031] [rviz2]: Trying to create a map of size 435 x 727 using 1 swatches
+[INFO] [1773381224.220406451] [rviz2]: Trying to create a map of size 435 x 733 using 1 swatches
+[INFO] [1773381225.307783275] [rviz2]: Trying to create a map of size 435 x 738 using 1 swatches
+[INFO] [1773381226.393517334] [rviz2]: Trying to create a map of size 435 x 744 using 1 swatches
+[INFO] [1773381227.449590517] [rviz2]: Trying to create a map of size 435 x 749 using 1 swatches
+[INFO] [1773381228.537548314] [rviz2]: Trying to create a map of size 435 x 755 using 1 swatches
+[INFO] [1773381229.627732389] [rviz2]: Trying to create a map of size 435 x 760 using 1 swatches
+[INFO] [1773381230.713908898] [rviz2]: Trying to create a map of size 435 x 766 using 1 swatches
+[INFO] [1773381231.802197869] [rviz2]: Trying to create a map of size 435 x 771 using 1 swatches
+[INFO] [1773381232.891091248] [rviz2]: Trying to create a map of size 435 x 777 using 1 swatches
+[INFO] [1773381233.980010237] [rviz2]: Trying to create a map of size 435 x 782 using 1 swatches
+[INFO] [1773381235.034148184] [rviz2]: Trying to create a map of size 435 x 788 using 1 swatches
+[INFO] [1773381236.125264344] [rviz2]: Trying to create a map of size 435 x 793 using 1 swatches
+[INFO] [1773381237.210517093] [rviz2]: Trying to create a map of size 435 x 799 using 1 swatches
+[INFO] [1773381238.299162101] [rviz2]: Trying to create a map of size 435 x 804 using 1 swatches
+[INFO] [1773381239.387511215] [rviz2]: Trying to create a map of size 435 x 810 using 1 swatches
+[INFO] [1773381240.476389711] [rviz2]: Trying to create a map of size 435 x 815 using 1 swatches
+[INFO] [1773381241.531074234] [rviz2]: Trying to create a map of size 435 x 821 using 1 swatches
+[INFO] [1773381239.995595682] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381242.409 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773381240.160992098] [rviz2]: Trying to create a map of size 435 x 826 using 1 swatches
+[INFO] [1773381241.212592558] [rviz2]: Trying to create a map of size 435 x 828 using 1 swatches
+[INFO] [1773381243.388427739] [rviz2]: Trying to create a map of size 435 x 830 using 1 swatches
+[INFO] [1773381244.476108656] [rviz2]: Trying to create a map of size 435 x 835 using 1 swatches
+[INFO] [1773381245.563635427] [rviz2]: Trying to create a map of size 435 x 838 using 1 swatches
+[INFO] [1773381248.795794861] [rviz2]: Trying to create a map of size 435 x 842 using 1 swatches
+[INFO] [1773381249.884342730] [rviz2]: Trying to create a map of size 435 x 846 using 1 swatches
+[INFO] [1773381254.204370207] [rviz2]: Trying to create a map of size 435 x 847 using 1 swatches
+[INFO] [1773381255.291220755] [rviz2]: Trying to create a map of size 435 x 849 using 1 swatches
+[INFO] [1773381256.379137552] [rviz2]: Trying to create a map of size 435 x 852 using 1 swatches
+[INFO] [1773381257.473035435] [rviz2]: Trying to create a map of size 435 x 855 using 1 swatches
+[INFO] [1773381258.556428001] [rviz2]: Trying to create a map of size 435 x 860 using 1 swatches
+[INFO] [1773381259.643814630] [rviz2]: Trying to create a map of size 435 x 865 using 1 swatches
+[INFO] [1773381260.731319387] [rviz2]: Trying to create a map of size 435 x 871 using 1 swatches
+[INFO] [1773381261.793352938] [rviz2]: Trying to create a map of size 435 x 876 using 1 swatches
+[INFO] [1773381262.882002533] [rviz2]: Trying to create a map of size 435 x 882 using 1 swatches
+[INFO] [1773381263.964989111] [rviz2]: Trying to create a map of size 435 x 887 using 1 swatches
+[INFO] [1773381265.052384714] [rviz2]: Trying to create a map of size 435 x 892 using 1 swatches
+[INFO] [1773381266.140234633] [rviz2]: Trying to create a map of size 435 x 897 using 1 swatches
+[INFO] [1773381267.229650675] [rviz2]: Trying to create a map of size 435 x 903 using 1 swatches
+[INFO] [1773381268.285954278] [rviz2]: Trying to create a map of size 435 x 909 using 1 swatches
+[INFO] [1773381269.499768282] [rviz2]: Trying to create a map of size 435 x 914 using 1 swatches
+[INFO] [1773381270.460356088] [rviz2]: Trying to create a map of size 435 x 920 using 1 swatches
+[INFO] [1773381271.548991184] [rviz2]: Trying to create a map of size 435 x 926 using 1 swatches
+[INFO] [1773381270.180418732] [rviz2]: Trying to create a map of size 435 x 931 using 1 swatches
+[INFO] [1773381271.239454811] [rviz2]: Trying to create a map of size 435 x 934 using 1 swatches
+[INFO] [1773381273.381627897] [rviz2]: Trying to create a map of size 435 x 935 using 1 swatches
+[INFO] [1773381274.473691095] [rviz2]: Trying to create a map of size 435 x 941 using 1 swatches
+[INFO] [1773381275.559568977] [rviz2]: Trying to create a map of size 435 x 947 using 1 swatches
+[INFO] [1773381276.646125546] [rviz2]: Trying to create a map of size 435 x 952 using 1 swatches
+[INFO] [1773381277.731765135] [rviz2]: Trying to create a map of size 435 x 958 using 1 swatches
+[INFO] [1773381278.819795926] [rviz2]: Trying to create a map of size 435 x 963 using 1 swatches
+[INFO] [1773381280.004465185] [rviz2]: Trying to create a map of size 435 x 968 using 1 swatches
+[INFO] [1773381280.966143895] [rviz2]: Trying to create a map of size 437 x 974 using 1 swatches
+[INFO] [1773381282.052241445] [rviz2]: Trying to create a map of size 440 x 980 using 1 swatches
+[INFO] [1773381283.140358363] [rviz2]: Trying to create a map of size 443 x 985 using 1 swatches
+[INFO] [1773381284.228105344] [rviz2]: Trying to create a map of size 446 x 990 using 1 swatches
+[INFO] [1773381285.316942258] [rviz2]: Trying to create a map of size 450 x 996 using 1 swatches
+[INFO] [1773381286.405660856] [rviz2]: Trying to create a map of size 454 x 1002 using 1 swatches
+[INFO] [1773381287.494603224] [rviz2]: Trying to create a map of size 456 x 1008 using 1 swatches
+[INFO] [1773381288.548025704] [rviz2]: Trying to create a map of size 460 x 1013 using 1 swatches
+[INFO] [1773381289.636021096] [rviz2]: Trying to create a map of size 464 x 1018 using 1 swatches
+[INFO] [1773381290.725348056] [rviz2]: Trying to create a map of size 467 x 1023 using 1 swatches
+[INFO] [1773381291.813131436] [rviz2]: Trying to create a map of size 471 x 1028 using 1 swatches
+[INFO] [1773381292.899157769] [rviz2]: Trying to create a map of size 476 x 1034 using 1 swatches
+[INFO] [1773381293.989838018] [rviz2]: Trying to create a map of size 479 x 1039 using 1 swatches
+[INFO] [1773381295.044704891] [rviz2]: Trying to create a map of size 484 x 1044 using 1 swatches
+[INFO] [1773381296.259589074] [rviz2]: Trying to create a map of size 489 x 1049 using 1 swatches
+[INFO] [1773381297.221340155] [rviz2]: Trying to create a map of size 494 x 1054 using 1 swatches
+[INFO] [1773381298.309079127] [rviz2]: Trying to create a map of size 497 x 1058 using 1 swatches
+[INFO] [1773381299.397114844] [rviz2]: Trying to create a map of size 502 x 1063 using 1 swatches
+[INFO] [1773381300.484828407] [rviz2]: Trying to create a map of size 507 x 1068 using 1 swatches
+[INFO] [1773381301.576638231] [rviz2]: Trying to create a map of size 511 x 1072 using 1 swatches
+[INFO] [1773381300.204037771] [rviz2]: Trying to create a map of size 516 x 1077 using 1 swatches
+[INFO] [1773381301.260415260] [rviz2]: Trying to create a map of size 518 x 1079 using 1 swatches
+[INFO] [1773381303.404353620] [rviz2]: Trying to create a map of size 519 x 1080 using 1 swatches
+[INFO] [1773381304.501458846] [rviz2]: Trying to create a map of size 524 x 1085 using 1 swatches
+[INFO] [1773381305.578336716] [rviz2]: Trying to create a map of size 530 x 1089 using 1 swatches
+[INFO] [1773381306.668302489] [rviz2]: Trying to create a map of size 535 x 1094 using 1 swatches
+[INFO] [1773381307.754758852] [rviz2]: Trying to create a map of size 539 x 1098 using 1 swatches
+[INFO] [1773381308.815083432] [rviz2]: Trying to create a map of size 544 x 1102 using 1 swatches
+[INFO] [1773381309.901313664] [rviz2]: Trying to create a map of size 549 x 1107 using 1 swatches
+[INFO] [1773381310.987461869] [rviz2]: Trying to create a map of size 555 x 1111 using 1 swatches
+[INFO] [1773381312.074702911] [rviz2]: Trying to create a map of size 560 x 1115 using 1 swatches
+[INFO] [1773381313.167187244] [rviz2]: Trying to create a map of size 565 x 1119 using 1 swatches
+[INFO] [1773381314.253636130] [rviz2]: Trying to create a map of size 570 x 1123 using 1 swatches
+[INFO] [1773381315.341383662] [rviz2]: Trying to create a map of size 575 x 1127 using 1 swatches
+[INFO] [1773381316.395949817] [rviz2]: Trying to create a map of size 581 x 1131 using 1 swatches
+[INFO] [1773381317.516121540] [rviz2]: Trying to create a map of size 586 x 1134 using 1 swatches
+[INFO] [1773381318.571202633] [rviz2]: Trying to create a map of size 591 x 1138 using 1 swatches
+[INFO] [1773381319.661166540] [rviz2]: Trying to create a map of size 597 x 1141 using 1 swatches
+[INFO] [1773381320.750421187] [rviz2]: Trying to create a map of size 602 x 1144 using 1 swatches
+[INFO] [1773381321.836831447] [rviz2]: Trying to create a map of size 608 x 1147 using 1 swatches
+[INFO] [1773381322.892167963] [rviz2]: Trying to create a map of size 613 x 1150 using 1 swatches
+[INFO] [1773381324.012408498] [rviz2]: Trying to create a map of size 619 x 1153 using 1 swatches
+[INFO] [1773381325.067825318] [rviz2]: Trying to create a map of size 625 x 1156 using 1 swatches
+[INFO] [1773381326.157986492] [rviz2]: Trying to create a map of size 630 x 1159 using 1 swatches
+[INFO] [1773381327.242988692] [rviz2]: Trying to create a map of size 635 x 1161 using 1 swatches
+[INFO] [1773381328.331221624] [rviz2]: Trying to create a map of size 641 x 1164 using 1 swatches
+[INFO] [1773381329.421240474] [rviz2]: Trying to create a map of size 647 x 1166 using 1 swatches
+[INFO] [1773381330.477278821] [rviz2]: Trying to create a map of size 652 x 1168 using 1 swatches
+[INFO] [1773381331.563447811] [rviz2]: Trying to create a map of size 658 x 1170 using 1 swatches
+[INFO] [1773381330.194931409] [rviz2]: Trying to create a map of size 664 x 1171 using 1 swatches
+[INFO] [1773381331.252602239] [rviz2]: Trying to create a map of size 666 x 1172 using 1 swatches
+[INFO] [1773381333.427150488] [rviz2]: Trying to create a map of size 671 x 1173 using 1 swatches
+[INFO] [1773381334.516567415] [rviz2]: Trying to create a map of size 677 x 1174 using 1 swatches
+[INFO] [1773381335.603313706] [rviz2]: Trying to create a map of size 683 x 1175 using 1 swatches
+[INFO] [1773381336.689758974] [rviz2]: Trying to create a map of size 689 x 1176 using 1 swatches
+[INFO] [1773381337.747672389] [rviz2]: Trying to create a map of size 695 x 1177 using 1 swatches
+[INFO] [1773381338.834592444] [rviz2]: Trying to create a map of size 701 x 1177 using 1 swatches
+[INFO] [1773381339.922798447] [rviz2]: Trying to create a map of size 707 x 1178 using 1 swatches
+[INFO] [1773381341.010157293] [rviz2]: Trying to create a map of size 712 x 1178 using 1 swatches
+[INFO] [1773381342.098422063] [rviz2]: Trying to create a map of size 718 x 1178 using 1 swatches
+[INFO] [1773381343.188119755] [rviz2]: Trying to create a map of size 724 x 1179 using 1 swatches
+[INFO] [1773381344.275825638] [rviz2]: Trying to create a map of size 730 x 1179 using 1 swatches
+[INFO] [1773381345.329891156] [rviz2]: Trying to create a map of size 736 x 1179 using 1 swatches
+[INFO] [1773381346.419338696] [rviz2]: Trying to create a map of size 741 x 1179 using 1 swatches
+[INFO] [1773381347.507397536] [rviz2]: Trying to create a map of size 748 x 1179 using 1 swatches
+[INFO] [1773381348.595758586] [rviz2]: Trying to create a map of size 754 x 1179 using 1 swatches
+[INFO] [1773381349.682781182] [rviz2]: Trying to create a map of size 760 x 1179 using 1 swatches
+[INFO] [1773381350.770345515] [rviz2]: Trying to create a map of size 766 x 1179 using 1 swatches
+[INFO] [1773381351.860362697] [rviz2]: Trying to create a map of size 772 x 1179 using 1 swatches
+[INFO] [1773381352.916735309] [rviz2]: Trying to create a map of size 778 x 1179 using 1 swatches
+[INFO] [1773381354.003076253] [rviz2]: Trying to create a map of size 784 x 1179 using 1 swatches
+[INFO] [1773381355.092243418] [rviz2]: Trying to create a map of size 789 x 1179 using 1 swatches
+[INFO] [1773381356.178077593] [rviz2]: Trying to create a map of size 795 x 1179 using 1 swatches
+[INFO] [1773381357.271798846] [rviz2]: Trying to create a map of size 801 x 1179 using 1 swatches
+[INFO] [1773381358.451915194] [rviz2]: Trying to create a map of size 806 x 1179 using 1 swatches
+[INFO] [1773381359.410878947] [rviz2]: Trying to create a map of size 812 x 1179 using 1 swatches
+[INFO] [1773381360.498760467] [rviz2]: Trying to create a map of size 817 x 1179 using 1 swatches
+[INFO] [1773381361.587739314] [rviz2]: Trying to create a map of size 823 x 1179 using 1 swatches
+[INFO] [1773381360.181962383] [rviz2]: Trying to create a map of size 828 x 1179 using 1 swatches
+[INFO] [1773381361.272532896] [rviz2]: Trying to create a map of size 831 x 1179 using 1 swatches
+[INFO] [1773381363.410120299] [rviz2]: Trying to create a map of size 833 x 1179 using 1 swatches
+[INFO] [1773381364.498843557] [rviz2]: Trying to create a map of size 839 x 1179 using 1 swatches
+[INFO] [1773381365.586937873] [rviz2]: Trying to create a map of size 844 x 1179 using 1 swatches
+[INFO] [1773381366.674403786] [rviz2]: Trying to create a map of size 849 x 1179 using 1 swatches
+[INFO] [1773381367.762322824] [rviz2]: Trying to create a map of size 855 x 1179 using 1 swatches
+[INFO] [1773381368.849796104] [rviz2]: Trying to create a map of size 859 x 1179 using 1 swatches
+[INFO] [1773381369.940377857] [rviz2]: Trying to create a map of size 865 x 1179 using 1 swatches
+[INFO] [1773381371.025887982] [rviz2]: Trying to create a map of size 869 x 1179 using 1 swatches
+[INFO] [1773381372.083351920] [rviz2]: Trying to create a map of size 875 x 1179 using 1 swatches
+[INFO] [1773381373.169967281] [rviz2]: Trying to create a map of size 879 x 1179 using 1 swatches
+[INFO] [1773381374.257364129] [rviz2]: Trying to create a map of size 884 x 1179 using 1 swatches
+[INFO] [1773381375.345520845] [rviz2]: Trying to create a map of size 888 x 1179 using 1 swatches
+[INFO] [1773381376.437103233] [rviz2]: Trying to create a map of size 893 x 1179 using 1 swatches
+[INFO] [1773381377.489841824] [rviz2]: Trying to create a map of size 897 x 1179 using 1 swatches
+[INFO] [1773381378.580535743] [rviz2]: Trying to create a map of size 901 x 1179 using 1 swatches
+[INFO] [1773381379.667246146] [rviz2]: Trying to create a map of size 905 x 1179 using 1 swatches
+[INFO] [1773381380.756270818] [rviz2]: Trying to create a map of size 910 x 1179 using 1 swatches
+[INFO] [1773381381.843121759] [rviz2]: Trying to create a map of size 914 x 1179 using 1 swatches
+[INFO] [1773381382.929298721] [rviz2]: Trying to create a map of size 918 x 1179 using 1 swatches
+[INFO] [1773381384.021332517] [rviz2]: Trying to create a map of size 921 x 1179 using 1 swatches
+[INFO] [1773381385.108747610] [rviz2]: Trying to create a map of size 925 x 1179 using 1 swatches
+[INFO] [1773381386.162071368] [rviz2]: Trying to create a map of size 929 x 1179 using 1 swatches
+[INFO] [1773381387.251627247] [rviz2]: Trying to create a map of size 933 x 1179 using 1 swatches
+[INFO] [1773381388.340522278] [rviz2]: Trying to create a map of size 936 x 1179 using 1 swatches
+[INFO] [1773381389.427454119] [rviz2]: Trying to create a map of size 940 x 1179 using 1 swatches
+[INFO] [1773381390.517626634] [rviz2]: Trying to create a map of size 943 x 1179 using 1 swatches
+[INFO] [1773381391.607595218] [rviz2]: Trying to create a map of size 946 x 1179 using 1 swatches
+[INFO] [1773381390.199688442] [rviz2]: Trying to create a map of size 948 x 1179 using 1 swatches
+[INFO] [1773381391.287396547] [rviz2]: Trying to create a map of size 950 x 1179 using 1 swatches
+[INFO] [1773381393.431485016] [rviz2]: Trying to create a map of size 951 x 1179 using 1 swatches
+[INFO] [1773381394.522083619] [rviz2]: Trying to create a map of size 953 x 1179 using 1 swatches
+[INFO] [1773381395.609848152] [rviz2]: Trying to create a map of size 956 x 1179 using 1 swatches
+[INFO] [1773381396.696604053] [rviz2]: Trying to create a map of size 958 x 1179 using 1 swatches
+[INFO] [1773381397.752316560] [rviz2]: Trying to create a map of size 960 x 1179 using 1 swatches
+[INFO] [1773381398.839279730] [rviz2]: Trying to create a map of size 962 x 1179 using 1 swatches
+[INFO] [1773381400.057517600] [rviz2]: Trying to create a map of size 965 x 1179 using 1 swatches
+[INFO] [1773381401.016559752] [rviz2]: Trying to create a map of size 967 x 1179 using 1 swatches
+[INFO] [1773381402.102055983] [rviz2]: Trying to create a map of size 968 x 1179 using 1 swatches
+[INFO] [1773381403.191898630] [rviz2]: Trying to create a map of size 969 x 1179 using 1 swatches
+[INFO] [1773381404.278968544] [rviz2]: Trying to create a map of size 971 x 1179 using 1 swatches
+[INFO] [1773381405.332668940] [rviz2]: Trying to create a map of size 972 x 1179 using 1 swatches
+[INFO] [1773381406.421710895] [rviz2]: Trying to create a map of size 973 x 1179 using 1 swatches
+[INFO] [1773381407.512413823] [rviz2]: Trying to create a map of size 974 x 1179 using 1 swatches
+[INFO] [1773381409.780644164] [rviz2]: Trying to create a map of size 975 x 1179 using 1 swatches
+[INFO] [1773381411.866016004] [rviz2]: Trying to create a map of size 976 x 1179 using 1 swatches
+[INFO] [1773381420.017904822] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381422.458 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773381510.016821856] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381512.449 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773381539.466455590] [rviz2]: Trying to create a map of size 976 x 1182 using 1 swatches
+[INFO] [1773381540.553249813] [rviz2]: Trying to create a map of size 976 x 1184 using 1 swatches
+[INFO] [1773381541.643003753] [rviz2]: Trying to create a map of size 976 x 1186 using 1 swatches
+[INFO] [1773381540.003488685] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381542.290 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773381540.302042288] [rviz2]: Trying to create a map of size 976 x 1188 using 1 swatches
+[INFO] [1773381541.357016976] [rviz2]: Trying to create a map of size 976 x 1189 using 1 swatches
+[INFO] [1773381543.500375582] [rviz2]: Trying to create a map of size 976 x 1194 using 1 swatches
+[INFO] [1773381544.588183723] [rviz2]: Trying to create a map of size 976 x 1196 using 1 swatches
+[INFO] [1773381545.678513756] [rviz2]: Trying to create a map of size 976 x 1197 using 1 swatches
+[INFO] [1773381546.764820416] [rviz2]: Trying to create a map of size 976 x 1198 using 1 swatches
+[INFO] [1773381547.854132800] [rviz2]: Trying to create a map of size 976 x 1199 using 1 swatches
+[INFO] [1773381548.907436190] [rviz2]: Trying to create a map of size 976 x 1200 using 1 swatches
+[INFO] [1773381550.032675909] [rviz2]: Trying to create a map of size 976 x 1201 using 1 swatches
+[INFO] [1773381551.087033459] [rviz2]: Trying to create a map of size 976 x 1202 using 1 swatches
+[INFO] [1773381554.349463050] [rviz2]: Trying to create a map of size 976 x 1203 using 1 swatches
+[INFO] [1773381562.658833096] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381561.960 for reason 'discarding message because the queue is full'
+[INFO] [1773381570.103315296] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381572.565 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773381592.597966147] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381591.925 for reason 'discarding message because the queue is full'
+[INFO] [1773381607.831359653] [rviz2]: Trying to create a map of size 977 x 1203 using 1 swatches
+[INFO] [1773381608.956028077] [rviz2]: Trying to create a map of size 979 x 1203 using 1 swatches
+[INFO] [1773381610.078232988] [rviz2]: Trying to create a map of size 982 x 1203 using 1 swatches
+[INFO] [1773381611.098181225] [rviz2]: Trying to create a map of size 983 x 1203 using 1 swatches
+[INFO] [1773381612.188323907] [rviz2]: Trying to create a map of size 985 x 1203 using 1 swatches
+[INFO] [1773381613.275760632] [rviz2]: Trying to create a map of size 987 x 1203 using 1 swatches
+[INFO] [1773381614.330271153] [rviz2]: Trying to create a map of size 988 x 1203 using 1 swatches
+[INFO] [1773381615.452011358] [rviz2]: Trying to create a map of size 990 x 1203 using 1 swatches
+[INFO] [1773381616.505584124] [rviz2]: Trying to create a map of size 991 x 1203 using 1 swatches
+[INFO] [1773381617.624445006] [rviz2]: Trying to create a map of size 992 x 1203 using 1 swatches
+[INFO] [1773381619.768125534] [rviz2]: Trying to create a map of size 993 x 1203 using 1 swatches
+[INFO] [1773381620.857282545] [rviz2]: Trying to create a map of size 994 x 1203 using 1 swatches
+[INFO] [1773381621.948543688] [rviz2]: Trying to create a map of size 995 x 1203 using 1 swatches
+[INFO] [1773381622.638380916] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381621.948 for reason 'discarding message because the queue is full'
+[INFO] [1773381625.177701913] [rviz2]: Trying to create a map of size 996 x 1203 using 1 swatches
+[INFO] [1773381652.597729684] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381651.925 for reason 'discarding message because the queue is full'
+[INFO] [1773381660.056087451] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381662.460 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773381682.583968755] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381681.898 for reason 'discarding message because the queue is full'
+[INFO] [1773381712.526707698] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381711.829 for reason 'discarding message because the queue is full'
+[INFO] [1773381742.655125876] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381741.980 for reason 'discarding message because the queue is full'
+[INFO] [1773381750.048834675] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381752.448 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773381772.608449580] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381771.919 for reason 'discarding message because the queue is full'
+[INFO] [1773381802.635524297] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381801.937 for reason 'discarding message because the queue is full'
+[INFO] [1773381810.060032765] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381812.471 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773381832.588515264] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381831.906 for reason 'discarding message because the queue is full'
+[INFO] [1773381833.431994760] [rviz2]: Trying to create a map of size 1000 x 1203 using 1 swatches
+[INFO] [1773381835.221504361] [rviz2]: Trying to create a map of size 1002 x 1203 using 1 swatches
+[INFO] [1773381836.311035078] [rviz2]: Trying to create a map of size 1004 x 1203 using 1 swatches
+[INFO] [1773381837.401608506] [rviz2]: Trying to create a map of size 1005 x 1203 using 1 swatches
+[INFO] [1773381838.490415054] [rviz2]: Trying to create a map of size 1006 x 1203 using 1 swatches
+[INFO] [1773381839.574857278] [rviz2]: Trying to create a map of size 1008 x 1203 using 1 swatches
+[INFO] [1773381841.716523470] [rviz2]: Trying to create a map of size 1009 x 1203 using 1 swatches
+[INFO] [1773381840.081570974] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381842.507 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773381840.347994909] [rviz2]: Trying to create a map of size 1010 x 1203 using 1 swatches
+[INFO] [1773381842.492275192] [rviz2]: Trying to create a map of size 1011 x 1203 using 1 swatches
+[INFO] [1773381843.586803657] [rviz2]: Trying to create a map of size 1012 x 1203 using 1 swatches
+[INFO] [1773381862.578204635] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381861.881 for reason 'discarding message because the queue is full'
+[INFO] [1773381892.664999814] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381891.992 for reason 'discarding message because the queue is full'
+[INFO] [1773381922.651132912] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381921.966 for reason 'discarding message because the queue is full'
+[INFO] [1773381930.085676133] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381932.503 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773381952.485380922] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381951.817 for reason 'discarding message because the queue is full'
+[INFO] [1773381982.605192261] [rviz]: Message Filter dropping message: frame 'laser' at time 1773381981.927 for reason 'discarding message because the queue is full'
+[INFO] [1773382012.520121760] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382011.828 for reason 'discarding message because the queue is full'
+[INFO] [1773382020.150906196] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382022.623 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773382025.728555493] [rviz2]: Trying to create a map of size 1013 x 1203 using 1 swatches
+[INFO] [1773382026.914815076] [rviz2]: Trying to create a map of size 1016 x 1203 using 1 swatches
+[INFO] [1773382027.937115256] [rviz2]: Trying to create a map of size 1019 x 1203 using 1 swatches
+[INFO] [1773382029.025119700] [rviz2]: Trying to create a map of size 1023 x 1203 using 1 swatches
+[INFO] [1773382030.080897727] [rviz2]: Trying to create a map of size 1026 x 1203 using 1 swatches
+[INFO] [1773382031.166776133] [rviz2]: Trying to create a map of size 1028 x 1203 using 1 swatches
+[INFO] [1773382032.290330279] [rviz2]: Trying to create a map of size 1032 x 1203 using 1 swatches
+[INFO] [1773382033.345966697] [rviz2]: Trying to create a map of size 1034 x 1203 using 1 swatches
+[INFO] [1773382034.434201892] [rviz2]: Trying to create a map of size 1036 x 1203 using 1 swatches
+[INFO] [1773382035.487765909] [rviz2]: Trying to create a map of size 1039 x 1203 using 1 swatches
+[INFO] [1773382036.580055895] [rviz2]: Trying to create a map of size 1041 x 1203 using 1 swatches
+[INFO] [1773382037.669711985] [rviz2]: Trying to create a map of size 1043 x 1203 using 1 swatches
+[INFO] [1773382038.754866065] [rviz2]: Trying to create a map of size 1046 x 1203 using 1 swatches
+[INFO] [1773382039.842526521] [rviz2]: Trying to create a map of size 1048 x 1203 using 1 swatches
+[INFO] [1773382040.897736577] [rviz2]: Trying to create a map of size 1050 x 1203 using 1 swatches
+[INFO] [1773382042.052491422] [rviz2]: Trying to create a map of size 1052 x 1203 using 1 swatches
+[INFO] [1773382042.646821492] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382041.949 for reason 'discarding message because the queue is full'
+[INFO] [1773382043.907700100] [rviz2]: Trying to create a map of size 1055 x 1203 using 1 swatches
+[INFO] [1773382045.282149737] [rviz2]: Trying to create a map of size 1056 x 1203 using 1 swatches
+[INFO] [1773382046.336900720] [rviz2]: Trying to create a map of size 1057 x 1203 using 1 swatches
+[INFO] [1773382047.425160307] [rviz2]: Trying to create a map of size 1058 x 1203 using 1 swatches
+[INFO] [1773382048.478777713] [rviz2]: Trying to create a map of size 1059 x 1203 using 1 swatches
+[INFO] [1773382049.634100702] [rviz2]: Trying to create a map of size 1060 x 1203 using 1 swatches
+[INFO] [1773382050.275538860] [rviz2]: Trying to create a map of size 1061 x 1203 using 1 swatches
+[INFO] [1773382072.667208224] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382071.989 for reason 'discarding message because the queue is full'
+[INFO] [1773382102.521063457] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382101.823 for reason 'discarding message because the queue is full'
+[INFO] [1773382132.608917526] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382131.933 for reason 'discarding message because the queue is full'
+[INFO] [1773382162.590913943] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382161.907 for reason 'discarding message because the queue is full'
+[INFO] [1773382170.375362616] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382172.769 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773382192.678682023] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382191.980 for reason 'discarding message because the queue is full'
+[INFO] [1773382222.566648579] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382221.883 for reason 'discarding message because the queue is full'
+[INFO] [1773382230.426877286] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382232.884 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773382252.602668484] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382251.909 for reason 'discarding message because the queue is full'
+[INFO] [1773382256.488116477] [rviz2]: Trying to create a map of size 1062 x 1203 using 1 swatches
+[INFO] [1773382257.508488456] [rviz2]: Trying to create a map of size 1064 x 1203 using 1 swatches
+[INFO] [1773382258.598871625] [rviz2]: Trying to create a map of size 1066 x 1203 using 1 swatches
+[INFO] [1773382259.654961087] [rviz2]: Trying to create a map of size 1068 x 1203 using 1 swatches
+[INFO] [1773382260.742295980] [rviz2]: Trying to create a map of size 1069 x 1203 using 1 swatches
+[INFO] [1773382261.893437841] [rviz2]: Trying to create a map of size 1070 x 1203 using 1 swatches
+[INFO] [1773382260.413654168] [rviz2]: Trying to create a map of size 1072 x 1203 using 1 swatches
+[INFO] [1773382261.467553284] [rviz2]: Trying to create a map of size 1073 x 1203 using 1 swatches
+[INFO] [1773382264.734389591] [rviz2]: Trying to create a map of size 1074 x 1203 using 1 swatches
+[INFO] [1773382265.818473328] [rviz2]: Trying to create a map of size 1075 x 1203 using 1 swatches
+[INFO] [1773382267.964095882] [rviz2]: Trying to create a map of size 1076 x 1203 using 1 swatches
+[INFO] [1773382270.138901902] [rviz2]: Trying to create a map of size 1077 x 1203 using 1 swatches
+[INFO] [1773382282.481909682] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382281.806 for reason 'discarding message because the queue is full'
+[INFO] [1773382312.601245920] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382311.916 for reason 'discarding message because the queue is full'
+[INFO] [1773382320.413834833] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382322.853 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773382342.653351213] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382341.957 for reason 'discarding message because the queue is full'
+[INFO] [1773382372.545297354] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382371.869 for reason 'discarding message because the queue is full'
+[INFO] [1773382380.423856119] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382382.802 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773382402.664598040] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382401.976 for reason 'discarding message because the queue is full'
+[INFO] [1773382410.478982608] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382412.911 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773382432.559174374] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382431.889 for reason 'discarding message because the queue is full'
+[INFO] [1773382440.469607123] [rviz]: Message Filter dropping message: frame 'laser' at time 1773382442.887 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1773382453.131383037] [rclcpp]: signal_handler(SIGINT/SIGTERM)

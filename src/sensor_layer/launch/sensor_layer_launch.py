@@ -21,6 +21,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, LogInfo, IncludeLaunchDescription
+from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 def generate_launch_description():
@@ -33,10 +34,12 @@ def generate_launch_description():
     inverted = LaunchConfiguration("inverted")
     angle_compensate = LaunchConfiguration("angle_compensate")
     scan_mode = LaunchConfiguration("scan_mode")
+    scan_frequency = LaunchConfiguration("scan_frequency")
 
     # ── EBIMU 파라미터 ───────────────────────────────────────────────
     ebimu_port = LaunchConfiguration('ebimu_port')
     ebimu_baud = LaunchConfiguration('ebimu_baud')
+    use_ebimu = LaunchConfiguration('use_ebimu')
 
     return LaunchDescription([
 
@@ -48,9 +51,11 @@ def generate_launch_description():
         DeclareLaunchArgument("inverted", default_value="false", description="스캔 데이터 반전 여부"),
         DeclareLaunchArgument("angle_compensate", default_value="true", description="각도 보정 여부"),
         DeclareLaunchArgument("scan_mode", default_value="Sensitivity", description="스캔 모드"),
+        DeclareLaunchArgument("scan_frequency", default_value="40.0", description="목표 스캔 주파수(Hz)"),
 
         DeclareLaunchArgument('ebimu_port', default_value='/dev/ttyUSB0', description='EBIMU 시리얼 포트'),
         DeclareLaunchArgument('ebimu_baud', default_value='115200', description='EBIMU 통신 속도'),
+        DeclareLaunchArgument('use_ebimu', default_value='false', description='EBIMU 노드 실행 여부(true/false)'),
 
         LogInfo(msg='=== sensor_layer 시작: EBIMU IMU + SLLIDAR T1 + TF ==='),
 
@@ -82,6 +87,7 @@ def generate_launch_description():
                 "inverted": inverted,
                 "angle_compensate": angle_compensate,
                 "scan_mode": scan_mode,
+                "scan_frequency": scan_frequency,
             }.items(),
         ),
 
@@ -94,6 +100,7 @@ def generate_launch_description():
                     "ebimu.launch.py",
                 )
             ),
+            condition=IfCondition(use_ebimu),
             launch_arguments={
                 "port": ebimu_port,
                 "baud": ebimu_baud,

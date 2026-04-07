@@ -12,6 +12,7 @@ import rclpy
 import yaml
 from geometry_msgs.msg import TransformStamped
 from nav_msgs.msg import Odometry
+from nav_msgs.msg import Path
 from PIL import Image
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.clock import Clock
@@ -88,8 +89,16 @@ class FakeSensorPublisher(Node):
         self.declare_parameter("pp_max_yaw_rate_radps", 2.2)
         self.declare_parameter("pp_relock_distance_m", 12.0)
         self.declare_parameter("map_raycast_step_m", 0.05)
+        self.declare_parameter("map_single_wall_inset_m", 1.2)
         self.declare_parameter("use_threaded_scan_publisher", True)
         self.declare_parameter("use_threaded_odom_publisher", True)
+        self.declare_parameter("motion_source", "internal_path")
+        self.declare_parameter("external_path_topic", "/local_path")
+        self.declare_parameter("external_path_fallback_topic", "/recommended_path")
+        self.declare_parameter("external_path_target_index", 6)
+        self.declare_parameter("external_search_ahead", 120)
+        self.declare_parameter("external_search_behind", 20)
+        self.declare_parameter("external_relock_distance_m", 2.5)
 
         self.lidar_rate_hz = max(
             1.0, self.get_parameter("lidar_rate_hz").get_parameter_value().double_value
@@ -240,12 +249,45 @@ class FakeSensorPublisher(Node):
         self.map_raycast_step_m = max(
             0.02, self.get_parameter("map_raycast_step_m").get_parameter_value().double_value
         )
+        self.map_single_wall_inset_m = max(
+            0.2, self.get_parameter("map_single_wall_inset_m").get_parameter_value().double_value
+        )
         self.use_threaded_scan_publisher = self.get_parameter(
             "use_threaded_scan_publisher"
         ).get_parameter_value().bool_value
         self.use_threaded_odom_publisher = self.get_parameter(
             "use_threaded_odom_publisher"
         ).get_parameter_value().bool_value
+        self.motion_source = (
+            self.get_parameter("motion_source").get_parameter_value().string_value.strip().lower()
+        )
+        if self.motion_source not in ("internal_path", "local_path"):
+            self.get_logger().warn(
+                f"Unknown motion_source='{self.motion_source}', fallback to 'internal_path'."
+            )
+            self.motion_source = "internal_path"
+        self.external_path_topic = self.get_parameter(
+            "external_path_topic"
+        ).get_parameter_value().string_value
+        self.external_path_fallback_topic = self.get_parameter(
+            "external_path_fallback_topic"
+        ).get_parameter_value().string_value
+        self.external_path_target_index = max(
+            1,
+            self.get_parameter("external_path_target_index").get_parameter_value().integer_value,
+        )
+        self.external_search_ahead = max(
+            10,
+            self.get_parameter("external_search_ahead").get_parameter_value().integer_value,
+        )
+        self.external_search_behind = max(
+            0,
+            self.get_parameter("external_search_behind").get_parameter_value().integer_value,
+        )
+        self.external_relock_distance_m = max(
+            0.5,
+            self.get_parameter("external_relock_distance_m").get_parameter_value().double_value,
+        )
         # On this environment, ROS timers periodically stall and collapse
         # effective scan/odom rates to ~1 Hz, which looks like TF/map teleport.
         # Force dedicated publisher threads for deterministic cadence.
@@ -295,6 +337,11 @@ class FakeSensorPublisher(Node):
         self.map_path_is_loop = True
         self._prev_gt_yaw_for_rate = 0.0
         self._warned_no_map_path = False
+        self._warned_no_external_path = False
+        self.external_local_path_xy = []
+        self.external_recommended_path_xy = []
+        self._last_external_best_i = None
+        self._last_external_path_len = 0
         self._last_scan_perf_warn_t = -1e9
         self._last_pose_jump_warn_t = -1e9
         self._scan_pub_count = 0
@@ -332,11 +379,10 @@ class FakeSensorPublisher(Node):
                     "Vehicle motion will be held to avoid circular fallback."
                 )
 
-        # Real-time scan streams should avoid middleware backpressure stalls.
-        # Keep a short queue and BEST_EFFORT delivery to prevent periodic
-        # multi-second publish gaps on constrained hosts.
+        # Cartographer's scan subscriber uses RELIABLE QoS by default.
+        # Publishing BEST_EFFORT here causes QoS mismatch and drops all scan data.
         scan_qos = QoSProfile(depth=10)
-        scan_qos.reliability = ReliabilityPolicy.BEST_EFFORT
+        scan_qos.reliability = ReliabilityPolicy.RELIABLE
         scan_qos.durability = DurabilityPolicy.VOLATILE
         self.scan_pub = self.create_publisher(LaserScan, "/scan", scan_qos)
         self.imu_pub = None
@@ -355,6 +401,23 @@ class FakeSensorPublisher(Node):
 
         self.tf_pub = self.create_publisher(TFMessage, "/tf", tf_qos)
         self.tf_static_pub = self.create_publisher(TFMessage, "/tf_static", tf_static_qos)
+        self.local_path_sub = None
+        self.recommended_path_sub = None
+        if self.motion_source == "local_path":
+            self.local_path_sub = self.create_subscription(
+                Path,
+                self.external_path_topic,
+                self._on_local_path,
+                10,
+                callback_group=self._timer_cb_group,
+            )
+            self.recommended_path_sub = self.create_subscription(
+                Path,
+                self.external_path_fallback_topic,
+                self._on_recommended_path,
+                10,
+                callback_group=self._timer_cb_group,
+            )
 
         if self.publish_static_tf:
             self._publish_static_tfs()
@@ -426,6 +489,16 @@ class FakeSensorPublisher(Node):
         )
         self.get_logger().info(
             "Control mode: centerline s-progress (pure_pursuit forced OFF, waypoint_yaw forced OFF)"
+        )
+        self.get_logger().info(
+            f"Motion source: {self.motion_source}"
+            + (
+                f" (topic={self.external_path_topic}, fallback={self.external_path_fallback_topic}, "
+                f"target_index={self.external_path_target_index}, "
+                f"search=+{self.external_search_ahead}/-{self.external_search_behind})"
+                if self.motion_source == "local_path"
+                else ""
+            )
         )
 
     def _yaw_to_quat(self, yaw: float):
@@ -686,7 +759,12 @@ class FakeSensorPublisher(Node):
             y = self.map_cy + d * s
             row, col = self._world_to_map(x, y)
             if row < 0 or row >= self.map_height or col < 0 or col >= self.map_width:
-                occ = True
+                # Do not merge out-of-map area into occupied runs.
+                # For outer-wall-only maps, treating OOB as occupied makes
+                # "wall hit" appear far outside the track.
+                if prev_occ:
+                    runs.append((run_start, d))
+                break
             else:
                 occ = bool(self.map_occ[row, col])
             if occ and not prev_occ:
@@ -713,6 +791,13 @@ class FakeSensorPublisher(Node):
             hits = self._occupied_along_ray(theta, max_range)
             if len(hits) >= 2:
                 r = 0.5 * (hits[0] + hits[1])
+                x = self.map_cx + r * math.cos(theta)
+                y = self.map_cy + r * math.sin(theta)
+                path.append((x, y))
+            elif len(hits) == 1:
+                # Single-wall maps (outer border only): follow the wall with
+                # a fixed inward offset so mapping can still progress.
+                r = max(0.0, hits[0] - self.map_single_wall_inset_m)
                 x = self.map_cx + r * math.cos(theta)
                 y = self.map_cy + r * math.sin(theta)
                 path.append((x, y))
@@ -851,6 +936,100 @@ class FakeSensorPublisher(Node):
                 best_d2 = d2
                 best_i = i
         return best_i
+
+    def _on_local_path(self, msg: Path):
+        if not msg.poses:
+            return
+        pts = []
+        for pose in msg.poses:
+            pts.append((pose.pose.position.x, pose.pose.position.y))
+        with self._state_lock:
+            self.external_local_path_xy = pts
+
+    def _on_recommended_path(self, msg: Path):
+        if not msg.poses:
+            return
+        pts = []
+        for pose in msg.poses:
+            pts.append((pose.pose.position.x, pose.pose.position.y))
+        with self._state_lock:
+            self.external_recommended_path_xy = pts
+
+    def _step_from_local_path(self):
+        path_xy = self.external_local_path_xy
+        path_source = "local_path"
+        if len(path_xy) < 2 and len(self.external_recommended_path_xy) >= 2:
+            path_xy = self.external_recommended_path_xy
+            path_source = "recommended_path"
+
+        if len(path_xy) < 2:
+            if not self._warned_no_external_path:
+                self.get_logger().warn(
+                    f"No external path yet (local='{self.external_path_topic}', "
+                    f"fallback='{self.external_path_fallback_topic}'); holding pose."
+                )
+                self._warned_no_external_path = True
+            self.gt_v = 0.0
+            self.gt_yaw_rate = 0.0
+            self.gt_ax_body = 0.0
+            self.gt_ay_body = 0.0
+            return
+
+        self._warned_no_external_path = False
+        n = len(path_xy)
+        if self._last_external_path_len != n:
+            self._last_external_best_i = None
+            self._last_external_path_len = n
+
+        if self._last_external_best_i is None:
+            best_i = 0
+            best_d2 = float("inf")
+            for i, (px, py) in enumerate(path_xy):
+                d2 = (px - self.gt_x) * (px - self.gt_x) + (py - self.gt_y) * (py - self.gt_y)
+                if d2 < best_d2:
+                    best_d2 = d2
+                    best_i = i
+        else:
+            best_i = self._last_external_best_i
+            best_d2 = float("inf")
+            k0 = -self.external_search_behind
+            k1 = self.external_search_ahead
+            for k in range(k0, k1 + 1):
+                i = (self._last_external_best_i + k) % n
+                px, py = path_xy[i]
+                d2 = (px - self.gt_x) * (px - self.gt_x) + (py - self.gt_y) * (py - self.gt_y)
+                if d2 < best_d2:
+                    best_d2 = d2
+                    best_i = i
+            # If we're clearly off this local neighborhood, relock globally.
+            if math.sqrt(best_d2) > self.external_relock_distance_m:
+                best_i = 0
+                best_d2 = float("inf")
+                for i, (px, py) in enumerate(path_xy):
+                    d2 = (px - self.gt_x) * (px - self.gt_x) + (py - self.gt_y) * (py - self.gt_y)
+                    if d2 < best_d2:
+                        best_d2 = d2
+                        best_i = i
+        self._last_external_best_i = best_i
+
+        target_i = min(n - 1, best_i + self.external_path_target_index)
+        tx, ty = path_xy[target_i]
+        desired_yaw = math.atan2(ty - self.gt_y, tx - self.gt_x)
+        yaw_err = math.atan2(math.sin(desired_yaw - self.gt_yaw), math.cos(desired_yaw - self.gt_yaw))
+        max_step = max(0.05, self.pp_max_yaw_rate_radps) * self.state_dt
+        yaw_step = max(-max_step, min(max_step, yaw_err))
+        self.gt_yaw += yaw_step
+        self.gt_yaw = math.atan2(math.sin(self.gt_yaw), math.cos(self.gt_yaw))
+
+        v = max(0.1, self.map_path_speed_mps)
+        self.gt_x += v * math.cos(self.gt_yaw) * self.state_dt
+        self.gt_y += v * math.sin(self.gt_yaw) * self.state_dt
+        self.gt_v = v
+        self.gt_yaw_rate = yaw_step / max(1e-4, self.state_dt)
+        self.gt_ax_body = 0.0
+        self.gt_ay_body = self.gt_v * self.gt_yaw_rate
+        if path_source == "recommended_path" and int(self.t * 2.0) % 10 == 0:
+            self.get_logger().info("Driving from /recommended_path fallback (no /local_path).")
 
     def _pure_pursuit_step(self):
         if len(self.map_path_xy) < 2:
@@ -1277,7 +1456,9 @@ class FakeSensorPublisher(Node):
             radius = 2.5
             omega = 0.12
         elif self.world_type == "map":
-            if self.map_path_total_length > 0.0:
+            if self.motion_source == "local_path":
+                self._step_from_local_path()
+            elif self.map_path_total_length > 0.0:
                 if self.map_use_pure_pursuit:
                     self._pure_pursuit_step()
                 else:
@@ -1326,7 +1507,7 @@ class FakeSensorPublisher(Node):
                     self.gt_yaw_rate = yaw_rate
                     self.gt_ax_body = ax_body
                     self.gt_ay_body = ay_body
-            else:
+            elif self.motion_source == "internal_path":
                 if not self._warned_no_map_path:
                     self.get_logger().error(
                         "No valid map path available; holding pose (no circular fallback)."
@@ -1348,7 +1529,16 @@ class FakeSensorPublisher(Node):
                         math.cos(self.gt_yaw - prev_yaw),
                     )
                 )
-                if xy_jump > 0.35 or yaw_jump > math.radians(25.0):
+                # External-path following can include sharper local replans, so
+                # use relaxed suppression thresholds to avoid false stop loops.
+                if self.motion_source == "local_path":
+                    xy_jump_limit = 1.20
+                    yaw_jump_limit = math.radians(90.0)
+                else:
+                    xy_jump_limit = 0.35
+                    yaw_jump_limit = math.radians(25.0)
+
+                if xy_jump > xy_jump_limit or yaw_jump > yaw_jump_limit:
                     if (self.t - self._last_pose_jump_warn_t) > 1.0:
                         self._last_pose_jump_warn_t = self.t
                         self.get_logger().warn(

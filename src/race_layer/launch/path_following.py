@@ -17,27 +17,46 @@ from tf2_ros import Buffer, TransformListener, TransformException
 
 
 def load_centerline_csv(path: str) -> List[Tuple[float, float]]:
-    """CSV 로드. 'x,y' 또는 'x_m, y_m, ...' 형식 지원."""
+    """CSV 로드. 'x,y' 또는 ';' 구분의 's_m; x_m; y_m; ...' 형식 지원."""
     pts: List[Tuple[float, float]] = []
     with open(path, "r", newline="", encoding="utf-8") as f:
-        reader = csv.reader(f)
-        rows = list(reader)
-    start = 0
-    for i, r in enumerate(rows):
-        if not r or r[0].strip().startswith("#"):
-            start = i + 1
+        lines = f.readlines()
+
+    x_idx, y_idx = 0, 1
+    for line in lines:
+        s = line.strip()
+        if not s:
             continue
-        if len(r) < 2:
+        if s.startswith("#"):
+            header = s.lstrip("#").strip().lower().replace(" ", "")
+            if ";" in header:
+                cols = [c.strip() for c in header.split(";")]
+                if "x_m" in cols and "y_m" in cols:
+                    x_idx = cols.index("x_m")
+                    y_idx = cols.index("y_m")
+            continue
+
+        if ";" in s:
+            parts = [p.strip() for p in s.split(";")]
+        else:
+            parts = next(csv.reader([s]))
+            parts = [p.strip() for p in parts]
+
+        if max(x_idx, y_idx) >= len(parts):
             continue
         try:
-            x = float(r[0].strip())
-            y = float(r[1].strip())
+            x = float(parts[x_idx])
+            y = float(parts[y_idx])
             pts.append((x, y))
         except ValueError:
-            if i == start and (
-                "x" in (r[0] + r[1]).lower() or "m" in (r[0] + r[1]).lower()
-            ):
-                start = i + 1
+            # Handle plain header like: x,y
+            joined = ",".join(parts[:3]).lower()
+            if "x" in joined and "y" in joined:
+                if "x_m" in parts and "y_m" in parts:
+                    x_idx = parts.index("x_m")
+                    y_idx = parts.index("y_m")
+                else:
+                    x_idx, y_idx = 0, 1
             continue
     return pts
 
@@ -53,7 +72,7 @@ class CenterlinePathNode(Node):
         self.declare_parameter("frame_id", "map")
         self.declare_parameter("path_topic", "/recommended_path")
         self.declare_parameter("marker_topic", "/centerline_marker")
-        self.declare_parameter("publish_hz", 2.0)
+        self.declare_parameter("publish_hz", 10.0)
         self.declare_parameter("publish_marker", True)
         # Path 메시지가 너무 크면 DDS 제한으로 잘려 반만 그려짐 → 포인트 수 상한으로 맵 전체가 보이게
         self.declare_parameter("path_downsample", 1)  # 1=전부, 2=2개마다 1개, ...
@@ -65,6 +84,8 @@ class CenterlinePathNode(Node):
         self.declare_parameter("path_window_size", 50)  # >0이면 차량 위치 기준 앞쪽 N개만 발행(슬라이딩 윈도우)
         self.declare_parameter("map_frame", "map")
         self.declare_parameter("base_frame", "base_link")
+        self.declare_parameter("nearest_search_ahead", 220)
+        self.declare_parameter("nearest_search_behind", 25)
 
         csv_path = self.get_parameter("csv_path").get_parameter_value().string_value
         self.frame_id = self.get_parameter("frame_id").get_parameter_value().string_value
@@ -83,6 +104,9 @@ class CenterlinePathNode(Node):
         self.path_window_size = max(0, int(self.get_parameter("path_window_size").value))
         self.map_frame = self.get_parameter("map_frame").value
         self.base_frame = self.get_parameter("base_frame").value
+        self.nearest_search_ahead = max(20, int(self.get_parameter("nearest_search_ahead").value))
+        self.nearest_search_behind = max(0, int(self.get_parameter("nearest_search_behind").value))
+        self._last_best_i = None
 
         self.points = load_centerline_csv(csv_path)
         if len(self.points) < 2:
@@ -99,9 +123,9 @@ class CenterlinePathNode(Node):
             self.tf_buffer = Buffer()
             self.tf_listener = TransformListener(self.tf_buffer, self)
 
-        # rviz 기본 구독이 Volatile이라 동일하게 맞춤 (안 맞으면 경로 안 뜸)
+        # Keep last path/marker for late RViz subscribers.
         qos = QoSProfile(depth=1)
-        qos.durability = QoSDurabilityPolicy.VOLATILE
+        qos.durability = QoSDurabilityPolicy.TRANSIENT_LOCAL
         qos.reliability = QoSReliabilityPolicy.RELIABLE
 
         self.path_pub = self.create_publisher(Path, path_topic, qos)
@@ -135,6 +159,7 @@ class CenterlinePathNode(Node):
         path_msg.header.stamp = now
 
         if self.path_window_size > 0 and hasattr(self, "tf_buffer"):
+            use_window = True
             try:
                 t = self.tf_buffer.lookup_transform(
                     self.map_frame,
@@ -143,29 +168,76 @@ class CenterlinePathNode(Node):
                     timeout=rclpy.duration.Duration(seconds=0.15),
                 )
             except TransformException:
-                return
-            mx = t.transform.translation.x
-            my = t.transform.translation.y
-            best_i = 0
-            best_d2 = float("inf")
-            for i in range(n):
-                x, y = self.points[i]
-                d2 = (x - mx) ** 2 + (y - my) ** 2
-                if d2 < best_d2:
-                    best_d2 = d2
-                    best_i = i
-            window_size = min(self.path_window_size, n)
-            for k in range(window_size):
-                idx = (best_i + k) % n
-                x, y = self.points[idx]
-                pose = PoseStamped()
-                pose.header.frame_id = self.frame_id
-                pose.header.stamp = now
-                pose.pose.position.x = float(x)
-                pose.pose.position.y = float(y)
-                pose.pose.position.z = 0.0
-                pose.pose.orientation.w = 1.0
-                path_msg.poses.append(pose)
+                # If TF is unavailable, publish full path instead of a fixed
+                # index-0 window. Index-0 fallback can pull the vehicle toward
+                # a wrong segment and cause repeated "jumping" behavior.
+                use_window = False
+                now_ns = self.get_clock().now().nanoseconds
+                if not hasattr(self, "_last_tf_warn_ns"):
+                    self._last_tf_warn_ns = 0
+                if now_ns - self._last_tf_warn_ns > 2_000_000_000:
+                    self._last_tf_warn_ns = now_ns
+                    self.get_logger().warn(
+                        f"TF {self.map_frame}->{self.base_frame} unavailable; "
+                        "publishing full path fallback."
+                    )
+            else:
+                mx = t.transform.translation.x
+                my = t.transform.translation.y
+                if self._last_best_i is None:
+                    best_i = 0
+                    best_d2 = float("inf")
+                    for i in range(n):
+                        x, y = self.points[i]
+                        d2 = (x - mx) ** 2 + (y - my) ** 2
+                        if d2 < best_d2:
+                            best_d2 = d2
+                            best_i = i
+                else:
+                    # Prevent branch-hopping on close parallel lanes:
+                    # search near the previous index with strong forward bias.
+                    best_i = self._last_best_i
+                    best_d2 = float("inf")
+                    for k in range(-self.nearest_search_behind, self.nearest_search_ahead + 1):
+                        i = (self._last_best_i + k) % n
+                        x, y = self.points[i]
+                        d2 = (x - mx) ** 2 + (y - my) ** 2
+                        if d2 < best_d2:
+                            best_d2 = d2
+                            best_i = i
+                self._last_best_i = best_i
+            if use_window:
+                window_size = min(self.path_window_size, n)
+                for k in range(window_size):
+                    idx = (best_i + k) % n
+                    x, y = self.points[idx]
+                    pose = PoseStamped()
+                    pose.header.frame_id = self.frame_id
+                    pose.header.stamp = now
+                    pose.pose.position.x = float(x)
+                    pose.pose.position.y = float(y)
+                    pose.pose.position.z = 0.0
+                    pose.pose.orientation.w = 1.0
+                    path_msg.poses.append(pose)
+            else:
+                # Same strategy as full-path mode: downsample if too dense.
+                if n <= self.path_max_poses:
+                    indices = list(range(0, n, self.path_downsample))
+                else:
+                    indices = [
+                        int(i * (n - 1) / (self.path_max_poses - 1))
+                        for i in range(self.path_max_poses)
+                    ]
+                for i in indices:
+                    x, y = self.points[i]
+                    pose = PoseStamped()
+                    pose.header.frame_id = self.frame_id
+                    pose.header.stamp = now
+                    pose.pose.position.x = float(x)
+                    pose.pose.position.y = float(y)
+                    pose.pose.position.z = 0.0
+                    pose.pose.orientation.w = 1.0
+                    path_msg.poses.append(pose)
         else:
             if n <= self.path_max_poses:
                 indices = list(range(0, n, self.path_downsample))

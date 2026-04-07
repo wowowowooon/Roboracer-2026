@@ -1026,6 +1026,7 @@ namespace sl {
             rp::hal::AutoLocker l(_op_locker);
             if (!isConnected()) return SL_RESULT_OPERATION_NOT_SUPPORT;
 
+            motorInfo.motorCtrlSupport = _isSupportingMotorCtrl;
 
             {
                 std::vector<sl_u8> answer;
@@ -1052,6 +1053,38 @@ namespace sl {
                     motorInfo.desired_speed = desired_speed.rpm;
 
             }
+            return SL_RESULT_OK;
+        }
+
+        sl_result setDesiredScanFrequency(float hz, sl_u32 timeoutInMs)
+        {
+            rp::hal::AutoLocker l(_op_locker);
+            if (!isConnected()) return SL_RESULT_OPERATION_NOT_SUPPORT;
+            if (hz <= 0.0f) return SL_RESULT_INVALID_DATA;
+
+            const sl_u16 requested_rpm = static_cast<sl_u16>(hz * 60.0f + 0.5f);
+            sl_lidar_response_desired_rot_speed_t desired_speed;
+            desired_speed.rpm = requested_rpm;
+            desired_speed.pwm_ref = requested_rpm;
+
+            auto ans = setLidarConf(SL_LIDAR_CONF_DESIRED_ROT_FREQ, &desired_speed, sizeof(desired_speed), timeoutInMs);
+            if (ans == SL_RESULT_INVALID_DATA) {
+                // Some firmware branches accept only a 16-bit RPM payload.
+                ans = setLidarConf(SL_LIDAR_CONF_DESIRED_ROT_FREQ, &requested_rpm, sizeof(requested_rpm), timeoutInMs);
+            }
+            return ans;
+        }
+
+        sl_result getDesiredScanFrequency(float& hz, sl_u32 timeoutInMs)
+        {
+            rp::hal::AutoLocker l(_op_locker);
+            if (!isConnected()) return SL_RESULT_OPERATION_NOT_SUPPORT;
+
+            sl_lidar_response_desired_rot_speed_t desired_speed;
+            auto ans = getDesiredSpeed(desired_speed, timeoutInMs);
+            if (IS_FAIL(ans)) return ans;
+
+            hz = static_cast<float>(desired_speed.rpm) / 60.0f;
             return SL_RESULT_OK;
         }
 

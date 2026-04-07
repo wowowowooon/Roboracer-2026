@@ -1,0 +1,21 @@
+[60.704s] Invoking command in '/home/tkddn647/test/build/race_pkg': PYTHONPATH=/home/tkddn647/test/build/race_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/tkddn647/test/install/race_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/tkddn647/test/build/race_pkg/build --no-deps symlink_data
+[61.190s] running develop
+[61.509s] running egg_info
+[61.511s] writing race_pkg.egg-info/PKG-INFO
+[61.511s] writing dependency_links to race_pkg.egg-info/dependency_links.txt
+[61.511s] writing entry points to race_pkg.egg-info/entry_points.txt
+[61.511s] writing requirements to race_pkg.egg-info/requires.txt
+[61.511s] writing top-level names to race_pkg.egg-info/top_level.txt
+[61.518s] reading manifest file 'race_pkg.egg-info/SOURCES.txt'
+[61.519s] writing manifest file 'race_pkg.egg-info/SOURCES.txt'
+[61.522s] running build_ext
+[61.522s] Creating /home/tkddn647/test/install/race_pkg/lib/python3.10/site-packages/race-pkg.egg-link (link to .)
+[61.524s] Installing centerline_publisher script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+[61.525s] Installing fgm_node script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+[61.525s] Installing local_planner script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+[61.525s] Installing scan_rate_adapter script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+[61.526s] Installing static_obstacle_detector script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+[61.526s] 
+[61.527s] Installed /home/tkddn647/test/build/race_pkg
+[61.527s] running symlink_data
+[90.064s] Invoked command in '/home/tkddn647/test/build/race_pkg' returned '0': PYTHONPATH=/home/tkddn647/test/build/race_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/tkddn647/test/install/race_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/tkddn647/test/build/race_pkg/build --no-deps symlink_data

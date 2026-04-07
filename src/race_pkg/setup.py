@@ -28,6 +28,7 @@ setup(
         'console_scripts': [
             # 여기서 파이썬 파일과 ROS 실행 명령어를 연결합니다.
             'static_obstacle_detector = race_pkg.perception.static_obstacle_detector:main',
+            'scan_rate_adapter = race_pkg.perception.scan_rate_adapter:main',
             'centerline_publisher = race_pkg.planning.centerline_publisher:main',
             'fgm_node = race_pkg.planning.fgm_node:main',
             'local_planner = race_pkg.planning.local_planner:main',

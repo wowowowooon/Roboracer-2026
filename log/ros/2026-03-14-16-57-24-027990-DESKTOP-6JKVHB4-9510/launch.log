@@ -1,0 +1,11 @@
+1773475044.0307856 [INFO] [launch]: All log files can be found below /home/tkddn647/test/log/ros/2026-03-14-16-57-24-027990-DESKTOP-6JKVHB4-9510
+1773475044.0309680 [INFO] [launch]: Default logging verbosity is set to INFO
+1773475044.1218464 [INFO] [sim_fake_sensor_publisher.py-1]: process started with pid [9539]
+1773475046.1475651 [INFO] [cartographer_node-2]: process started with pid [9578]
+1773475046.1478238 [INFO] [cartographer_occupancy_grid_node-3]: process started with pid [9580]
+1773475046.1480138 [INFO] [map_auto_saver.py-4]: process started with pid [9582]
+1773475092.6745551 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+1773475092.8984668 [INFO] [cartographer_occupancy_grid_node-3]: process has finished cleanly [pid 9580]
+1773475092.9010775 [INFO] [cartographer_node-2]: process has finished cleanly [pid 9578]
+1773475092.9102421 [INFO] [map_auto_saver.py-4]: process has finished cleanly [pid 9582]
+1773475092.9822109 [INFO] [sim_fake_sensor_publisher.py-1]: process has finished cleanly [pid 9539]

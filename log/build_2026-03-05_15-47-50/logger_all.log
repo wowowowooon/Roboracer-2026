@@ -1,0 +1,341 @@
+[0.329s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install', '--packages-select', 'sim_test', 'localization_layer', 'race_layer']
+[0.329s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=True, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=12, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=['sim_test', 'localization_layer', 'race_layer'], packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x7e723745a7d0>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7e7237577730>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7e7237577730>>, mixin_verb=('build',))
+[0.702s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.703s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.703s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.703s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.703s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.703s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.703s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/tkddn647/test'
+[0.703s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.704s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.704s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.704s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.704s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.704s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.704s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.704s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.704s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.737s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.737s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.738s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.738s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extensions ['ignore', 'ignore_ament_install']
+[0.738s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extension 'ignore'
+[0.738s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extension 'ignore_ament_install'
+[0.739s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extensions ['colcon_pkg']
+[0.739s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extension 'colcon_pkg'
+[0.739s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extensions ['colcon_meta']
+[0.739s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extension 'colcon_meta'
+[0.739s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extensions ['ros']
+[0.739s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extension 'ros'
+[0.739s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extensions ['cmake', 'python']
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extension 'cmake'
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extension 'python'
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extensions ['python_setup_py']
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(maps) by extension 'python_setup_py'
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(src/ebimu_pkg) by extensions ['ignore', 'ignore_ament_install']
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(src/ebimu_pkg) by extension 'ignore'
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(src/ebimu_pkg) by extension 'ignore_ament_install'
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(src/ebimu_pkg) by extensions ['colcon_pkg']
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(src/ebimu_pkg) by extension 'colcon_pkg'
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(src/ebimu_pkg) by extensions ['colcon_meta']
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(src/ebimu_pkg) by extension 'colcon_meta'
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(src/ebimu_pkg) by extensions ['ros']
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(src/ebimu_pkg) by extension 'ros'
+[0.747s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ebimu_pkg' with type 'ros.ament_python' and name 'ebimu_pkg'
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/localization_layer) by extensions ['ignore', 'ignore_ament_install']
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/localization_layer) by extension 'ignore'
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/localization_layer) by extension 'ignore_ament_install'
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/localization_layer) by extensions ['colcon_pkg']
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/localization_layer) by extension 'colcon_pkg'
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/localization_layer) by extensions ['colcon_meta']
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/localization_layer) by extension 'colcon_meta'
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/localization_layer) by extensions ['ros']
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/localization_layer) by extension 'ros'
+[0.750s] DEBUG:colcon.colcon_core.package_identification:Package 'src/localization_layer' with type 'ros.ament_cmake' and name 'localization_layer'
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_layer) by extensions ['ignore', 'ignore_ament_install']
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_layer) by extension 'ignore'
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_layer) by extension 'ignore_ament_install'
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_layer) by extensions ['colcon_pkg']
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_layer) by extension 'colcon_pkg'
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_layer) by extensions ['colcon_meta']
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_layer) by extension 'colcon_meta'
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_layer) by extensions ['ros']
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_layer) by extension 'ros'
+[0.752s] DEBUG:colcon.colcon_core.package_identification:Package 'src/race_layer' with type 'ros.ament_cmake' and name 'race_layer'
+[0.752s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_pkg) by extensions ['ignore', 'ignore_ament_install']
+[0.752s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_pkg) by extension 'ignore'
+[0.752s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_pkg) by extension 'ignore_ament_install'
+[0.753s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_pkg) by extensions ['colcon_pkg']
+[0.753s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_pkg) by extension 'colcon_pkg'
+[0.753s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_pkg) by extensions ['colcon_meta']
+[0.753s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_pkg) by extension 'colcon_meta'
+[0.753s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_pkg) by extensions ['ros']
+[0.753s] Level 1:colcon.colcon_core.package_identification:_identify(src/race_pkg) by extension 'ros'
+[0.754s] DEBUG:colcon.colcon_core.package_identification:Package 'src/race_pkg' with type 'ros.ament_python' and name 'race_pkg'
+[0.754s] Level 1:colcon.colcon_core.package_identification:_identify(src/sensor_layer) by extensions ['ignore', 'ignore_ament_install']
+[0.755s] Level 1:colcon.colcon_core.package_identification:_identify(src/sensor_layer) by extension 'ignore'
+[0.755s] Level 1:colcon.colcon_core.package_identification:_identify(src/sensor_layer) by extension 'ignore_ament_install'
+[0.755s] Level 1:colcon.colcon_core.package_identification:_identify(src/sensor_layer) by extensions ['colcon_pkg']
+[0.755s] Level 1:colcon.colcon_core.package_identification:_identify(src/sensor_layer) by extension 'colcon_pkg'
+[0.755s] Level 1:colcon.colcon_core.package_identification:_identify(src/sensor_layer) by extensions ['colcon_meta']
+[0.755s] Level 1:colcon.colcon_core.package_identification:_identify(src/sensor_layer) by extension 'colcon_meta'
+[0.755s] Level 1:colcon.colcon_core.package_identification:_identify(src/sensor_layer) by extensions ['ros']
+[0.755s] Level 1:colcon.colcon_core.package_identification:_identify(src/sensor_layer) by extension 'ros'
+[0.756s] DEBUG:colcon.colcon_core.package_identification:Package 'src/sensor_layer' with type 'ros.ament_cmake' and name 'sensor_layer'
+[0.756s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_test) by extensions ['ignore', 'ignore_ament_install']
+[0.756s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_test) by extension 'ignore'
+[0.757s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_test) by extension 'ignore_ament_install'
+[0.757s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_test) by extensions ['colcon_pkg']
+[0.757s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_test) by extension 'colcon_pkg'
+[0.757s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_test) by extensions ['colcon_meta']
+[0.757s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_test) by extension 'colcon_meta'
+[0.757s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_test) by extensions ['ros']
+[0.757s] Level 1:colcon.colcon_core.package_identification:_identify(src/sim_test) by extension 'ros'
+[0.758s] DEBUG:colcon.colcon_core.package_identification:Package 'src/sim_test' with type 'ros.ament_cmake' and name 'sim_test'
+[0.759s] Level 1:colcon.colcon_core.package_identification:_identify(src/sllidar_ros2) by extensions ['ignore', 'ignore_ament_install']
+[0.759s] Level 1:colcon.colcon_core.package_identification:_identify(src/sllidar_ros2) by extension 'ignore'
+[0.759s] Level 1:colcon.colcon_core.package_identification:_identify(src/sllidar_ros2) by extension 'ignore_ament_install'
+[0.759s] Level 1:colcon.colcon_core.package_identification:_identify(src/sllidar_ros2) by extensions ['colcon_pkg']
+[0.759s] Level 1:colcon.colcon_core.package_identification:_identify(src/sllidar_ros2) by extension 'colcon_pkg'
+[0.759s] Level 1:colcon.colcon_core.package_identification:_identify(src/sllidar_ros2) by extensions ['colcon_meta']
+[0.759s] Level 1:colcon.colcon_core.package_identification:_identify(src/sllidar_ros2) by extension 'colcon_meta'
+[0.759s] Level 1:colcon.colcon_core.package_identification:_identify(src/sllidar_ros2) by extensions ['ros']
+[0.759s] Level 1:colcon.colcon_core.package_identification:_identify(src/sllidar_ros2) by extension 'ros'
+[0.762s] DEBUG:colcon.colcon_core.package_identification:Package 'src/sllidar_ros2' with type 'ros.ament_cmake' and name 'sllidar_ros2'
+[0.762s] Level 1:colcon.colcon_core.package_identification:_identify(src/tf_manager_cpp) by extensions ['ignore', 'ignore_ament_install']
+[0.762s] Level 1:colcon.colcon_core.package_identification:_identify(src/tf_manager_cpp) by extension 'ignore'
+[0.762s] Level 1:colcon.colcon_core.package_identification:_identify(src/tf_manager_cpp) by extension 'ignore_ament_install'
+[0.763s] Level 1:colcon.colcon_core.package_identification:_identify(src/tf_manager_cpp) by extensions ['colcon_pkg']
+[0.763s] Level 1:colcon.colcon_core.package_identification:_identify(src/tf_manager_cpp) by extension 'colcon_pkg'
+[0.763s] Level 1:colcon.colcon_core.package_identification:_identify(src/tf_manager_cpp) by extensions ['colcon_meta']
+[0.763s] Level 1:colcon.colcon_core.package_identification:_identify(src/tf_manager_cpp) by extension 'colcon_meta'
+[0.763s] Level 1:colcon.colcon_core.package_identification:_identify(src/tf_manager_cpp) by extensions ['ros']
+[0.763s] Level 1:colcon.colcon_core.package_identification:_identify(src/tf_manager_cpp) by extension 'ros'
+[0.764s] DEBUG:colcon.colcon_core.package_identification:Package 'src/tf_manager_cpp' with type 'ros.ament_cmake' and name 'tf_manager_cpp'
+[0.764s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.764s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.764s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.764s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.764s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.813s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'ebimu_pkg' in 'src/ebimu_pkg'
+[0.813s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'race_pkg' in 'src/race_pkg'
+[0.814s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'sllidar_ros2' in 'src/sllidar_ros2'
+[0.814s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'tf_manager_cpp' in 'src/tf_manager_cpp'
+[0.814s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'sensor_layer' in 'src/sensor_layer'
+[0.814s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.815s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.819s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 347 installed packages in /opt/ros/humble
+[0.821s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.892s] Level 5:colcon.colcon_core.verb:set package 'race_layer' build argument 'cmake_args' from command line to 'None'
+[0.892s] Level 5:colcon.colcon_core.verb:set package 'race_layer' build argument 'cmake_target' from command line to 'None'
+[0.892s] Level 5:colcon.colcon_core.verb:set package 'race_layer' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.892s] Level 5:colcon.colcon_core.verb:set package 'race_layer' build argument 'cmake_clean_cache' from command line to 'False'
+[0.892s] Level 5:colcon.colcon_core.verb:set package 'race_layer' build argument 'cmake_clean_first' from command line to 'False'
+[0.893s] Level 5:colcon.colcon_core.verb:set package 'race_layer' build argument 'cmake_force_configure' from command line to 'False'
+[0.893s] Level 5:colcon.colcon_core.verb:set package 'race_layer' build argument 'ament_cmake_args' from command line to 'None'
+[0.893s] Level 5:colcon.colcon_core.verb:set package 'race_layer' build argument 'catkin_cmake_args' from command line to 'None'
+[0.893s] Level 5:colcon.colcon_core.verb:set package 'race_layer' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.893s] DEBUG:colcon.colcon_core.verb:Building package 'race_layer' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/tkddn647/test/build/race_layer', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/tkddn647/test/install/race_layer', 'merge_install': False, 'path': '/home/tkddn647/test/src/race_layer', 'symlink_install': True, 'test_result_base': None}
+[0.893s] Level 5:colcon.colcon_core.verb:set package 'localization_layer' build argument 'cmake_args' from command line to 'None'
+[0.893s] Level 5:colcon.colcon_core.verb:set package 'localization_layer' build argument 'cmake_target' from command line to 'None'
+[0.893s] Level 5:colcon.colcon_core.verb:set package 'localization_layer' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.893s] Level 5:colcon.colcon_core.verb:set package 'localization_layer' build argument 'cmake_clean_cache' from command line to 'False'
+[0.893s] Level 5:colcon.colcon_core.verb:set package 'localization_layer' build argument 'cmake_clean_first' from command line to 'False'
+[0.893s] Level 5:colcon.colcon_core.verb:set package 'localization_layer' build argument 'cmake_force_configure' from command line to 'False'
+[0.893s] Level 5:colcon.colcon_core.verb:set package 'localization_layer' build argument 'ament_cmake_args' from command line to 'None'
+[0.893s] Level 5:colcon.colcon_core.verb:set package 'localization_layer' build argument 'catkin_cmake_args' from command line to 'None'
+[0.894s] Level 5:colcon.colcon_core.verb:set package 'localization_layer' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.894s] DEBUG:colcon.colcon_core.verb:Building package 'localization_layer' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/tkddn647/test/build/localization_layer', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/tkddn647/test/install/localization_layer', 'merge_install': False, 'path': '/home/tkddn647/test/src/localization_layer', 'symlink_install': True, 'test_result_base': None}
+[0.894s] Level 5:colcon.colcon_core.verb:set package 'sim_test' build argument 'cmake_args' from command line to 'None'
+[0.894s] Level 5:colcon.colcon_core.verb:set package 'sim_test' build argument 'cmake_target' from command line to 'None'
+[0.894s] Level 5:colcon.colcon_core.verb:set package 'sim_test' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.894s] Level 5:colcon.colcon_core.verb:set package 'sim_test' build argument 'cmake_clean_cache' from command line to 'False'
+[0.894s] Level 5:colcon.colcon_core.verb:set package 'sim_test' build argument 'cmake_clean_first' from command line to 'False'
+[0.894s] Level 5:colcon.colcon_core.verb:set package 'sim_test' build argument 'cmake_force_configure' from command line to 'False'
+[0.894s] Level 5:colcon.colcon_core.verb:set package 'sim_test' build argument 'ament_cmake_args' from command line to 'None'
+[0.894s] Level 5:colcon.colcon_core.verb:set package 'sim_test' build argument 'catkin_cmake_args' from command line to 'None'
+[0.894s] Level 5:colcon.colcon_core.verb:set package 'sim_test' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.894s] DEBUG:colcon.colcon_core.verb:Building package 'sim_test' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/tkddn647/test/build/sim_test', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/tkddn647/test/install/sim_test', 'merge_install': False, 'path': '/home/tkddn647/test/src/sim_test', 'symlink_install': True, 'test_result_base': None}
+[0.895s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.897s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.897s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/tkddn647/test/src/localization_layer' with build type 'ament_cmake'
+[0.897s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/tkddn647/test/src/localization_layer'
+[0.903s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.903s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.903s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.910s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/tkddn647/test/src/race_layer' with build type 'ament_cmake'
+[0.911s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/tkddn647/test/src/race_layer'
+[0.912s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.912s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.928s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/tkddn647/test/build/race_layer': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/tkddn647/test/src/race_layer -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/tkddn647/test/install/race_layer
+[1.284s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/tkddn647/test/build/localization_layer': AMENT_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/tkddn647/test/build/localization_layer -- -j12 -l12
+[1.409s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/tkddn647/test/build/localization_layer' returned '0': AMENT_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/tkddn647/test/build/localization_layer -- -j12 -l12
+[1.430s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/tkddn647/test/build/localization_layer': AMENT_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/tkddn647/test/build/localization_layer
+[1.446s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/tkddn647/test/build/race_layer' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/tkddn647/test/src/race_layer -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/tkddn647/test/install/race_layer
+[1.448s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/tkddn647/test/build/race_layer': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/tkddn647/test/build/race_layer -- -j12 -l12
+[1.526s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(localization_layer)
+[1.527s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/tkddn647/test/build/localization_layer' returned '0': AMENT_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/tkddn647/test/build/localization_layer
+[1.531s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer' for CMake module files
+[1.531s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer' for CMake config files
+[1.532s] Level 1:colcon.colcon_core.shell:create_environment_hook('localization_layer', 'cmake_prefix_path')
+[1.533s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/tkddn647/test/install/localization_layer/share/localization_layer/hook/cmake_prefix_path.ps1'
+[1.534s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/tkddn647/test/install/localization_layer/share/localization_layer/hook/cmake_prefix_path.dsv'
+[1.535s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/tkddn647/test/install/localization_layer/share/localization_layer/hook/cmake_prefix_path.sh'
+[1.536s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer/lib'
+[1.537s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer/bin'
+[1.537s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer/lib/pkgconfig/localization_layer.pc'
+[1.537s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer/lib/python3.10/site-packages'
+[1.538s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer/bin'
+[1.538s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/localization_layer/share/localization_layer/package.ps1'
+[1.539s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/tkddn647/test/install/localization_layer/share/localization_layer/package.dsv'
+[1.541s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/localization_layer/share/localization_layer/package.sh'
+[1.541s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/localization_layer/share/localization_layer/package.bash'
+[1.542s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/localization_layer/share/localization_layer/package.zsh'
+[1.543s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/tkddn647/test/install/localization_layer/share/colcon-core/packages/localization_layer)
+[1.544s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(localization_layer)
+[1.545s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer' for CMake module files
+[1.545s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer' for CMake config files
+[1.546s] Level 1:colcon.colcon_core.shell:create_environment_hook('localization_layer', 'cmake_prefix_path')
+[1.547s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/tkddn647/test/install/localization_layer/share/localization_layer/hook/cmake_prefix_path.ps1'
+[1.547s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/tkddn647/test/install/localization_layer/share/localization_layer/hook/cmake_prefix_path.dsv'
+[1.548s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/tkddn647/test/install/localization_layer/share/localization_layer/hook/cmake_prefix_path.sh'
+[1.549s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer/lib'
+[1.549s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer/bin'
+[1.549s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer/lib/pkgconfig/localization_layer.pc'
+[1.549s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer/lib/python3.10/site-packages'
+[1.550s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/localization_layer/bin'
+[1.550s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/localization_layer/share/localization_layer/package.ps1'
+[1.551s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/tkddn647/test/install/localization_layer/share/localization_layer/package.dsv'
+[1.552s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/localization_layer/share/localization_layer/package.sh'
+[1.553s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/localization_layer/share/localization_layer/package.bash'
+[1.554s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/localization_layer/share/localization_layer/package.zsh'
+[1.555s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/tkddn647/test/install/localization_layer/share/colcon-core/packages/localization_layer)
+[1.558s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/tkddn647/test/build/race_layer' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/tkddn647/test/build/race_layer -- -j12 -l12
+[1.560s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/tkddn647/test/src/sim_test' with build type 'ament_cmake'
+[1.560s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/tkddn647/test/build/race_layer': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/tkddn647/test/build/race_layer
+[1.561s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/tkddn647/test/src/sim_test'
+[1.562s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.562s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.988s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/tkddn647/test/build/sim_test': AMENT_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/tkddn647/test/build/sim_test -- -j12 -l12
+[2.058s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/tkddn647/test/build/sim_test' returned '0': AMENT_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/tkddn647/test/build/sim_test -- -j12 -l12
+[2.061s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/tkddn647/test/build/sim_test': AMENT_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/tkddn647/test/build/sim_test
+[2.091s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(race_layer)
+[2.092s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer' for CMake module files
+[2.093s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/tkddn647/test/build/race_layer' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/tkddn647/test/build/race_layer
+[2.094s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer' for CMake config files
+[2.095s] Level 1:colcon.colcon_core.shell:create_environment_hook('race_layer', 'cmake_prefix_path')
+[2.095s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/tkddn647/test/install/race_layer/share/race_layer/hook/cmake_prefix_path.ps1'
+[2.096s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/tkddn647/test/install/race_layer/share/race_layer/hook/cmake_prefix_path.dsv'
+[2.097s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/tkddn647/test/install/race_layer/share/race_layer/hook/cmake_prefix_path.sh'
+[2.098s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer/lib'
+[2.098s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer/bin'
+[2.098s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer/lib/pkgconfig/race_layer.pc'
+[2.099s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer/lib/python3.10/site-packages'
+[2.099s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer/bin'
+[2.100s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/race_layer/share/race_layer/package.ps1'
+[2.102s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/tkddn647/test/install/race_layer/share/race_layer/package.dsv'
+[2.104s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/race_layer/share/race_layer/package.sh'
+[2.105s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/race_layer/share/race_layer/package.bash'
+[2.106s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/race_layer/share/race_layer/package.zsh'
+[2.106s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/tkddn647/test/install/race_layer/share/colcon-core/packages/race_layer)
+[2.107s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(race_layer)
+[2.108s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer' for CMake module files
+[2.108s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer' for CMake config files
+[2.109s] Level 1:colcon.colcon_core.shell:create_environment_hook('race_layer', 'cmake_prefix_path')
+[2.110s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/tkddn647/test/install/race_layer/share/race_layer/hook/cmake_prefix_path.ps1'
+[2.110s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/tkddn647/test/install/race_layer/share/race_layer/hook/cmake_prefix_path.dsv'
+[2.111s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/tkddn647/test/install/race_layer/share/race_layer/hook/cmake_prefix_path.sh'
+[2.112s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer/lib'
+[2.112s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer/bin'
+[2.112s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer/lib/pkgconfig/race_layer.pc'
+[2.113s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer/lib/python3.10/site-packages'
+[2.113s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/race_layer/bin'
+[2.114s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/race_layer/share/race_layer/package.ps1'
+[2.115s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/tkddn647/test/install/race_layer/share/race_layer/package.dsv'
+[2.116s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/race_layer/share/race_layer/package.sh'
+[2.116s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/race_layer/share/race_layer/package.bash'
+[2.117s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/race_layer/share/race_layer/package.zsh'
+[2.118s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/tkddn647/test/install/race_layer/share/colcon-core/packages/race_layer)
+[2.124s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(sim_test)
+[2.125s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test' for CMake module files
+[2.125s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/tkddn647/test/build/sim_test' returned '0': AMENT_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/home/tkddn647/test/install/ebimu_pkg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/tkddn647/test/install/localization_layer:/home/tkddn647/test/install/sensor_layer:/home/tkddn647/test/install/tf_manager_cpp:/home/tkddn647/test/install/sllidar_ros2:/opt/ros/humble PYTHONPATH=/home/tkddn647/test/install/ebimu_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/tkddn647/test/build/sim_test
+[2.126s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test' for CMake config files
+[2.127s] Level 1:colcon.colcon_core.shell:create_environment_hook('sim_test', 'cmake_prefix_path')
+[2.127s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/tkddn647/test/install/sim_test/share/sim_test/hook/cmake_prefix_path.ps1'
+[2.128s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/tkddn647/test/install/sim_test/share/sim_test/hook/cmake_prefix_path.dsv'
+[2.129s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/tkddn647/test/install/sim_test/share/sim_test/hook/cmake_prefix_path.sh'
+[2.130s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test/lib'
+[2.130s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test/bin'
+[2.130s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test/lib/pkgconfig/sim_test.pc'
+[2.130s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test/lib/python3.10/site-packages'
+[2.131s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test/bin'
+[2.131s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/sim_test/share/sim_test/package.ps1'
+[2.132s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/tkddn647/test/install/sim_test/share/sim_test/package.dsv'
+[2.133s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/sim_test/share/sim_test/package.sh'
+[2.133s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/sim_test/share/sim_test/package.bash'
+[2.134s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/sim_test/share/sim_test/package.zsh'
+[2.134s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/tkddn647/test/install/sim_test/share/colcon-core/packages/sim_test)
+[2.135s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(sim_test)
+[2.136s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test' for CMake module files
+[2.136s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test' for CMake config files
+[2.137s] Level 1:colcon.colcon_core.shell:create_environment_hook('sim_test', 'cmake_prefix_path')
+[2.137s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/tkddn647/test/install/sim_test/share/sim_test/hook/cmake_prefix_path.ps1'
+[2.138s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/tkddn647/test/install/sim_test/share/sim_test/hook/cmake_prefix_path.dsv'
+[2.139s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/tkddn647/test/install/sim_test/share/sim_test/hook/cmake_prefix_path.sh'
+[2.140s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test/lib'
+[2.140s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test/bin'
+[2.140s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test/lib/pkgconfig/sim_test.pc'
+[2.140s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test/lib/python3.10/site-packages'
+[2.141s] Level 1:colcon.colcon_core.environment:checking '/home/tkddn647/test/install/sim_test/bin'
+[2.141s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/sim_test/share/sim_test/package.ps1'
+[2.142s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/tkddn647/test/install/sim_test/share/sim_test/package.dsv'
+[2.143s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/sim_test/share/sim_test/package.sh'
+[2.143s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/sim_test/share/sim_test/package.bash'
+[2.144s] INFO:colcon.colcon_core.shell:Creating package script '/home/tkddn647/test/install/sim_test/share/sim_test/package.zsh'
+[2.145s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/tkddn647/test/install/sim_test/share/colcon-core/packages/sim_test)
+[2.145s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[2.146s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[2.146s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[2.146s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[2.208s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[2.208s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[2.208s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[2.208s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[2.209s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.AccessDenied: Failed to connect to socket /run/user/1000/bus: Operation not permitted
+[2.209s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[2.209s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/tkddn647/test/install/local_setup.ps1'
+[2.210s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/tkddn647/test/install/_local_setup_util_ps1.py'
+[2.212s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/tkddn647/test/install/setup.ps1'
+[2.213s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/tkddn647/test/install/local_setup.sh'
+[2.214s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/tkddn647/test/install/_local_setup_util_sh.py'
+[2.214s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/tkddn647/test/install/setup.sh'
+[2.215s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/tkddn647/test/install/local_setup.bash'
+[2.216s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/tkddn647/test/install/setup.bash'
+[2.217s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/tkddn647/test/install/local_setup.zsh'
+[2.218s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/tkddn647/test/install/setup.zsh'

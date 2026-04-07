@@ -1,0 +1,360 @@
+[0.000000] (-) TimerEvent: {}
+[0.000293] (-) JobUnselected: {'identifier': 'ebimu_pkg'}
+[0.000339] (-) JobUnselected: {'identifier': 'localization_layer'}
+[0.000380] (-) JobUnselected: {'identifier': 'race_layer'}
+[0.000422] (-) JobUnselected: {'identifier': 'race_pkg'}
+[0.000462] (-) JobUnselected: {'identifier': 'sensor_layer'}
+[0.000503] (-) JobUnselected: {'identifier': 'sim_test'}
+[0.000543] (-) JobUnselected: {'identifier': 'tf_manager_cpp'}
+[0.000835] (sllidar_ros2) JobQueued: {'identifier': 'sllidar_ros2', 'dependencies': OrderedDict()}
+[0.000879] (sllidar_ros2) JobStarted: {'identifier': 'sllidar_ros2'}
+[0.016047] (sllidar_ros2) JobProgress: {'identifier': 'sllidar_ros2', 'progress': 'cmake'}
+[0.017465] (sllidar_ros2) JobProgress: {'identifier': 'sllidar_ros2', 'progress': 'build'}
+[0.018088] (sllidar_ros2) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/tkddn647/test/build/sllidar_ros2', '--', '-j12', '-l12'], 'cwd': '/home/tkddn647/test/build/sllidar_ros2', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_CI', '1'), ('USER', 'tkddn647'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/out/nls.messages.json","locale":"en","availableLanguages":{}}'), ('VSCODE_WSL_EXT_LOCATION', '/mnt/c/Users/user/.vscode/extensions/ms-vscode-remote.remote-wsl-0.81.9'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('DEBUG', 'release'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/tkddn647'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-82e1d81d-488c-4c48-9085-e311f7b1e133.sock'), ('ROS_PYTHON_VERSION', '3'), ('PAGER', 'cat'), ('LC_CTYPE', 'C.UTF-8'), ('NO_COLOR', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', ''), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('APPLICATION_INSIGHTS_NO_STATSBEAT', 'true'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'tkddn647'), ('NAME', 'DESKTOP-6JKVHB4'), ('WSL_INTEROP', '/run/WSL/677_interop'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '1'), ('PATH', '/home/tkddn647/.local/bin:/home/tkddn647/.codex/tmp/arg0/codex-arg0BxvueL:/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/bin/remote-cli:/home/tkddn647/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Python314/Scripts/:/mnt/c/Python314/:/mnt/c/Program Files (x86)/STMicroelectronics/stlink_server:/mnt/c/ST/STM32CubeCLT_1.20.0:/mnt/c/ST/STM32CubeCLT_1.20.0/CMake/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/st-arm-clang/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/Ninja/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/GNU-tools-for-STM32/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STLink-gdb-server/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STM32CubeProgrammer/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2025a/bin:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/cursor/resources/app/bin:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/user/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/user/AppData/Roaming/npm:/mnt/c/mingw64/bin:/snap/bin:/home/tkddn647/.vscode-server/extensions/openai.chatgpt-0.5.79-linux-x64/bin/linux-x86_64'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('CODEX_SANDBOX_NETWORK_DISABLED', '1'), ('LANG', 'en_US.UTF-8'), ('GH_PAGER', 'cat'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ELECTRON_RUN_AS_NODE', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CODEX_THREAD_ID', '019ce1a5-f22c-7203-a034-b12919311833'), ('GIT_PAGER', 'cat'), ('PWD', '/home/tkddn647/test/build/sllidar_ros2'), ('LC_ALL', 'C.UTF-8'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.099610] (-) TimerEvent: {}
+[0.169655] (sllidar_ros2) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target sllidar_node\n'}
+[0.199572] (sllidar_ros2) StdoutLine: {'line': b'[ 15%] Built target sllidar_client\n'}
+[0.199789] (-) TimerEvent: {}
+[0.199806] (sllidar_ros2) StdoutLine: {'line': b'[ 15%] Building CXX object CMakeFiles/sllidar_node.dir/src/sllidar_node.cpp.o\n'}
+[0.299984] (-) TimerEvent: {}
+[0.400377] (-) TimerEvent: {}
+[0.500687] (-) TimerEvent: {}
+[0.601270] (-) TimerEvent: {}
+[0.701549] (-) TimerEvent: {}
+[0.802122] (-) TimerEvent: {}
+[0.902638] (-) TimerEvent: {}
+[1.002932] (-) TimerEvent: {}
+[1.103471] (-) TimerEvent: {}
+[1.203856] (-) TimerEvent: {}
+[1.304188] (-) TimerEvent: {}
+[1.404505] (-) TimerEvent: {}
+[1.505094] (-) TimerEvent: {}
+[1.605761] (-) TimerEvent: {}
+[1.706212] (-) TimerEvent: {}
+[1.806537] (-) TimerEvent: {}
+[1.906874] (-) TimerEvent: {}
+[2.007200] (-) TimerEvent: {}
+[2.107749] (-) TimerEvent: {}
+[2.208105] (-) TimerEvent: {}
+[2.308538] (-) TimerEvent: {}
+[2.408879] (-) TimerEvent: {}
+[2.509240] (-) TimerEvent: {}
+[2.609570] (-) TimerEvent: {}
+[2.709951] (-) TimerEvent: {}
+[2.810310] (-) TimerEvent: {}
+[2.899794] (sllidar_ros2) StderrLine: {'line': b'In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:41,\n'}
+[2.900054] (sllidar_ros2) StderrLine: {'line': b'                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_driver.h:54,\n'}
+[2.900114] (sllidar_ros2) StderrLine: {'line': b'                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar.h:36,\n'}
+[2.900169] (sllidar_ros2) StderrLine: {'line': b'                 from /home/tkddn647/test/src/sllidar_ros2/src/sllidar_node.cpp:38:\n'}
+[2.900216] (sllidar_ros2) StderrLine: {'line': b'/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_protocol.h:66:16: warning: ISO C++ forbids zero-size array \xe2\x80\x98data\xe2\x80\x99 [-Wpedantic]\n'}
+[2.900293] (sllidar_ros2) StderrLine: {'line': b'   66 |     sl_u8 data[0];\n'}
+[2.900345] (sllidar_ros2) StderrLine: {'line': b'      |                ^\n'}
+[2.900387] (sllidar_ros2) StderrLine: {'line': b'In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_driver.h:54,\n'}
+[2.900427] (sllidar_ros2) StderrLine: {'line': b'                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar.h:36,\n'}
+[2.900466] (sllidar_ros2) StderrLine: {'line': b'                 from /home/tkddn647/test/src/sllidar_ros2/src/sllidar_node.cpp:38:\n'}
+[2.900503] (sllidar_ros2) StderrLine: {'line': b'/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:324:20: warning: ISO C++ forbids zero-size array \xe2\x80\x98payload\xe2\x80\x99 [-Wpedantic]\n'}
+[2.900539] (sllidar_ros2) StderrLine: {'line': b'  324 |     sl_u8  payload[0];\n'}
+[2.900574] (sllidar_ros2) StderrLine: {'line': b'      |                    ^\n'}
+[2.910491] (-) TimerEvent: {}
+[3.010796] (-) TimerEvent: {}
+[3.111058] (-) TimerEvent: {}
+[3.211459] (-) TimerEvent: {}
+[3.311751] (-) TimerEvent: {}
+[3.412084] (-) TimerEvent: {}
+[3.512445] (-) TimerEvent: {}
+[3.612767] (-) TimerEvent: {}
+[3.713032] (-) TimerEvent: {}
+[3.813394] (-) TimerEvent: {}
+[3.913716] (-) TimerEvent: {}
+[4.014071] (-) TimerEvent: {}
+[4.114519] (-) TimerEvent: {}
+[4.214844] (-) TimerEvent: {}
+[4.315207] (-) TimerEvent: {}
+[4.415500] (-) TimerEvent: {}
+[4.515793] (-) TimerEvent: {}
+[4.616082] (-) TimerEvent: {}
+[4.716440] (-) TimerEvent: {}
+[4.816792] (-) TimerEvent: {}
+[4.917147] (-) TimerEvent: {}
+[5.017468] (-) TimerEvent: {}
+[5.117735] (-) TimerEvent: {}
+[5.218020] (-) TimerEvent: {}
+[5.286503] (sllidar_ros2) StdoutLine: {'line': b'[ 20%] Linking CXX executable sllidar_node\n'}
+[5.318172] (-) TimerEvent: {}
+[5.418458] (-) TimerEvent: {}
+[5.518743] (-) TimerEvent: {}
+[5.619045] (-) TimerEvent: {}
+[5.718959] (sllidar_ros2) StdoutLine: {'line': b'[100%] Built target sllidar_node\n'}
+[5.719199] (-) TimerEvent: {}
+[5.731711] (sllidar_ros2) CommandEnded: {'returncode': 0}
+[5.733330] (sllidar_ros2) JobProgress: {'identifier': 'sllidar_ros2', 'progress': 'install'}
+[5.743904] (sllidar_ros2) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/tkddn647/test/build/sllidar_ros2'], 'cwd': '/home/tkddn647/test/build/sllidar_ros2', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('CODEX_CI', '1'), ('USER', 'tkddn647'), ('CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'codex_vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/out/nls.messages.json","locale":"en","availableLanguages":{}}'), ('VSCODE_WSL_EXT_LOCATION', '/mnt/c/Users/user/.vscode/extensions/ms-vscode-remote.remote-wsl-0.81.9'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('DEBUG', 'release'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/tkddn647'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-82e1d81d-488c-4c48-9085-e311f7b1e133.sock'), ('ROS_PYTHON_VERSION', '3'), ('PAGER', 'cat'), ('LC_CTYPE', 'C.UTF-8'), ('NO_COLOR', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', ''), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('APPLICATION_INSIGHTS_NO_STATSBEAT', 'true'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'tkddn647'), ('NAME', 'DESKTOP-6JKVHB4'), ('WSL_INTEROP', '/run/WSL/677_interop'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('RUST_LOG', 'warn'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '1'), ('PATH', '/home/tkddn647/.local/bin:/home/tkddn647/.codex/tmp/arg0/codex-arg0BxvueL:/home/tkddn647/.vscode-server/bin/072586267e68ece9a47aa43f8c108e0dcbf44622/bin/remote-cli:/home/tkddn647/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Python314/Scripts/:/mnt/c/Python314/:/mnt/c/Program Files (x86)/STMicroelectronics/stlink_server:/mnt/c/ST/STM32CubeCLT_1.20.0:/mnt/c/ST/STM32CubeCLT_1.20.0/CMake/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/st-arm-clang/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/Ninja/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/GNU-tools-for-STM32/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STLink-gdb-server/bin:/mnt/c/ST/STM32CubeCLT_1.20.0/STM32CubeProgrammer/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2025a/bin:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/cursor/resources/app/bin:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/user/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/user/AppData/Roaming/npm:/mnt/c/mingw64/bin:/snap/bin:/home/tkddn647/.vscode-server/extensions/openai.chatgpt-0.5.79-linux-x64/bin/linux-x86_64'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('CODEX_SANDBOX_NETWORK_DISABLED', '1'), ('LANG', 'en_US.UTF-8'), ('GH_PAGER', 'cat'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ELECTRON_RUN_AS_NODE', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CODEX_THREAD_ID', '019ce1a5-f22c-7203-a034-b12919311833'), ('GIT_PAGER', 'cat'), ('PWD', '/home/tkddn647/test/build/sllidar_ros2'), ('LC_ALL', 'C.UTF-8'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[5.754252] (sllidar_ros2) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[5.755477] (sllidar_ros2) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[5.756420] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_t1_launch.py\n'}
+[5.756620] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_t1_launch.py\n'}
+[5.756903] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/rviz/sllidar_ros2.rviz\n'}
+[5.757348] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/lib/sllidar_ros2/sllidar_node\n'}
+[5.757518] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/lib/sllidar_ros2/sllidar_client\n'}
+[5.757759] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/ament_index/resource_index/package_run_dependencies/sllidar_ros2\n'}
+[5.757978] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/ament_index/resource_index/parent_prefix_path/sllidar_ros2\n'}
+[5.758191] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/environment/ament_prefix_path.sh\n'}
+[5.758358] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/environment/ament_prefix_path.dsv\n'}
+[5.758540] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/environment/path.sh\n'}
+[5.758741] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/environment/path.dsv\n'}
+[5.758959] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/local_setup.bash\n'}
+[5.759318] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/local_setup.sh\n'}
+[5.759648] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/local_setup.zsh\n'}
+[5.759714] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/local_setup.dsv\n'}
+[5.759765] (sllidar_ros2) StdoutLine: {'line': b'-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/package.dsv\n'}
+[5.770036] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/ament_index/resource_index/packages/sllidar_ros2\n'}
+[5.770807] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[5.770877] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[5.770929] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/cmake/sllidar_ros2Config.cmake\n'}
+[5.770972] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/cmake/sllidar_ros2Config-version.cmake\n'}
+[5.771012] (sllidar_ros2) StdoutLine: {'line': b'-- Up-to-date symlink: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/package.xml\n'}
+[5.819405] (-) TimerEvent: {}
+[5.919877] (-) TimerEvent: {}
+[6.020293] (-) TimerEvent: {}
+[6.121028] (-) TimerEvent: {}
+[6.221489] (-) TimerEvent: {}
+[6.321862] (-) TimerEvent: {}
+[6.422293] (-) TimerEvent: {}
+[6.522702] (-) TimerEvent: {}
+[6.623206] (-) TimerEvent: {}
+[6.723593] (-) TimerEvent: {}
+[6.823988] (-) TimerEvent: {}
+[6.924442] (-) TimerEvent: {}
+[7.024936] (-) TimerEvent: {}
+[7.125384] (-) TimerEvent: {}
+[7.225779] (-) TimerEvent: {}
+[7.326199] (-) TimerEvent: {}
+[7.426554] (-) TimerEvent: {}
+[7.526867] (-) TimerEvent: {}
+[7.627242] (-) TimerEvent: {}
+[7.727672] (-) TimerEvent: {}
+[7.828209] (-) TimerEvent: {}
+[7.928996] (-) TimerEvent: {}
+[8.029535] (-) TimerEvent: {}
+[8.130005] (-) TimerEvent: {}
+[8.230439] (-) TimerEvent: {}
+[8.331193] (-) TimerEvent: {}
+[8.431669] (-) TimerEvent: {}
+[8.532073] (-) TimerEvent: {}
+[8.633056] (-) TimerEvent: {}
+[8.733533] (-) TimerEvent: {}
+[8.834017] (-) TimerEvent: {}
+[8.934442] (-) TimerEvent: {}
+[9.034788] (-) TimerEvent: {}
+[9.135405] (-) TimerEvent: {}
+[9.235777] (-) TimerEvent: {}
+[9.336118] (-) TimerEvent: {}
+[9.436459] (-) TimerEvent: {}
+[9.536847] (-) TimerEvent: {}
+[9.637715] (-) TimerEvent: {}
+[9.738182] (-) TimerEvent: {}
+[9.838524] (-) TimerEvent: {}
+[9.938911] (-) TimerEvent: {}
+[10.039302] (-) TimerEvent: {}
+[10.139708] (-) TimerEvent: {}
+[10.240085] (-) TimerEvent: {}
+[10.340678] (-) TimerEvent: {}
+[10.441134] (-) TimerEvent: {}
+[10.541506] (-) TimerEvent: {}
+[10.641940] (-) TimerEvent: {}
+[10.742397] (-) TimerEvent: {}
+[10.842814] (-) TimerEvent: {}
+[10.943205] (-) TimerEvent: {}
+[11.043537] (-) TimerEvent: {}
+[11.143914] (-) TimerEvent: {}
+[11.244262] (-) TimerEvent: {}
+[11.344571] (-) TimerEvent: {}
+[11.444988] (-) TimerEvent: {}
+[11.545622] (-) TimerEvent: {}
+[11.646013] (-) TimerEvent: {}
+[11.746395] (-) TimerEvent: {}
+[11.846862] (-) TimerEvent: {}
+[11.947256] (-) TimerEvent: {}
+[12.047664] (-) TimerEvent: {}
+[12.148095] (-) TimerEvent: {}
+[12.248498] (-) TimerEvent: {}
+[12.348915] (-) TimerEvent: {}
+[12.449293] (-) TimerEvent: {}
+[12.550774] (-) TimerEvent: {}
+[12.651220] (-) TimerEvent: {}
+[12.751595] (-) TimerEvent: {}
+[12.851920] (-) TimerEvent: {}
+[12.952356] (-) TimerEvent: {}
+[13.052714] (-) TimerEvent: {}
+[13.153310] (-) TimerEvent: {}
+[13.254011] (-) TimerEvent: {}
+[13.354433] (-) TimerEvent: {}
+[13.454797] (-) TimerEvent: {}
+[13.555217] (-) TimerEvent: {}
+[13.655577] (-) TimerEvent: {}
+[13.756241] (-) TimerEvent: {}
+[13.856731] (-) TimerEvent: {}
+[13.957227] (-) TimerEvent: {}
+[14.057654] (-) TimerEvent: {}
+[14.158132] (-) TimerEvent: {}
+[14.258632] (-) TimerEvent: {}
+[14.359072] (-) TimerEvent: {}
+[14.459535] (-) TimerEvent: {}
+[14.559911] (-) TimerEvent: {}
+[14.660378] (-) TimerEvent: {}
+[14.760790] (-) TimerEvent: {}
+[14.861186] (-) TimerEvent: {}
+[14.961621] (-) TimerEvent: {}
+[15.062090] (-) TimerEvent: {}
+[15.162539] (-) TimerEvent: {}
+[15.262958] (-) TimerEvent: {}
+[15.363574] (-) TimerEvent: {}
+[15.463942] (-) TimerEvent: {}
+[15.564345] (-) TimerEvent: {}
+[15.664713] (-) TimerEvent: {}
+[15.765451] (-) TimerEvent: {}
+[15.865903] (-) TimerEvent: {}
+[15.966391] (-) TimerEvent: {}
+[16.066896] (-) TimerEvent: {}
+[16.167805] (-) TimerEvent: {}
+[16.268466] (-) TimerEvent: {}
+[16.368841] (-) TimerEvent: {}
+[16.469209] (-) TimerEvent: {}
+[16.569612] (-) TimerEvent: {}
+[16.670043] (-) TimerEvent: {}
+[16.770954] (-) TimerEvent: {}
+[16.872103] (-) TimerEvent: {}
+[16.973038] (-) TimerEvent: {}
+[17.073555] (-) TimerEvent: {}
+[17.173969] (-) TimerEvent: {}
+[17.274406] (-) TimerEvent: {}
+[17.374983] (-) TimerEvent: {}
+[17.475396] (-) TimerEvent: {}
+[17.576041] (-) TimerEvent: {}
+[17.676511] (-) TimerEvent: {}
+[17.777097] (-) TimerEvent: {}
+[17.877445] (-) TimerEvent: {}
+[17.978028] (-) TimerEvent: {}
+[18.078639] (-) TimerEvent: {}
+[18.179584] (-) TimerEvent: {}
+[18.280136] (-) TimerEvent: {}
+[18.380604] (-) TimerEvent: {}
+[18.481538] (-) TimerEvent: {}
+[18.582090] (-) TimerEvent: {}
+[18.682536] (-) TimerEvent: {}
+[18.782871] (-) TimerEvent: {}
+[18.883271] (-) TimerEvent: {}
+[18.983634] (-) TimerEvent: {}
+[19.084042] (-) TimerEvent: {}
+[19.184426] (-) TimerEvent: {}
+[19.284864] (-) TimerEvent: {}
+[19.385309] (-) TimerEvent: {}
+[19.485722] (-) TimerEvent: {}
+[19.586098] (-) TimerEvent: {}
+[19.686566] (-) TimerEvent: {}
+[19.786918] (-) TimerEvent: {}
+[19.887243] (-) TimerEvent: {}
+[19.987587] (-) TimerEvent: {}
+[20.087885] (-) TimerEvent: {}
+[20.188237] (-) TimerEvent: {}
+[20.288646] (-) TimerEvent: {}
+[20.389665] (-) TimerEvent: {}
+[20.490216] (-) TimerEvent: {}
+[20.590692] (-) TimerEvent: {}
+[20.691077] (-) TimerEvent: {}
+[20.791594] (-) TimerEvent: {}
+[20.892534] (-) TimerEvent: {}
+[20.992919] (-) TimerEvent: {}
+[21.093236] (-) TimerEvent: {}
+[21.193580] (-) TimerEvent: {}
+[21.294320] (-) TimerEvent: {}
+[21.394713] (-) TimerEvent: {}
+[21.495227] (-) TimerEvent: {}
+[21.595634] (-) TimerEvent: {}
+[21.696036] (-) TimerEvent: {}
+[21.796346] (-) TimerEvent: {}
+[21.896717] (-) TimerEvent: {}
+[21.997115] (-) TimerEvent: {}
+[22.097526] (-) TimerEvent: {}
+[22.198121] (-) TimerEvent: {}
+[22.298535] (-) TimerEvent: {}
+[22.398903] (-) TimerEvent: {}
+[22.499348] (-) TimerEvent: {}
+[22.599701] (-) TimerEvent: {}
+[22.700036] (-) TimerEvent: {}
+[22.800351] (-) TimerEvent: {}
+[22.900732] (-) TimerEvent: {}
+[23.001148] (-) TimerEvent: {}
+[23.101548] (-) TimerEvent: {}
+[23.202059] (-) TimerEvent: {}
+[23.302498] (-) TimerEvent: {}
+[23.402869] (-) TimerEvent: {}
+[23.503245] (-) TimerEvent: {}
+[23.603707] (-) TimerEvent: {}
+[23.704138] (-) TimerEvent: {}
+[23.805378] (-) TimerEvent: {}
+[23.905894] (-) TimerEvent: {}
+[24.006316] (-) TimerEvent: {}
+[24.106733] (-) TimerEvent: {}
+[24.207248] (-) TimerEvent: {}
+[24.307687] (-) TimerEvent: {}
+[24.408066] (-) TimerEvent: {}
+[24.508389] (-) TimerEvent: {}
+[24.608760] (-) TimerEvent: {}
+[24.709230] (-) TimerEvent: {}
+[24.809599] (-) TimerEvent: {}
+[24.909968] (-) TimerEvent: {}
+[25.010398] (-) TimerEvent: {}
+[25.110860] (-) TimerEvent: {}
+[25.211197] (-) TimerEvent: {}
+[25.311568] (-) TimerEvent: {}
+[25.412448] (-) TimerEvent: {}
+[25.512905] (-) TimerEvent: {}
+[25.613263] (-) TimerEvent: {}
+[25.713568] (-) TimerEvent: {}
+[25.813953] (-) TimerEvent: {}
+[25.914364] (-) TimerEvent: {}
+[26.014763] (-) TimerEvent: {}
+[26.115208] (-) TimerEvent: {}
+[26.215726] (-) TimerEvent: {}
+[26.316182] (-) TimerEvent: {}
+[26.416815] (-) TimerEvent: {}
+[26.517718] (-) TimerEvent: {}
+[26.618723] (-) TimerEvent: {}
+[26.719221] (-) TimerEvent: {}
+[26.819631] (-) TimerEvent: {}
+[26.920149] (-) TimerEvent: {}
+[27.020680] (-) TimerEvent: {}
+[27.121073] (-) TimerEvent: {}
+[27.221600] (-) TimerEvent: {}
+[27.322366] (-) TimerEvent: {}
+[27.423376] (-) TimerEvent: {}
+[27.523820] (-) TimerEvent: {}
+[27.624319] (-) TimerEvent: {}
+[27.727450] (-) TimerEvent: {}
+[27.828025] (-) TimerEvent: {}
+[27.928494] (-) TimerEvent: {}
+[28.029088] (-) TimerEvent: {}
+[28.129583] (-) TimerEvent: {}
+[28.230167] (-) TimerEvent: {}
+[28.330630] (-) TimerEvent: {}
+[28.431155] (-) TimerEvent: {}
+[28.531567] (-) TimerEvent: {}
+[28.631946] (-) TimerEvent: {}
+[28.732274] (-) TimerEvent: {}
+[28.832651] (-) TimerEvent: {}
+[28.933001] (-) TimerEvent: {}
+[29.033399] (-) TimerEvent: {}
+[29.133822] (-) TimerEvent: {}
+[29.234225] (-) TimerEvent: {}
+[29.334786] (-) TimerEvent: {}
+[29.435658] (-) TimerEvent: {}
+[29.536048] (-) TimerEvent: {}
+[29.636407] (-) TimerEvent: {}
+[29.736763] (-) TimerEvent: {}
+[29.837115] (-) TimerEvent: {}
+[29.938018] (-) TimerEvent: {}
+[30.027172] (sllidar_ros2) CommandEnded: {'returncode': 0}
+[30.038145] (-) TimerEvent: {}
+[30.066116] (sllidar_ros2) JobEnded: {'identifier': 'sllidar_ros2', 'rc': 0}
+[30.067944] (-) EventReactorShutdown: {}

@@ -1,0 +1,19 @@
+running develop
+running egg_info
+writing race_pkg.egg-info/PKG-INFO
+writing dependency_links to race_pkg.egg-info/dependency_links.txt
+writing entry points to race_pkg.egg-info/entry_points.txt
+writing requirements to race_pkg.egg-info/requires.txt
+writing top-level names to race_pkg.egg-info/top_level.txt
+reading manifest file 'race_pkg.egg-info/SOURCES.txt'
+writing manifest file 'race_pkg.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/tkddn647/test/install/race_pkg/lib/python3.10/site-packages/race-pkg.egg-link (link to .)
+Installing centerline_publisher script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+Installing fgm_node script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+Installing local_planner script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+Installing scan_rate_adapter script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+Installing static_obstacle_detector script to /home/tkddn647/test/install/race_pkg/lib/race_pkg
+
+Installed /home/tkddn647/test/build/race_pkg
+running symlink_data

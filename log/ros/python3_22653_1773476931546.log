@@ -1,0 +1,32 @@
+[INFO] [1773476931.603104379] [map_auto_saver]: Periodic auto-save enabled: every 10.0s -> /home/tkddn647/test/maps
+[INFO] [1773476941.596099301] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_172901.pbstream
+[INFO] [1773476941.597850809] [map_auto_saver]: Map saved successfully.
+[INFO] [1773476941.598253736] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_172901.png + .yaml
+[ERROR] [1773476944.016294817] [map_auto_saver]: ROS map export failed (code=1). stdout="[ros2run]: Process exited with failure 1" stderr="1773476941.772603 [0] map_saver_: selected interface "lo" is not multicast-capable: disabling multicast
+[INFO] [1773476941.784785826] [map_saver]: 
+	map_saver lifecycle node launched. 
+	Waiting on external lifecycle transitions to activate
+	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[INFO] [1773476941.784967492] [map_saver]: Creating
+[INFO] [1773476941.785471433] [map_saver]: Configuring
+[INFO] [1773476941.787754373] [map_saver]: Saving map from '/map' topic to '/home/tkddn647/test/maps/my_map_20260314_172901' file
+[WARN] [1773476941.787800601] [map_saver]: Free threshold unspecified. Setting it to default value: 0.250000
+[WARN] [1773476941.787823635] [map_saver]: Occupied threshold unspecified. Setting it to default value: 0.650000
+[ERROR] [1773476943.788570170] [map_saver]: Failed to spin map subscription
+[INFO] [1773476943.792073735] [map_saver]: Destroying"
+[WARN] [1773476944.016807874] [map_auto_saver]: Falling back to pbstream->ros_map export (periodic) -> /home/tkddn647/test/maps/my_map_20260314_172901_rosmap.yaml
+[ERROR] [1773476944.289775463] [map_auto_saver]: pbstream_to_ros_map failed (code=250). stdout="[ros2run]: Aborted" stderr="I0314 17:29:04.186746 22875 pbstream_to_ros_map_main.cpp:44] Loading submap slices from serialized data.
+I0314 17:29:04.187425 22875 pbstream_to_ros_map_main.cpp:52] Generating combined map image from submap slices.
+F0314 17:29:04.187722 22875 image.cc:55] Check failed: cairo_image_surface_get_format(surface.get()) == kCairoFormat (-1 vs. 0) 
+*** Check failure stack trace: ***
+    @     0x7bdbb5b42b03  google::LogMessage::Fail()
+    @     0x7bdbb5b4a9d1  google::LogMessage::SendToLog()
+    @     0x7bdbb5b427c2  google::LogMessage::Flush()
+    @     0x7bdbb5b4478f  google::LogMessageFatal::~LogMessageFatal()
+    @     0x5dda6cb0aca2  (unknown)
+    @     0x5dda6cb09ae8  (unknown)
+    @     0x5dda6cb0812f  (unknown)
+    @     0x7bdbb4e29d90  (unknown)
+    @     0x7bdbb4e29e40  __libc_start_main
+    @     0x5dda6cb090f5  (unknown)"
+[INFO] [1773476946.251363101] [map_auto_saver]: KeyboardInterrupt received. Attempting shutdown save...

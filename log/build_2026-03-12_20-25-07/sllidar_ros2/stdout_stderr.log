@@ -1,0 +1,216 @@
+-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+-- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+-- Found std_srvs: 4.9.0 (/opt/ros/humble/share/std_srvs/cmake)
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/tkddn647/test/build/sllidar_ros2
+Consolidate compiler generated dependencies of target sllidar_client
+Consolidate compiler generated dependencies of target sllidar_node
+[  5%] Building CXX object CMakeFiles/sllidar_client.dir/src/sllidar_client.cpp.o
+[ 10%] Building CXX object CMakeFiles/sllidar_node.dir/sdk/src/hal/thread.cpp.o
+[ 15%] Building CXX object CMakeFiles/sllidar_node.dir/src/sllidar_node.cpp.o
+[ 20%] Building CXX object CMakeFiles/sllidar_node.dir/sdk/src/sl_crc.cpp.o
+[ 25%] Building CXX object CMakeFiles/sllidar_node.dir/sdk/src/rplidar_driver.cpp.o
+[ 30%] Building CXX object CMakeFiles/sllidar_node.dir/sdk/src/arch/linux/timer.cpp.o
+[ 35%] Building CXX object CMakeFiles/sllidar_node.dir/sdk/src/sl_serial_channel.cpp.o
+[ 40%] Building CXX object CMakeFiles/sllidar_node.dir/sdk/src/dataunpacker/dataunpacker.cpp.o
+[ 45%] Building CXX object CMakeFiles/sllidar_node.dir/sdk/src/sl_udp_channel.cpp.o
+[ 50%] Building CXX object CMakeFiles/sllidar_node.dir/sdk/src/sl_tcp_channel.cpp.o
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:41,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_crc.h:36,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_crc.cpp:33:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_protocol.h:66:16: warning: ISO C++ forbids zero-size array ‘data’ [-Wpedantic]
+   66 |     sl_u8 data[0];
+      |                ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_crc.h:36,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_crc.cpp:33:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:324:20: warning: ISO C++ forbids zero-size array ‘payload’ [-Wpedantic]
+  324 |     sl_u8  payload[0];
+      |                    ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:41,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_driver.h:54,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_tcp_channel.cpp:33:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_protocol.h:66:16: warning: ISO C++ forbids zero-size array ‘data’ [-Wpedantic]
+   66 |     sl_u8 data[0];
+      |                ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_driver.h:54,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_tcp_channel.cpp:33:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:324:20: warning: ISO C++ forbids zero-size array ‘payload’ [-Wpedantic]
+  324 |     sl_u8  payload[0];
+      |                    ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:41,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_driver.h:54,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_serial_channel.cpp:33:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_protocol.h:66:16: warning: ISO C++ forbids zero-size array ‘data’ [-Wpedantic]
+   66 |     sl_u8 data[0];
+      |                ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_driver.h:54,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_serial_channel.cpp:33:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:324:20: warning: ISO C++ forbids zero-size array ‘payload’ [-Wpedantic]
+  324 |     sl_u8  payload[0];
+      |                    ^
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_tcp_channel.cpp: In member function ‘void sl::TcpChannel::setStatus(_u32)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_tcp_channel.cpp:109:29: warning: unused parameter ‘flag’ [-Wunused-parameter]
+  109 |         void setStatus(_u32 flag){}
+      |                        ~~~~~^~~~
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:41,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_driver.h:54,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_udp_channel.cpp:33:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_protocol.h:66:16: warning: ISO C++ forbids zero-size array ‘data’ [-Wpedantic]
+   66 |     sl_u8 data[0];
+      |                ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_driver.h:54,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_udp_channel.cpp:33:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:324:20: warning: ISO C++ forbids zero-size array ‘payload’ [-Wpedantic]
+  324 |     sl_u8  payload[0];
+      |                    ^
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_udp_channel.cpp: In member function ‘void sl::UdpChannel::setStatus(_u32)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_udp_channel.cpp:112:29: warning: unused parameter ‘flag’ [-Wunused-parameter]
+  112 |         void setStatus(_u32 flag){}
+      |                        ~~~~~^~~~
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar_protocol.h:36,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar.h:39,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sdkcommon.h:49,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/rplidar_driver.cpp:33:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_protocol.h:66:16: warning: ISO C++ forbids zero-size array ‘data’ [-Wpedantic]
+   66 |     sl_u8 data[0];
+      |                ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar_cmd.h:36,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar.h:40,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sdkcommon.h:49,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/rplidar_driver.cpp:33:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:324:20: warning: ISO C++ forbids zero-size array ‘payload’ [-Wpedantic]
+  324 |     sl_u8  payload[0];
+      |                    ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar_protocol.h:36,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar.h:39,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/src/sdkcommon.h:49,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/hal/thread.cpp:35:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_protocol.h:66:16: warning: ISO C++ forbids zero-size array ‘data’ [-Wpedantic]
+   66 |     sl_u8 data[0];
+      |                ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar_cmd.h:36,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar.h:40,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/src/sdkcommon.h:49,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/hal/thread.cpp:35:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:324:20: warning: ISO C++ forbids zero-size array ‘payload’ [-Wpedantic]
+  324 |     sl_u8  payload[0];
+      |                    ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar_protocol.h:36,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar.h:39,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/src/sdkcommon.h:49,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunnpacker_commondef.h:41,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.cpp:39:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_protocol.h:66:16: warning: ISO C++ forbids zero-size array ‘data’ [-Wpedantic]
+   66 |     sl_u8 data[0];
+      |                ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar_cmd.h:36,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar.h:40,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/src/sdkcommon.h:49,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunnpacker_commondef.h:41,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.cpp:39:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:324:20: warning: ISO C++ forbids zero-size array ‘payload’ [-Wpedantic]
+  324 |     sl_u8  payload[0];
+      |                    ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/sdk/src/hal/thread.cpp:43:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/src/arch/linux/thread.hpp: In static member function ‘static rp::hal::Thread rp::hal::Thread::create(thread_proc_t, void*)’:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/src/arch/linux/thread.hpp:52:57: warning: cast between incompatible function types from ‘thread_proc_t’ {aka ‘long unsigned int (*)(void*)’} to ‘void* (*)(void*)’ [-Wcast-function-type]
+   52 |     pthread_create((pthread_t *)&newborn._handle, NULL, (void * (*)(void *))proc, data);
+      |                                                         ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/./sdk/src/arch/linux/thread.hpp: In member function ‘u_result rp::hal::Thread::join(long unsigned int)’:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/src/arch/linux/thread.hpp:176:37: warning: unused parameter ‘timeout’ [-Wunused-parameter]
+  176 | u_result Thread::join(unsigned long timeout)
+      |                       ~~~~~~~~~~~~~~^~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/rplidar_driver.cpp: In member function ‘u_result rp::standalone::rplidar::RPlidarDriver::connect(const char*, _u32, _u32)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/rplidar_driver.cpp:67:77: warning: unused parameter ‘flag’ [-Wunused-parameter]
+   67 |     u_result RPlidarDriver::connect(const char *path, _u32 portOrBaud, _u32 flag)
+      |                                                                        ~~~~~^~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/rplidar_driver.cpp: In member function ‘u_result rp::standalone::rplidar::RPlidarDriver::reset(_u32)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/rplidar_driver.cpp:101:40: warning: unused parameter ‘timeout’ [-Wunused-parameter]
+  101 |     u_result RPlidarDriver::reset(_u32 timeout)
+      |                                   ~~~~~^~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/rplidar_driver.cpp: In member function ‘u_result rp::standalone::rplidar::RPlidarDriver::getScanDataWithInterval(rplidar_response_measurement_node_t*, size_t&)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/rplidar_driver.cpp:180:91: warning: unused parameter ‘nodebuffer’ [-Wunused-parameter]
+  180 |     u_result RPlidarDriver::getScanDataWithInterval(rplidar_response_measurement_node_t * nodebuffer, size_t & count)
+      |                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/rplidar_driver.cpp:180:112: warning: unused parameter ‘count’ [-Wunused-parameter]
+  180 |     u_result RPlidarDriver::getScanDataWithInterval(rplidar_response_measurement_node_t * nodebuffer, size_t & count)
+      |                                                                                                       ~~~~~~~~~^~~~~
+In file included from /home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.cpp:40:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h: In member function ‘virtual void sl::internal::LIDARSampleDataListener::onCustomSampleDataDecoded(_u8, _u32, const void*, size_t)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:54:52: warning: unused parameter ‘ansType’ [-Wunused-parameter]
+   54 |         virtual void onCustomSampleDataDecoded(_u8 ansType, _u32 customCode, const void* data, size_t size) {}
+      |                                                ~~~~^~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:54:66: warning: unused parameter ‘customCode’ [-Wunused-parameter]
+   54 |         virtual void onCustomSampleDataDecoded(_u8 ansType, _u32 customCode, const void* data, size_t size) {}
+      |                                                             ~~~~~^~~~~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:54:90: warning: unused parameter ‘data’ [-Wunused-parameter]
+   54 |         virtual void onCustomSampleDataDecoded(_u8 ansType, _u32 customCode, const void* data, size_t size) {}
+      |                                                                              ~~~~~~~~~~~~^~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:54:103: warning: unused parameter ‘size’ [-Wunused-parameter]
+   54 |         virtual void onCustomSampleDataDecoded(_u8 ansType, _u32 customCode, const void* data, size_t size) {}
+      |                                                                                                ~~~~~~~^~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h: In member function ‘virtual void sl::internal::LIDARSampleDataListener::onDecodingError(int, _u8, const void*, size_t)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:56:42: warning: unused parameter ‘errMsg’ [-Wunused-parameter]
+   56 |         virtual void onDecodingError(int errMsg, _u8 ansType, const void* payload, size_t size) {}
+      |                                      ~~~~^~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:56:54: warning: unused parameter ‘ansType’ [-Wunused-parameter]
+   56 |         virtual void onDecodingError(int errMsg, _u8 ansType, const void* payload, size_t size) {}
+      |                                                  ~~~~^~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:56:75: warning: unused parameter ‘payload’ [-Wunused-parameter]
+   56 |         virtual void onDecodingError(int errMsg, _u8 ansType, const void* payload, size_t size) {}
+      |                                                               ~~~~~~~~~~~~^~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:56:91: warning: unused parameter ‘size’ [-Wunused-parameter]
+   56 |         virtual void onDecodingError(int errMsg, _u8 ansType, const void* payload, size_t size) {}
+      |                                                                                    ~~~~~~~^~~~
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:41,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_driver.h:54,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar.h:36,
+                 from /home/tkddn647/test/src/sllidar_ros2/src/sllidar_node.cpp:38:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_protocol.h:66:16: warning: ISO C++ forbids zero-size array ‘data’ [-Wpedantic]
+   66 |     sl_u8 data[0];
+      |                ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_driver.h:54,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar.h:36,
+                 from /home/tkddn647/test/src/sllidar_ros2/src/sllidar_node.cpp:38:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:324:20: warning: ISO C++ forbids zero-size array ‘payload’ [-Wpedantic]
+  324 |     sl_u8  payload[0];
+      |                    ^
+[ 55%] Linking CXX executable sllidar_node
+[ 95%] Built target sllidar_node
+[100%] Linking CXX executable sllidar_client
+[100%] Built target sllidar_client
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/launch/sllidar_t1_launch.py
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/launch/view_sllidar_t1_launch.py
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/rviz/sllidar_ros2.rviz
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/lib/sllidar_ros2/sllidar_node
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/lib/sllidar_ros2/sllidar_client
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/ament_index/resource_index/package_run_dependencies/sllidar_ros2
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/ament_index/resource_index/parent_prefix_path/sllidar_ros2
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/environment/ament_prefix_path.sh
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/environment/ament_prefix_path.dsv
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/environment/path.sh
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/environment/path.dsv
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/local_setup.bash
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/local_setup.sh
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/local_setup.zsh
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/local_setup.dsv
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/package.dsv
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/ament_index/resource_index/packages/sllidar_ros2
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/cmake/sllidar_ros2Config.cmake
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/cmake/sllidar_ros2Config-version.cmake
+-- Symlinking: /home/tkddn647/test/install/sllidar_ros2/share/sllidar_ros2/package.xml

@@ -1,0 +1,222 @@
+[INFO] [1773475359.047223476] [map_auto_saver]: Periodic auto-save enabled: every 8.0s -> /home/tkddn647/test/maps
+[INFO] [1773475367.039841091] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170247.pbstream
+[INFO] [1773475367.065700510] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475367.066129738] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170247.png + .yaml
+[INFO] [1773475367.669930242] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475375.039965682] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170255.pbstream
+[INFO] [1773475375.067878302] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475375.068294686] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170255.png + .yaml
+[INFO] [1773475375.690459073] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475383.038887210] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170303.pbstream
+[INFO] [1773475383.082490911] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475383.083022858] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170303.png + .yaml
+[INFO] [1773475383.701180192] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475391.039656188] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170311.pbstream
+[INFO] [1773475391.088813137] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475391.089293933] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170311.png + .yaml
+[INFO] [1773475391.704969052] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475399.039153494] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170319.pbstream
+[INFO] [1773475399.108046095] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475399.108479169] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170319.png + .yaml
+[INFO] [1773475399.738579756] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475407.038957030] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170327.pbstream
+[INFO] [1773475407.110292163] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475407.110840389] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170327.png + .yaml
+[INFO] [1773475407.733460508] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475415.039457581] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170335.pbstream
+[INFO] [1773475415.124561284] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475415.125029404] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170335.png + .yaml
+[INFO] [1773475415.657254139] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475423.039027921] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170343.pbstream
+[INFO] [1773475423.130747581] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475423.131369137] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170343.png + .yaml
+[INFO] [1773475423.663738295] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475431.039418868] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170351.pbstream
+[INFO] [1773475431.148856277] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475431.149348767] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170351.png + .yaml
+[INFO] [1773475431.771650798] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475439.039393180] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170359.pbstream
+[INFO] [1773475439.155415657] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475439.155955132] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170359.png + .yaml
+[INFO] [1773475439.763646782] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475447.039072294] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170407.pbstream
+[INFO] [1773475447.169120848] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475447.169572465] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170407.png + .yaml
+[INFO] [1773475447.789452978] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475455.038987697] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170415.pbstream
+[INFO] [1773475455.188174637] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475455.188645813] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170415.png + .yaml
+[INFO] [1773475455.803854317] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475463.039290760] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170423.pbstream
+[INFO] [1773475463.194692889] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475463.195483191] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170423.png + .yaml
+[INFO] [1773475463.825190415] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475471.039179992] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170431.pbstream
+[INFO] [1773475471.206666483] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475471.207242249] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170431.png + .yaml
+[INFO] [1773475471.831012370] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475479.039221311] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170439.pbstream
+[INFO] [1773475479.217103409] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475479.217636257] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170439.png + .yaml
+[INFO] [1773475479.753294817] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475487.039742339] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170447.pbstream
+[INFO] [1773475487.225121043] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475487.225569045] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170447.png + .yaml
+[INFO] [1773475487.843040400] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475495.039675485] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170455.pbstream
+[INFO] [1773475495.249970871] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475495.250541508] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170455.png + .yaml
+[INFO] [1773475495.872545516] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475503.039310439] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170503.pbstream
+[INFO] [1773475503.242208762] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475503.242745701] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170503.png + .yaml
+[INFO] [1773475503.865212526] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475511.039783487] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170511.pbstream
+[INFO] [1773475511.255298310] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475511.255915875] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170511.png + .yaml
+[INFO] [1773475511.872883110] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475519.039700881] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170519.pbstream
+[INFO] [1773475519.268359619] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475519.268898443] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170519.png + .yaml
+[INFO] [1773475519.899546848] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475527.039104008] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170527.pbstream
+[INFO] [1773475527.275410001] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475527.275962190] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170527.png + .yaml
+[INFO] [1773475527.802871980] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475535.039409171] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170535.pbstream
+[INFO] [1773475535.290840360] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475535.291322935] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170535.png + .yaml
+[INFO] [1773475535.909075473] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475543.039219888] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170543.pbstream
+[INFO] [1773475543.298964500] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475543.299487574] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170543.png + .yaml
+[INFO] [1773475543.922589120] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475551.039634558] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170551.pbstream
+[INFO] [1773475551.310279710] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475551.310801921] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170551.png + .yaml
+[INFO] [1773475551.939702070] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475559.039575216] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170559.pbstream
+[INFO] [1773475559.438626596] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475559.439342350] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170559.png + .yaml
+[INFO] [1773475560.116808819] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475567.039697270] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170607.pbstream
+[INFO] [1773475567.401590581] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475567.402088033] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170607.png + .yaml
+[INFO] [1773475568.041876152] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475575.040478262] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170615.pbstream
+[INFO] [1773475575.468410545] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475575.468896581] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170615.png + .yaml
+[INFO] [1773475576.284078673] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475583.040003634] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170623.pbstream
+[INFO] [1773475583.785532644] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475583.786358453] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170623.png + .yaml
+[INFO] [1773475584.778728815] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475591.039859994] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170631.pbstream
+[INFO] [1773475591.670865771] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475591.671858281] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170631.png + .yaml
+[INFO] [1773475592.651538949] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475599.039373791] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170639.pbstream
+[INFO] [1773475599.380683341] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475599.381565168] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170639.png + .yaml
+[INFO] [1773475600.011899611] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475607.039282618] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170647.pbstream
+[INFO] [1773475607.381652666] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475607.382143075] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170647.png + .yaml
+[INFO] [1773475607.999298701] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475615.039141076] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170655.pbstream
+[INFO] [1773475615.399329457] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475615.399772474] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170655.png + .yaml
+[INFO] [1773475616.026101347] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475623.039121217] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170703.pbstream
+[INFO] [1773475623.416536117] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475623.417000771] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170703.png + .yaml
+[INFO] [1773475624.063729261] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475631.039515761] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170711.pbstream
+[INFO] [1773475631.420455547] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475631.420904150] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170711.png + .yaml
+[INFO] [1773475632.037431283] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475639.038908331] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170719.pbstream
+[INFO] [1773475639.442795320] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475639.443259599] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170719.png + .yaml
+[INFO] [1773475640.063388504] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475647.039076101] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170727.pbstream
+[INFO] [1773475647.443796557] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475647.444256545] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170727.png + .yaml
+[INFO] [1773475648.161750759] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475655.039246617] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170735.pbstream
+[INFO] [1773475655.452237054] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475655.452697557] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170735.png + .yaml
+[INFO] [1773475656.075434063] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475663.039240162] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170743.pbstream
+[INFO] [1773475663.471418195] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475663.471937764] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170743.png + .yaml
+[INFO] [1773475664.200418702] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475671.039724256] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170751.pbstream
+[INFO] [1773475671.475566552] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475671.476064192] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170751.png + .yaml
+[INFO] [1773475672.198951125] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475679.039139937] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170759.pbstream
+[INFO] [1773475679.486352379] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475679.486810875] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170759.png + .yaml
+[INFO] [1773475680.105923493] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475687.039075277] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170807.pbstream
+[INFO] [1773475687.516924040] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475687.517365788] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170807.png + .yaml
+[INFO] [1773475688.146085704] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475695.038920908] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170815.pbstream
+[INFO] [1773475695.505713875] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475695.506206755] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170815.png + .yaml
+[INFO] [1773475696.141603486] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475703.039190449] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170823.pbstream
+[INFO] [1773475703.544114107] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475703.544565620] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170823.png + .yaml
+[INFO] [1773475704.175447529] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475711.039014424] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170831.pbstream
+[INFO] [1773475711.533161761] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475711.533925482] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170831.png + .yaml
+[INFO] [1773475712.161684477] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475719.039284408] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170839.pbstream
+[INFO] [1773475719.541446131] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475719.541952591] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170839.png + .yaml
+[INFO] [1773475720.172717756] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475727.039120869] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170847.pbstream
+[INFO] [1773475727.554990102] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475727.555463728] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170847.png + .yaml
+[INFO] [1773475728.287570666] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475735.039391079] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170855.pbstream
+[INFO] [1773475735.568167619] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475735.568716595] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170855.png + .yaml
+[INFO] [1773475736.219651225] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475743.039744631] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170903.pbstream
+[INFO] [1773475743.685898159] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475743.686373453] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170903.png + .yaml
+[INFO] [1773475744.342727340] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475751.039494363] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170911.pbstream
+[INFO] [1773475751.625816065] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475751.626585004] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170911.png + .yaml
+[INFO] [1773475752.266865090] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475759.039196903] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170919.pbstream
+[INFO] [1773475759.612775800] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475759.613238556] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170919.png + .yaml
+[INFO] [1773475760.347184644] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475767.039056160] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170927.pbstream
+[INFO] [1773475767.668859814] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475767.669526738] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170927.png + .yaml
+[INFO] [1773475768.398300096] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475775.039386253] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170935.pbstream
+[INFO] [1773475775.669895418] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475775.670366874] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170935.png + .yaml
+[INFO] [1773475776.306935716] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475783.039175218] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170943.pbstream
+[INFO] [1773475783.657776451] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475783.658229075] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170943.png + .yaml
+[INFO] [1773475784.314035651] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475791.039477399] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170951.pbstream
+[INFO] [1773475791.690696974] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475791.691185346] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170951.png + .yaml
+[INFO] [1773475792.448611844] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475799.039816225] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170959.pbstream
+[INFO] [1773475799.826813913] [map_auto_saver]: Map saved successfully.
+[INFO] [1773475799.827287208] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/my_map_20260314_170959.png + .yaml
+[INFO] [1773475800.504943747] [map_auto_saver]: ROS map export succeeded.
+[INFO] [1773475800.837816025] [map_auto_saver]: KeyboardInterrupt received. Attempting shutdown save...

@@ -1,0 +1,62 @@
+[INFO] [1773476590.070468230] [map_auto_saver]: Periodic auto-save enabled: every 10.0s -> /home/tkddn647/test/maps
+[INFO] [1773476600.062884872] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/retry_map_20260314_172320.pbstream
+[INFO] [1773476600.064994208] [map_auto_saver]: Map saved successfully.
+[INFO] [1773476600.065513359] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/retry_map_20260314_172320.png + .yaml
+[ERROR] [1773476603.329349124] [map_auto_saver]: ROS map export failed (code=1). stdout="[ros2run]: Process exited with failure 1" stderr="1773476600.248819 [0] map_saver_: selected interface "lo" is not multicast-capable: disabling multicast
+[INFO] [1773476600.260543777] [map_saver]: 
+	map_saver lifecycle node launched. 
+	Waiting on external lifecycle transitions to activate
+	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[INFO] [1773476600.260739070] [map_saver]: Creating
+[INFO] [1773476600.261257700] [map_saver]: Configuring
+[INFO] [1773476600.263165260] [map_saver]: Saving map from '/map' topic to '/home/tkddn647/test/maps/retry_map_20260314_172320' file
+[WARN] [1773476600.263198674] [map_saver]: Free threshold unspecified. Setting it to default value: 0.250000
+[WARN] [1773476600.263215857] [map_saver]: Occupied threshold unspecified. Setting it to default value: 0.650000
+[ERROR] [1773476602.263951064] [map_saver]: Failed to spin map subscription
+[INFO] [1773476602.267350664] [map_saver]: Destroying"
+[WARN] [1773476603.330421747] [map_auto_saver]: Falling back to pbstream->ros_map export (periodic) -> /home/tkddn647/test/maps/retry_map_20260314_172320_rosmap.yaml
+[ERROR] [1773476603.623616119] [map_auto_saver]: pbstream_to_ros_map failed (code=250). stdout="[ros2run]: Aborted" stderr="I0314 17:23:23.509960 20855 pbstream_to_ros_map_main.cpp:44] Loading submap slices from serialized data.
+I0314 17:23:23.511005 20855 pbstream_to_ros_map_main.cpp:52] Generating combined map image from submap slices.
+F0314 17:23:23.511219 20855 image.cc:55] Check failed: cairo_image_surface_get_format(surface.get()) == kCairoFormat (-1 vs. 0) 
+*** Check failure stack trace: ***
+    @     0x7121b19feb03  google::LogMessage::Fail()
+    @     0x7121b1a069d1  google::LogMessage::SendToLog()
+    @     0x7121b19fe7c2  google::LogMessage::Flush()
+    @     0x7121b1a0078f  google::LogMessageFatal::~LogMessageFatal()
+    @     0x589cea04eca2  (unknown)
+    @     0x589cea04dae8  (unknown)
+    @     0x589cea04c12f  (unknown)
+    @     0x7121b0c29d90  (unknown)
+    @     0x7121b0c29e40  __libc_start_main
+    @     0x589cea04d0f5  (unknown)"
+[INFO] [1773476610.063177204] [map_auto_saver]: Saving map (periodic) -> /home/tkddn647/test/maps/retry_map_20260314_172330.pbstream
+[INFO] [1773476610.065301986] [map_auto_saver]: Map saved successfully.
+[INFO] [1773476610.065884157] [map_auto_saver]: Exporting ROS map (periodic) -> /home/tkddn647/test/maps/retry_map_20260314_172330.png + .yaml
+[ERROR] [1773476612.492152993] [map_auto_saver]: ROS map export failed (code=1). stdout="[ros2run]: Process exited with failure 1" stderr="1773476610.248169 [0] map_saver_: selected interface "lo" is not multicast-capable: disabling multicast
+[INFO] [1773476610.260168236] [map_saver]: 
+	map_saver lifecycle node launched. 
+	Waiting on external lifecycle transitions to activate
+	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[INFO] [1773476610.260325035] [map_saver]: Creating
+[INFO] [1773476610.260734677] [map_saver]: Configuring
+[INFO] [1773476610.262754179] [map_saver]: Saving map from '/map' topic to '/home/tkddn647/test/maps/retry_map_20260314_172330' file
+[WARN] [1773476610.262784126] [map_saver]: Free threshold unspecified. Setting it to default value: 0.250000
+[WARN] [1773476610.262804946] [map_saver]: Occupied threshold unspecified. Setting it to default value: 0.650000
+[ERROR] [1773476612.263532068] [map_saver]: Failed to spin map subscription
+[INFO] [1773476612.266464199] [map_saver]: Destroying"
+[WARN] [1773476612.492749079] [map_auto_saver]: Falling back to pbstream->ros_map export (periodic) -> /home/tkddn647/test/maps/retry_map_20260314_172330_rosmap.yaml
+[ERROR] [1773476612.765436894] [map_auto_saver]: pbstream_to_ros_map failed (code=250). stdout="[ros2run]: Aborted" stderr="I0314 17:23:32.662823 20924 pbstream_to_ros_map_main.cpp:44] Loading submap slices from serialized data.
+I0314 17:23:32.663669 20924 pbstream_to_ros_map_main.cpp:52] Generating combined map image from submap slices.
+F0314 17:23:32.663833 20924 image.cc:55] Check failed: cairo_image_surface_get_format(surface.get()) == kCairoFormat (-1 vs. 0) 
+*** Check failure stack trace: ***
+    @     0x7cf2c9613b03  google::LogMessage::Fail()
+    @     0x7cf2c961b9d1  google::LogMessage::SendToLog()
+    @     0x7cf2c96137c2  google::LogMessage::Flush()
+    @     0x7cf2c961578f  google::LogMessageFatal::~LogMessageFatal()
+    @     0x62dd146ceca2  (unknown)
+    @     0x62dd146cdae8  (unknown)
+    @     0x62dd146cc12f  (unknown)
+    @     0x7cf2c8829d90  (unknown)
+    @     0x7cf2c8829e40  __libc_start_main
+    @     0x62dd146cd0f5  (unknown)"
+[INFO] [1773476615.213278307] [map_auto_saver]: KeyboardInterrupt received. Attempting shutdown save...

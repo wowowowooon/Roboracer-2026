@@ -1,0 +1,73 @@
+[INFO] [1773477422.786921841] [cartographer logger]: I0314 17:37:02.000000 25264 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/cartographer_2d_mapping_lidar_only.lua' for 'cartographer_2d_mapping_lidar_only.lua'.
+[INFO] [1773477422.787328225] [cartographer logger]: I0314 17:37:02.000000 25264 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/map_builder_mapping.lua' for 'map_builder_mapping.lua'.
+[INFO] [1773477422.787365436] [cartographer logger]: I0314 17:37:02.000000 25264 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/map_builder_mapping.lua' for 'map_builder_mapping.lua'.
+[INFO] [1773477422.787428256] [cartographer logger]: I0314 17:37:02.000000 25264 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/pose_graph_mapping.lua' for 'pose_graph_mapping.lua'.
+[INFO] [1773477422.787456931] [cartographer logger]: I0314 17:37:02.000000 25264 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/pose_graph_mapping.lua' for 'pose_graph_mapping.lua'.
+[INFO] [1773477422.787572210] [cartographer logger]: I0314 17:37:02.000000 25264 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/trajectory_builder.lua' for 'trajectory_builder.lua'.
+[INFO] [1773477422.787591467] [cartographer logger]: I0314 17:37:02.000000 25264 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/trajectory_builder.lua' for 'trajectory_builder.lua'.
+[INFO] [1773477422.787631503] [cartographer logger]: I0314 17:37:02.000000 25264 configuration_file_resolver.cc:41] Found '/opt/ros/humble/share/cartographer/configuration_files/trajectory_builder_2d.lua' for 'trajectory_builder_2d.lua'.
+[INFO] [1773477422.787649227] [cartographer logger]: I0314 17:37:02.000000 25264 configuration_file_resolver.cc:41] Found '/opt/ros/humble/share/cartographer/configuration_files/trajectory_builder_2d.lua' for 'trajectory_builder_2d.lua'.
+[INFO] [1773477422.787745520] [cartographer logger]: I0314 17:37:02.000000 25264 configuration_file_resolver.cc:41] Found '/opt/ros/humble/share/cartographer/configuration_files/trajectory_builder_3d.lua' for 'trajectory_builder_3d.lua'.
+[INFO] [1773477422.787764847] [cartographer logger]: I0314 17:37:02.000000 25264 configuration_file_resolver.cc:41] Found '/opt/ros/humble/share/cartographer/configuration_files/trajectory_builder_3d.lua' for 'trajectory_builder_3d.lua'.
+[INFO] [1773477422.799438629] [cartographer logger]: I0314 17:37:02.000000 25264 map_builder_bridge.cpp:136] Added trajectory with ID '0'.
+[WARN] [1773477422.807612279] [cartographer logger]: W0314 17:37:02.000000 25264 fixed_ratio_sampler.cc:26] FixedRatioSampler is dropping all data.
+[INFO] [1773477422.853650923] [cartographer logger]: I0314 17:37:02.000000 25264 ordered_multi_queue.cc:172] All sensor data for trajectory 0 is available starting at '639090742228489352'.
+[WARN] [1773477422.918004203] [cartographer logger]: W0314 17:37:02.000000 25264 pose_extrapolator.cc:168] Queue too short for velocity estimation. Queue duration: 0 s
+[INFO] [1773477422.937043988] [cartographer logger]: I0314 17:37:02.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 0).
+[INFO] [1773477428.268065292] [cartographer logger]: I0314 17:37:08.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 1).
+[INFO] [1773477433.522567045] [cartographer logger]: I0314 17:37:13.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 2).
+[INFO] [1773477437.851352663] [cartographer logger]: I0314 17:37:17.000000 25264 collated_trajectory_builder.cc:81] odom rate: 15.00 Hz 6.67e-02 s +/- 3.91e-04 s (pulsed at 100.13% real time)
+[INFO] [1773477437.851422676] [cartographer logger]: I0314 17:37:17.000000 25264 collated_trajectory_builder.cc:81] scan rate: 15.00 Hz 6.67e-02 s +/- 4.64e-04 s (pulsed at 100.44% real time)
+[INFO] [1773477438.857825691] [cartographer logger]: I0314 17:37:18.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 3).
+[INFO] [1773477444.190543169] [cartographer logger]: I0314 17:37:24.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 4).
+[INFO] [1773477449.526591568] [cartographer logger]: I0314 17:37:29.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 5).
+[INFO] [1773477452.865793714] [cartographer logger]: I0314 17:37:32.000000 25264 collated_trajectory_builder.cc:81] odom rate: 15.00 Hz 6.67e-02 s +/- 4.18e-04 s (pulsed at 99.91% real time)
+[INFO] [1773477452.865848658] [cartographer logger]: I0314 17:37:32.000000 25264 collated_trajectory_builder.cc:81] scan rate: 15.00 Hz 6.67e-02 s +/- 2.80e-04 s (pulsed at 100.01% real time)
+[INFO] [1773477454.855946913] [cartographer logger]: I0314 17:37:34.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 6).
+[INFO] [1773477456.185832230] [cartographer logger]: I0314 17:37:36.000000 25264 motion_filter.cc:42] Motion filter reduced the number of nodes to 100%.
+[INFO] [1773477460.191471317] [cartographer logger]: I0314 17:37:40.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 7).
+[INFO] [1773477465.523380981] [cartographer logger]: I0314 17:37:45.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 8).
+[INFO] [1773477467.918051443] [cartographer logger]: I0314 17:37:47.000000 25264 collated_trajectory_builder.cc:81] odom rate: 15.00 Hz 6.67e-02 s +/- 3.84e-04 s (pulsed at 100.00% real time)
+[INFO] [1773477467.918144229] [cartographer logger]: I0314 17:37:47.000000 25264 collated_trajectory_builder.cc:81] scan rate: 15.00 Hz 6.67e-02 s +/- 3.15e-04 s (pulsed at 100.07% real time)
+[INFO] [1773477470.864849144] [cartographer logger]: I0314 17:37:50.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 9).
+[INFO] [1773477476.191364786] [cartographer logger]: I0314 17:37:56.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 10).
+[INFO] [1773477481.524906138] [cartographer logger]: I0314 17:38:01.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 11).
+[INFO] [1773477482.918287208] [cartographer logger]: I0314 17:38:02.000000 25264 collated_trajectory_builder.cc:81] odom rate: 15.00 Hz 6.67e-02 s +/- 3.81e-04 s (pulsed at 100.00% real time)
+[INFO] [1773477482.918357892] [cartographer logger]: I0314 17:38:02.000000 25264 collated_trajectory_builder.cc:81] scan rate: 15.00 Hz 6.67e-02 s +/- 4.00e-04 s (pulsed at 100.00% real time)
+[INFO] [1773477486.856220137] [cartographer logger]: I0314 17:38:06.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 12).
+[INFO] [1773477489.519301798] [cartographer logger]: I0314 17:38:09.000000 25264 motion_filter.cc:42] Motion filter reduced the number of nodes to 100%.
+[INFO] [1773477492.194764105] [cartographer logger]: I0314 17:38:12.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 13).
+[INFO] [1773477497.589795846] [cartographer logger]: I0314 17:38:17.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 14).
+[INFO] [1773477497.925187656] [cartographer logger]: I0314 17:38:17.000000 25264 collated_trajectory_builder.cc:81] odom rate: 14.93 Hz 6.70e-02 s +/- 4.53e-03 s (pulsed at 101.90% real time)
+[INFO] [1773477497.925249193] [cartographer logger]: I0314 17:38:17.000000 25264 collated_trajectory_builder.cc:81] scan rate: 14.93 Hz 6.70e-02 s +/- 4.52e-03 s (pulsed at 100.00% real time)
+[INFO] [1773477502.929801885] [cartographer logger]: I0314 17:38:22.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 15).
+[INFO] [1773477508.388621928] [cartographer logger]: I0314 17:38:28.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 16).
+[INFO] [1773477512.933592054] [cartographer logger]: I0314 17:38:32.000000 25264 collated_trajectory_builder.cc:81] odom rate: 14.87 Hz 6.73e-02 s +/- 8.93e-03 s (pulsed at 99.90% real time)
+[INFO] [1773477512.933653822] [cartographer logger]: I0314 17:38:32.000000 25264 collated_trajectory_builder.cc:81] scan rate: 14.87 Hz 6.73e-02 s +/- 8.94e-03 s (pulsed at 100.00% real time)
+[INFO] [1773477513.857478349] [cartographer logger]: I0314 17:38:33.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 17).
+[INFO] [1773477519.189939056] [cartographer logger]: I0314 17:38:39.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 18).
+[INFO] [1773477523.493026752] [cartographer logger]: I0314 17:38:43.000000 25264 motion_filter.cc:42] Motion filter reduced the number of nodes to 100%.
+[INFO] [1773477524.727565948] [cartographer logger]: I0314 17:38:44.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 19).
+[INFO] [1773477527.936544202] [cartographer logger]: I0314 17:38:47.000000 25264 collated_trajectory_builder.cc:81] odom rate: 14.67 Hz 6.82e-02 s +/- 1.62e-02 s (pulsed at 102.74% real time)
+[INFO] [1773477527.936611761] [cartographer logger]: I0314 17:38:47.000000 25264 collated_trajectory_builder.cc:81] scan rate: 14.67 Hz 6.82e-02 s +/- 1.62e-02 s (pulsed at 100.01% real time)
+[INFO] [1773477530.055759145] [cartographer logger]: I0314 17:38:50.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 20).
+[INFO] [1773477535.592200019] [cartographer logger]: I0314 17:38:55.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 21).
+[INFO] [1773477540.924231257] [cartographer logger]: I0314 17:39:00.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 22).
+[INFO] [1773477543.556826112] [cartographer logger]: I0314 17:39:03.000000 25264 collated_trajectory_builder.cc:81] odom rate: 14.79 Hz 6.76e-02 s +/- 1.37e-02 s (pulsed at 96.18% real time)
+[INFO] [1773477543.556897237] [cartographer logger]: I0314 17:39:03.000000 25264 collated_trajectory_builder.cc:81] scan rate: 14.80 Hz 6.76e-02 s +/- 1.35e-02 s (pulsed at 100.12% real time)
+[INFO] [1773477546.524228957] [cartographer logger]: I0314 17:39:06.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 23).
+[INFO] [1773477551.856243132] [cartographer logger]: I0314 17:39:11.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 24).
+[INFO] [1773477557.452422316] [cartographer logger]: I0314 17:39:17.000000 25264 motion_filter.cc:42] Motion filter reduced the number of nodes to 100%.
+[INFO] [1773477557.458564954] [cartographer logger]: I0314 17:39:17.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 25).
+[INFO] [1773477558.585042035] [cartographer logger]: I0314 17:39:18.000000 25264 collated_trajectory_builder.cc:81] odom rate: 14.73 Hz 6.79e-02 s +/- 1.80e-02 s (pulsed at 100.01% real time)
+[INFO] [1773477558.585146374] [cartographer logger]: I0314 17:39:18.000000 25264 collated_trajectory_builder.cc:81] scan rate: 14.74 Hz 6.79e-02 s +/- 1.78e-02 s (pulsed at 102.04% real time)
+[INFO] [1773477562.789836280] [cartographer logger]: I0314 17:39:22.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 26).
+[INFO] [1773477571.922852694] [cartographer logger]: I0314 17:39:31.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 27).
+[INFO] [1773477573.693156868] [cartographer logger]: I0314 17:39:33.000000 25264 collated_trajectory_builder.cc:81] odom rate: 14.58 Hz 6.86e-02 s +/- 2.78e-02 s (pulsed at 95.27% real time)
+[INFO] [1773477573.693232683] [cartographer logger]: I0314 17:39:33.000000 25264 collated_trajectory_builder.cc:81] scan rate: 11.18 Hz 8.94e-02 s +/- 2.65e-01 s (pulsed at 100.15% real time)
+[INFO] [1773477577.656701164] [cartographer logger]: I0314 17:39:37.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 28).
+[INFO] [1773477583.807354241] [cartographer logger]: I0314 17:39:43.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 29).
+[INFO] [1773477588.718390630] [cartographer logger]: I0314 17:39:48.000000 25264 collated_trajectory_builder.cc:81] odom rate: 14.48 Hz 6.91e-02 s +/- 3.59e-02 s (pulsed at 101.87% real time)
+[INFO] [1773477588.718507373] [cartographer logger]: I0314 17:39:48.000000 25264 collated_trajectory_builder.cc:81] scan rate: 14.48 Hz 6.91e-02 s +/- 3.59e-02 s (pulsed at 102.06% real time)
+[INFO] [1773477588.924104324] [cartographer logger]: I0314 17:39:48.000000 25264 pose_graph_2d.cc:148] Inserted submap (0, 30).
+[INFO] [1773477590.228157190] [rclcpp]: signal_handler(SIGINT/SIGTERM)

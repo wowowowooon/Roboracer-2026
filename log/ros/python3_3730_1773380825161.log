@@ -1,0 +1,62 @@
+[WARN] [1773380825.210122896] [sim_fake_sensor_publisher]: Centerline CSV not found: /tmp/none.csv
+[INFO] [1773380826.305385255] [sim_fake_sensor_publisher]: Map path ready. length=254.59 m, points=721
+[INFO] [1773380826.336722171] [sim_fake_sensor_publisher]: Fake sensor publisher started. world_type=map, rates(lidar/imu/odom/state)=15.0/15.0/15.0/60.0 Hz
+[INFO] [1773380826.337995064] [sim_fake_sensor_publisher]: Publish flags: scan=True, imu=False, odom=True, odom_tf=True
+[INFO] [1773380826.339225937] [sim_fake_sensor_publisher]: Scan scheduler: threaded
+[INFO] [1773380826.339612226] [sim_fake_sensor_publisher]: Odom scheduler: threaded
+[INFO] [1773380826.340250986] [sim_fake_sensor_publisher]: Active scan params: range_max=8.00 m, angle_min/max=-135.0/135.0 deg, increment=1.000 deg
+[INFO] [1773380826.340644915] [sim_fake_sensor_publisher]: Control mode: centerline s-progress (pure_pursuit forced OFF, waypoint_yaw forced OFF)
+[INFO] [1773380826.341184010] [sim_fake_sensor_publisher]: Motion source: internal_path
+[INFO] [1773380830.205605766] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=11.77, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773380835.208205586] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.5ms, target=15.00Hz
+[INFO] [1773380840.209689934] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773380845.209839520] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773380850.274134437] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.5ms, target=15.00Hz
+[INFO] [1773380852.779219255] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773380857.842068050] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773380862.907835332] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.5ms, target=15.00Hz
+[INFO] [1773380867.974744877] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773380872.979086700] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773380878.045049546] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773380880.617817573] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773380885.684470648] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773380890.750817472] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.4ms, target=15.00Hz
+[INFO] [1773380895.812484789] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.5ms, target=15.00Hz
+[INFO] [1773380900.817066702] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773380905.884340340] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773380910.945952929] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.02, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773380913.469265562] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773380918.531402419] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773380923.533790626] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773380928.606298208] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.98, avg_gen=1.8ms, target=15.00Hz
+[INFO] [1773380933.666319184] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.02, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773380938.669091392] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.4ms, target=15.00Hz
+[INFO] [1773380941.237688460] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773380946.238468561] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773380951.306218409] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.8ms, target=15.00Hz
+[INFO] [1773380956.369480956] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.8ms, target=15.00Hz
+[INFO] [1773380961.372710337] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773380966.438344054] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773380971.504559876] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.4ms, target=15.00Hz
+[INFO] [1773380974.072077923] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773380979.140127459] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773380984.204531063] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773380989.209026321] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.98, avg_gen=1.4ms, target=15.00Hz
+[INFO] [1773380994.271228724] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.5ms, target=15.00Hz
+[INFO] [1773380999.338592221] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.3ms, target=15.00Hz
+[INFO] [1773381001.855974414] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.4ms, target=15.00Hz
+[INFO] [1773381006.859309278] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773381011.924574080] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773381016.986420297] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773381021.987994630] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.4ms, target=15.00Hz
+[INFO] [1773381027.057699542] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773381032.123309166] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773381034.640656007] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773381039.710545017] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.5ms, target=15.00Hz
+[INFO] [1773381044.774438547] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773381049.780309759] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.99, avg_gen=1.7ms, target=15.00Hz
+[INFO] [1773381054.845795258] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.6ms, target=15.00Hz
+[INFO] [1773381059.909968708] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.5ms, target=15.00Hz
+[INFO] [1773381062.419587713] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=14.98, avg_gen=1.5ms, target=15.00Hz
+[INFO] [1773381067.479646051] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.01, avg_gen=1.5ms, target=15.00Hz
+[INFO] [1773381072.545382748] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=1.4ms, target=15.00Hz

@@ -1,0 +1,85 @@
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar_protocol.h:36,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar.h:39,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sdkcommon.h:49,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:33:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_protocol.h:66:16: warning: ISO C++ forbids zero-size array ‘data’ [-Wpedantic]
+   66 |     sl_u8 data[0];
+      |                ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar_cmd.h:36,
+                 from /home/tkddn647/test/src/sllidar_ros2/./sdk/include/rplidar.h:40,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sdkcommon.h:49,
+                 from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:33:
+/home/tkddn647/test/src/sllidar_ros2/./sdk/include/sl_lidar_cmd.h:324:20: warning: ISO C++ forbids zero-size array ‘payload’ [-Wpedantic]
+  324 |     sl_u8  payload[0];
+      |                    ^
+In file included from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:50:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h: In member function ‘virtual void sl::internal::LIDARSampleDataListener::onCustomSampleDataDecoded(_u8, _u32, const void*, size_t)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:54:52: warning: unused parameter ‘ansType’ [-Wunused-parameter]
+   54 |         virtual void onCustomSampleDataDecoded(_u8 ansType, _u32 customCode, const void* data, size_t size) {}
+      |                                                ~~~~^~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:54:66: warning: unused parameter ‘customCode’ [-Wunused-parameter]
+   54 |         virtual void onCustomSampleDataDecoded(_u8 ansType, _u32 customCode, const void* data, size_t size) {}
+      |                                                             ~~~~~^~~~~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:54:90: warning: unused parameter ‘data’ [-Wunused-parameter]
+   54 |         virtual void onCustomSampleDataDecoded(_u8 ansType, _u32 customCode, const void* data, size_t size) {}
+      |                                                                              ~~~~~~~~~~~~^~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:54:103: warning: unused parameter ‘size’ [-Wunused-parameter]
+   54 |         virtual void onCustomSampleDataDecoded(_u8 ansType, _u32 customCode, const void* data, size_t size) {}
+      |                                                                                                ~~~~~~~^~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h: In member function ‘virtual void sl::internal::LIDARSampleDataListener::onDecodingError(int, _u8, const void*, size_t)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:56:42: warning: unused parameter ‘errMsg’ [-Wunused-parameter]
+   56 |         virtual void onDecodingError(int errMsg, _u8 ansType, const void* payload, size_t size) {}
+      |                                      ~~~~^~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:56:54: warning: unused parameter ‘ansType’ [-Wunused-parameter]
+   56 |         virtual void onDecodingError(int errMsg, _u8 ansType, const void* payload, size_t size) {}
+      |                                                  ~~~~^~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:56:75: warning: unused parameter ‘payload’ [-Wunused-parameter]
+   56 |         virtual void onDecodingError(int errMsg, _u8 ansType, const void* payload, size_t size) {}
+      |                                                               ~~~~~~~~~~~~^~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/dataunpacker/dataunpacker.h:56:91: warning: unused parameter ‘size’ [-Wunused-parameter]
+   56 |         virtual void onDecodingError(int errMsg, _u8 ansType, const void* payload, size_t size) {}
+      |                                                                                    ~~~~~~~^~~~
+In file included from /home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:51:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_async_transceiver.h: In member function ‘virtual void sl::internal::IAsyncProtocolCodec::onChannelError(u_result)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_async_transceiver.h:90:48: warning: unused parameter ‘errCode’ [-Wunused-parameter]
+   90 |         virtual void   onChannelError(u_result errCode) {}
+      |                                       ~~~~~~~~~^~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp: In member function ‘virtual sl_result sl::SlamtecLidarDriver::reset(sl_u32)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:511:32: warning: unused parameter ‘timeoutInMs’ [-Wunused-parameter]
+  511 |         sl_result reset(sl_u32 timeoutInMs = DEFAULT_TIMEOUT)
+      |                         ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp: In member function ‘virtual sl_result sl::SlamtecLidarDriver::startScan(bool, bool, sl_u32, sl::LidarScanMode*)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:586:69: warning: unused parameter ‘options’ [-Wunused-parameter]
+  586 |         sl_result startScan(bool force, bool useTypicalScan, sl_u32 options = 0, LidarScanMode* outUsedScanMode = nullptr)
+      |                                                              ~~~~~~~^~~~~~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp: In member function ‘virtual sl_result sl::SlamtecLidarDriver::stop(sl_u32)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:763:31: warning: unused parameter ‘timeout’ [-Wunused-parameter]
+  763 |         sl_result stop(sl_u32 timeout = DEFAULT_TIMEOUT)
+      |                        ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp: In member function ‘virtual sl_result sl::SlamtecLidarDriver::getFrequency(const sl::LidarScanMode&, const sl_lidar_response_measurement_node_hq_t*, size_t, float&)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:880:110: warning: unused parameter ‘nodes’ [-Wunused-parameter]
+  880 |         sl_result getFrequency(const LidarScanMode& scanMode, const sl_lidar_response_measurement_node_hq_t* nodes, size_t count, float& frequency)
+      |                                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp: In member function ‘virtual sl_result sl::SlamtecLidarDriver::getMotorInfo(sl::LidarMotorInfo&, sl_u32)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:1023:66: warning: unused parameter ‘timeoutInMs’ [-Wunused-parameter]
+ 1023 |         sl_result getMotorInfo(LidarMotorInfo &motorInfo, sl_u32 timeoutInMs)
+      |                                                           ~~~~~~~^~~~~~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp: In member function ‘u_result sl::SlamtecLidarDriver::getScanModeCount(sl_u16&, sl_u32)’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:1232:61: warning: unused parameter ‘timeoutInMs’ [-Wunused-parameter]
+ 1232 |         u_result getScanModeCount(sl_u16& modeCount, sl_u32 timeoutInMs = DEFAULT_TIMEOUT)
+      |                                                      ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp: In instantiation of ‘void sl::RawSampleNodeHolder<T>::pushNode(_u64, const T*) [with T = sl_lidar_response_measurement_node_hq_t; _u64 = long unsigned int]’:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:1681:42:   required from here
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:202:28: warning: unused parameter ‘timestamp_uS’ [-Wunused-parameter]
+  202 |         void pushNode(_u64 timestamp_uS, const T* node)
+      |                       ~~~~~^~~~~~~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp: At global scope:
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:83:17: warning: ‘void sl::convert(const sl_lidar_response_measurement_node_hq_t&, sl_lidar_response_measurement_node_t&)’ defined but not used [-Wunused-function]
+   83 |     static void convert(const sl_lidar_response_measurement_node_hq_t& from, sl_lidar_response_measurement_node_t& to)
+      |                 ^~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:75:17: warning: ‘void sl::convert(const sl_lidar_response_measurement_node_t&, sl_lidar_response_measurement_node_hq_t&)’ defined but not used [-Wunused-function]
+   75 |     static void convert(const sl_lidar_response_measurement_node_t& from, sl_lidar_response_measurement_node_hq_t& to)
+      |                 ^~~~~~~
+/home/tkddn647/test/src/sllidar_ros2/sdk/src/sl_lidar_driver.cpp:70:17: warning: ‘void sl::printDeprecationWarn(const char*, const char*)’ defined but not used [-Wunused-function]
+   70 |     static void printDeprecationWarn(const char* fn, const char* replacement)
+      |                 ^~~~~~~~~~~~~~~~~~~~

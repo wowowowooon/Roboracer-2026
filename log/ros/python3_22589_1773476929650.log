@@ -1,0 +1,12 @@
+[WARN] [1773476929.697359620] [sim_fake_sensor_publisher]: Centerline CSV not found: /tmp/none.csv
+[INFO] [1773476930.659262542] [sim_fake_sensor_publisher]: Map path ready. length=348.15 m, points=721
+[INFO] [1773476930.686156330] [sim_fake_sensor_publisher]: Fake sensor publisher started. world_type=map, rates(lidar/imu/odom/state)=15.0/15.0/15.0/60.0 Hz
+[INFO] [1773476930.686793384] [sim_fake_sensor_publisher]: Publish flags: scan=True, imu=False, odom=True, odom_tf=True
+[INFO] [1773476930.687154021] [sim_fake_sensor_publisher]: Scan scheduler: threaded
+[INFO] [1773476930.687620750] [sim_fake_sensor_publisher]: Odom scheduler: threaded
+[INFO] [1773476930.688221834] [sim_fake_sensor_publisher]: Active scan params: range_max=30.00 m, angle_min/max=-135.0/135.0 deg, increment=1.000 deg
+[INFO] [1773476930.688904264] [sim_fake_sensor_publisher]: Control mode: centerline s-progress (pure_pursuit forced OFF, waypoint_yaw forced OFF)
+[INFO] [1773476930.689584560] [sim_fake_sensor_publisher]: Motion source: internal_path
+[INFO] [1773476934.687563733] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=12.18, avg_gen=2.8ms, target=15.00Hz
+[INFO] [1773476939.688157279] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=2.9ms, target=15.00Hz
+[INFO] [1773476944.688407746] [sim_fake_sensor_publisher]: scan publisher diag: pub_hz=15.00, avg_gen=2.7ms, target=15.00Hz

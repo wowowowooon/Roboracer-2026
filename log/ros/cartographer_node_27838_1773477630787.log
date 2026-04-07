@@ -1,0 +1,22 @@
+[INFO] [1773477630.799740907] [cartographer logger]: I0314 17:40:30.000000 27838 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/cartographer_2d_mapping_lidar_only.lua' for 'cartographer_2d_mapping_lidar_only.lua'.
+[INFO] [1773477630.800171117] [cartographer logger]: I0314 17:40:30.000000 27838 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/map_builder_mapping.lua' for 'map_builder_mapping.lua'.
+[INFO] [1773477630.800205503] [cartographer logger]: I0314 17:40:30.000000 27838 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/map_builder_mapping.lua' for 'map_builder_mapping.lua'.
+[INFO] [1773477630.800256560] [cartographer logger]: I0314 17:40:30.000000 27838 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/pose_graph_mapping.lua' for 'pose_graph_mapping.lua'.
+[INFO] [1773477630.800280416] [cartographer logger]: I0314 17:40:30.000000 27838 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/pose_graph_mapping.lua' for 'pose_graph_mapping.lua'.
+[INFO] [1773477630.800400625] [cartographer logger]: I0314 17:40:30.000000 27838 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/trajectory_builder.lua' for 'trajectory_builder.lua'.
+[INFO] [1773477630.800420242] [cartographer logger]: I0314 17:40:30.000000 27838 configuration_file_resolver.cc:41] Found '/home/tkddn647/test/install/localization_layer/share/localization_layer/config/trajectory_builder.lua' for 'trajectory_builder.lua'.
+[INFO] [1773477630.800459277] [cartographer logger]: I0314 17:40:30.000000 27838 configuration_file_resolver.cc:41] Found '/opt/ros/humble/share/cartographer/configuration_files/trajectory_builder_2d.lua' for 'trajectory_builder_2d.lua'.
+[INFO] [1773477630.800476850] [cartographer logger]: I0314 17:40:30.000000 27838 configuration_file_resolver.cc:41] Found '/opt/ros/humble/share/cartographer/configuration_files/trajectory_builder_2d.lua' for 'trajectory_builder_2d.lua'.
+[INFO] [1773477630.800700727] [cartographer logger]: I0314 17:40:30.000000 27838 configuration_file_resolver.cc:41] Found '/opt/ros/humble/share/cartographer/configuration_files/trajectory_builder_3d.lua' for 'trajectory_builder_3d.lua'.
+[INFO] [1773477630.800742296] [cartographer logger]: I0314 17:40:30.000000 27838 configuration_file_resolver.cc:41] Found '/opt/ros/humble/share/cartographer/configuration_files/trajectory_builder_3d.lua' for 'trajectory_builder_3d.lua'.
+[INFO] [1773477630.812653192] [cartographer logger]: I0314 17:40:30.000000 27838 map_builder_bridge.cpp:136] Added trajectory with ID '0'.
+[WARN] [1773477630.813717060] [cartographer logger]: W0314 17:40:30.000000 27838 fixed_ratio_sampler.cc:26] FixedRatioSampler is dropping all data.
+[INFO] [1773477630.880715344] [cartographer logger]: I0314 17:40:30.000000 27838 ordered_multi_queue.cc:172] All sensor data for trajectory 0 is available starting at '639090744308770850'.
+[WARN] [1773477630.948643895] [cartographer logger]: W0314 17:40:30.000000 27838 pose_extrapolator.cc:168] Queue too short for velocity estimation. Queue duration: 0 s
+[INFO] [1773477630.970157903] [cartographer logger]: I0314 17:40:30.000000 27838 pose_graph_2d.cc:148] Inserted submap (0, 0).
+[INFO] [1773477636.233585498] [cartographer logger]: I0314 17:40:36.000000 27838 pose_graph_2d.cc:148] Inserted submap (0, 1).
+[INFO] [1773477641.552432896] [cartographer logger]: I0314 17:40:41.000000 27838 pose_graph_2d.cc:148] Inserted submap (0, 2).
+[INFO] [1773477645.814480640] [cartographer logger]: I0314 17:40:45.000000 27838 collated_trajectory_builder.cc:81] odom rate: 15.00 Hz 6.67e-02 s +/- 4.25e-04 s (pulsed at 100.15% real time)
+[INFO] [1773477645.814548750] [cartographer logger]: I0314 17:40:45.000000 27838 collated_trajectory_builder.cc:81] scan rate: 15.00 Hz 6.67e-02 s +/- 3.52e-04 s (pulsed at 100.45% real time)
+[INFO] [1773477646.887487448] [cartographer logger]: I0314 17:40:46.000000 27838 pose_graph_2d.cc:148] Inserted submap (0, 3).
+[INFO] [1773477651.568135642] [rclcpp]: signal_handler(SIGINT/SIGTERM)
