@@ -15,6 +15,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     sim_pkg_dir = get_package_share_directory("sim_test")
     loc_pkg_dir = get_package_share_directory("localization_layer")
+    sim_cartographer_config_dir = os.path.join(sim_pkg_dir, "config", "cartographer")
     mapping_launch = os.path.join(loc_pkg_dir, "launch", "cartographer_mapping_launch.py")
     default_params = os.path.join(sim_pkg_dir, "config", "sim_sensor_params_mapping.yaml")
 
@@ -130,10 +131,10 @@ def generate_launch_description():
                         "save_on_shutdown": "true",
                         "export_ros_map": "true",
                         "export_ros_map_on_shutdown": "true",
-                        "use_sim_time": "false",
                         "imu_topic": "/unused_imu",
                         "odom_topic": "/sim_odom",
                         "scan_topic": "/sim_scan",
+                        "configuration_directory": sim_cartographer_config_dir,
                         "configuration_basename": "cartographer_2d_mapping_lidar_only.lua",
                         "enable_sensor_bringup": "false",
                     }.items(),

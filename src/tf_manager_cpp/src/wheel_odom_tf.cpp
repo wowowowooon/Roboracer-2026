@@ -36,7 +36,7 @@ public:
 
 private:
 
-  double wheelbase_ = 3.3;   // 앞축과 뒷축 간 거리 (m)
+  double wheelbase_ = 0.37;   // 앞축과 뒷축 간 거리 (m)
 
   double x_ = 0.0;
   double y_ = 0.0;

@@ -3,7 +3,7 @@
 <package format="3">
   <name>localization_layer</name>
   <version>0.0.1</version>
-  <description>Localization layer using Cartographer SLAM</description>
+  <description>Real-car localization and mapping using Cartographer SLAM</description>
   <maintainer email="tkddn647@example.com">tkddn647</maintainer>
   <license>Apache License 2.0</license>
 
@@ -20,8 +20,13 @@
   <depend>tf2_ros</depend>
   <depend>ros2launch</depend>
   <depend>rclpy</depend>
-  <exec_depend>nav2_map_server</exec_depend>
+  <exec_depend>python3-yaml</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>python3-pil</exec_depend>
+  <exec_depend>rviz2</exec_depend>
   <exec_depend>sensor_layer</exec_depend>
+  <exec_depend>sllidar_ros2</exec_depend>
+  <exec_depend>ebimu_pkg</exec_depend>
   <exec_depend>tf_manager_cpp</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>

@@ -30,9 +30,12 @@ def generate_launch_description():
     channel_type = LaunchConfiguration("channel_type")
     udp_ip = LaunchConfiguration("udp_ip")
     udp_port = LaunchConfiguration("udp_port")
+    serial_port = LaunchConfiguration("serial_port")
+    serial_baudrate = LaunchConfiguration("serial_baudrate")
     frame_id = LaunchConfiguration("frame_id")
     inverted = LaunchConfiguration("inverted")
     angle_compensate = LaunchConfiguration("angle_compensate")
+    angle_offset = LaunchConfiguration("angle_offset")
     scan_mode = LaunchConfiguration("scan_mode")
     scan_frequency = LaunchConfiguration("scan_frequency")
 
@@ -40,6 +43,7 @@ def generate_launch_description():
     ebimu_port = LaunchConfiguration('ebimu_port')
     ebimu_baud = LaunchConfiguration('ebimu_baud')
     use_ebimu = LaunchConfiguration('use_ebimu')
+    use_wheel_odom_tf = LaunchConfiguration('use_wheel_odom_tf')
 
     return LaunchDescription([
 
@@ -47,15 +51,19 @@ def generate_launch_description():
         DeclareLaunchArgument("channel_type", default_value="udp", description="LiDAR 채널 타입 (T1은 udp)"),
         DeclareLaunchArgument("udp_ip", default_value="192.168.11.2", description="SLLIDAR T1 UDP IP"),
         DeclareLaunchArgument("udp_port", default_value="8089", description="SLLIDAR T1 UDP Port"),
+        DeclareLaunchArgument("serial_port", default_value="/dev/ttyUSB0", description="SLLIDAR serial port"),
+        DeclareLaunchArgument("serial_baudrate", default_value="1000000", description="SLLIDAR serial baudrate"),
         DeclareLaunchArgument("frame_id", default_value="laser", description="LiDAR frame_id"),
         DeclareLaunchArgument("inverted", default_value="false", description="스캔 데이터 반전 여부"),
-        DeclareLaunchArgument("angle_compensate", default_value="true", description="각도 보정 여부"),
+        DeclareLaunchArgument("angle_compensate", default_value="false", description="각도 보정 여부"),
+        DeclareLaunchArgument("angle_offset", default_value="3.141592653589793", description="LiDAR scan 각도 오프셋(rad)"),
         DeclareLaunchArgument("scan_mode", default_value="Sensitivity", description="스캔 모드"),
         DeclareLaunchArgument("scan_frequency", default_value="40.0", description="목표 스캔 주파수(Hz)"),
 
         DeclareLaunchArgument('ebimu_port', default_value='/dev/ttyUSB0', description='EBIMU 시리얼 포트'),
         DeclareLaunchArgument('ebimu_baud', default_value='115200', description='EBIMU 통신 속도'),
         DeclareLaunchArgument('use_ebimu', default_value='false', description='EBIMU 노드 실행 여부(true/false)'),
+        DeclareLaunchArgument('use_wheel_odom_tf', default_value='true', description='wheel odom TF 실행 여부(true/false)'),
 
         LogInfo(msg='=== sensor_layer 시작: EBIMU IMU + SLLIDAR T1 + TF ==='),
 
@@ -68,6 +76,9 @@ def generate_launch_description():
                     "tf_manager.launch.py",
                 )
             ),
+            launch_arguments={
+                "use_wheel_odom_tf": use_wheel_odom_tf,
+            }.items(),
         ),
 
         # ── 2) LiDAR include ───────────────────
@@ -83,9 +94,12 @@ def generate_launch_description():
                 "channel_type": channel_type,
                 "udp_ip": udp_ip,
                 "udp_port": udp_port,
+                "serial_port": serial_port,
+                "serial_baudrate": serial_baudrate,
                 "frame_id": frame_id,
                 "inverted": inverted,
                 "angle_compensate": angle_compensate,
+                "angle_offset": angle_offset,
                 "scan_mode": scan_mode,
                 "scan_frequency": scan_frequency,
             }.items(),

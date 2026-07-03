@@ -1,8 +1,7 @@
-
 #include <rclcpp/rclcpp.hpp>
 #include <tf2_ros/static_transform_broadcaster.h>
 #include <geometry_msgs/msg/transform_stamped.hpp>
-#include "tf2/LinearMath/Quaternion.h"
+
 class SensorStaticTF : public rclcpp::Node
 {
 public:
@@ -25,10 +24,13 @@ private:
     tf.header.frame_id = "base_link";
     tf.child_frame_id = "laser";
 
-    tf.transform.translation.x = 0.20;
+    tf.transform.translation.x = 0.31;
     tf.transform.translation.y = 0.0;
-    tf.transform.translation.z = 0.0;
+    tf.transform.translation.z = 0.20;
 
+    tf.transform.rotation.x = 0.0;
+    tf.transform.rotation.y = 0.0;
+    tf.transform.rotation.z = 0.0;
     tf.transform.rotation.w = 1.0;
 
     broadcaster_->sendTransform(tf);
@@ -42,10 +44,13 @@ private:
     tf.header.frame_id = "base_link";
     tf.child_frame_id = "imu_link";
 
-    tf.transform.translation.x = 0.10;
+    tf.transform.translation.x = 0.27;
     tf.transform.translation.y = 0.00;
-    tf.transform.translation.z = 0.00;
+    tf.transform.translation.z = 0.13;
 
+    tf.transform.rotation.x = 0.0;
+    tf.transform.rotation.y = 0.0;
+    tf.transform.rotation.z = 0.0;
     tf.transform.rotation.w = 1.0;
 
     broadcaster_->sendTransform(tf);

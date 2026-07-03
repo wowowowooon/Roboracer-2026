@@ -14,10 +14,13 @@ from launch_ros.parameter_descriptions import ParameterValue
 def generate_launch_description():
     channel_type = LaunchConfiguration('channel_type', default='udp')
     udp_ip = LaunchConfiguration('udp_ip', default='192.168.11.2')
-    udp_port = LaunchConfiguration('udp_port', default='8089') 
+    udp_port = LaunchConfiguration('udp_port', default='8089')
+    serial_port = LaunchConfiguration('serial_port', default='/dev/ttyUSB0')
+    serial_baudrate = LaunchConfiguration('serial_baudrate', default='1000000')
     frame_id = LaunchConfiguration('frame_id', default='laser')
     inverted = LaunchConfiguration('inverted', default='false')
-    angle_compensate = LaunchConfiguration('angle_compensate', default='true')
+    angle_compensate = LaunchConfiguration('angle_compensate', default='false')
+    angle_offset = LaunchConfiguration('angle_offset', default='0.0')
     scan_mode = LaunchConfiguration('scan_mode', default='Sensitivity')
     scan_frequency = LaunchConfiguration('scan_frequency', default='40.0')
 
@@ -37,6 +40,16 @@ def generate_launch_description():
             'udp_port',
             default_value=udp_port,
             description='Specifying udp port to connected lidar'),
+
+        DeclareLaunchArgument(
+            'serial_port',
+            default_value=serial_port,
+            description='Specifying serial port of lidar'),
+
+        DeclareLaunchArgument(
+            'serial_baudrate',
+            default_value=serial_baudrate,
+            description='Specifying serial baudrate of lidar'),
         
         DeclareLaunchArgument(
             'frame_id',
@@ -52,6 +65,11 @@ def generate_launch_description():
             'angle_compensate',
             default_value=angle_compensate,
             description='Specifying whether or not to enable angle_compensate of scan data'),
+
+        DeclareLaunchArgument(
+            'angle_offset',
+            default_value=angle_offset,
+            description='Scan angle offset in radians'),
 
         DeclareLaunchArgument(
             'scan_mode',
@@ -70,10 +88,13 @@ def generate_launch_description():
             parameters=[{'channel_type': channel_type, 
                          'udp_ip': udp_ip,
                          'udp_port': ParameterValue(udp_port, value_type=int),
+                         'serial_port': serial_port,
+                         'serial_baudrate': ParameterValue(serial_baudrate, value_type=int),
                          'frame_id': frame_id,
                          'inverted': ParameterValue(inverted, value_type=bool),
                          'angle_compensate': ParameterValue(angle_compensate, value_type=bool),
+                         'angle_offset': ParameterValue(angle_offset, value_type=float),
                          'scan_mode': scan_mode,
                          'scan_frequency': ParameterValue(scan_frequency, value_type=float)}],
-            output='screen'),
+            output='log'),
     ])

@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
+import math
 import os
 import subprocess
 import threading
 from datetime import datetime
 
 import rclpy
-from cartographer_ros_msgs.srv import WriteState
+import yaml
+from cartographer_ros_msgs.srv import TrajectoryQuery, WriteState
 from PIL import Image
 from rclpy.node import Node
 
@@ -15,11 +17,11 @@ class MapAutoSaver(Node):
     def __init__(self):
         super().__init__('map_auto_saver')
 
-        self.declare_parameter('map_save_dir', '/home/tkddn647/test/maps') # 파일 경로는 Jeston Nano의 절대 경로로 지정. 예시 : /home/username/maps
+        self.declare_parameter('map_save_dir', '/home/nvidia/f1tenth_ajou/maps')
         self.declare_parameter('map_file_prefix', 'cartographer_map')
         self.declare_parameter('include_unfinished_submaps', True)
         self.declare_parameter('save_on_shutdown', True)
-        self.declare_parameter('save_interval_sec', 0.0)
+        self.declare_parameter('save_interval_sec', 20.0)
         self.declare_parameter('export_ros_map', True)
         self.declare_parameter('ros_map_topic', '/map')
         self.declare_parameter('ros_map_format', 'png')
@@ -31,6 +33,7 @@ class MapAutoSaver(Node):
         self.declare_parameter('shutdown_write_state_timeout_sec', 4.0)
         self.declare_parameter('shutdown_ros_map_timeout_sec', 2.0)
         self.declare_parameter('pbstream_to_ros_map_resolution', 0.05)
+        self.declare_parameter('min_pbstream_bytes', 4096)
 
         self.map_save_dir = self.get_parameter('map_save_dir').get_parameter_value().string_value
         if not os.path.isabs(self.map_save_dir):
@@ -64,12 +67,16 @@ class MapAutoSaver(Node):
         self.pbstream_to_ros_map_resolution = self.get_parameter(
             'pbstream_to_ros_map_resolution'
         ).get_parameter_value().double_value
+        self.min_pbstream_bytes = self.get_parameter(
+            'min_pbstream_bytes'
+        ).get_parameter_value().integer_value
 
         os.makedirs(self.map_save_dir, exist_ok=True)
         self.ros_log_dir = os.path.join(self.map_save_dir, '.roslog')
         os.makedirs(self.ros_log_dir, exist_ok=True)
 
         self.write_state_client = self.create_client(WriteState, '/write_state')
+        self.trajectory_query_client = self.create_client(TrajectoryQuery, '/trajectory_query')
         self._save_lock = threading.Lock()
         self._shutdown_save_done = False
 
@@ -88,6 +95,52 @@ class MapAutoSaver(Node):
     def _timestamped_stem(self) -> str:
         ts = datetime.now().strftime('%Y%m%d_%H%M%S')
         return os.path.join(self.map_save_dir, f'{self.map_file_prefix}_{ts}')
+
+    @staticmethod
+    def _quat_to_yaw(q) -> float:
+        siny = 2.0 * (q.w * q.z + q.x * q.y)
+        cosy = 1.0 - 2.0 * (q.y * q.y + q.z * q.z)
+        return math.atan2(siny, cosy)
+
+    def _write_mapping_origin_yaml(
+        self,
+        map_filestem: str,
+        pbstream_path: str,
+        ros_map_yaml: str | None = None,
+    ) -> None:
+        pose = {'x': 0.0, 'y': 0.0, 'z': 0.0, 'yaw': 0.0}
+
+        if self.trajectory_query_client.wait_for_service(timeout_sec=1.0):
+            req = TrajectoryQuery.Request()
+            req.trajectory_id = 0
+            future = self.trajectory_query_client.call_async(req)
+            rclpy.spin_until_future_complete(self, future, timeout_sec=3.0)
+            if future.done() and future.result() is not None and future.result().status.code == 0:
+                trajectory = future.result().trajectory
+                if trajectory:
+                    first = trajectory[0].pose
+                    pose = {
+                        'x': float(first.position.x),
+                        'y': float(first.position.y),
+                        'z': float(first.position.z),
+                        'yaw': float(self._quat_to_yaw(first.orientation)),
+                    }
+
+        origin_path = f'{map_filestem}_origin.yaml'
+        data = {
+            'map_frame': 'map',
+            'relative_to_trajectory_id': 0,
+            'initial_pose': pose,
+            'pbstream': os.path.abspath(pbstream_path),
+            'ros_map_yaml': ros_map_yaml or '',
+            'note': (
+                'Localization should start from this map-frame pose so waypoint CSV '
+                'coordinates match the saved Cartographer map.'
+            ),
+        }
+        with open(origin_path, 'w', encoding='utf-8') as f:
+            yaml.safe_dump(data, f, sort_keys=False)
+        self.get_logger().info(f'Saved mapping origin -> {origin_path}')
 
     def _save_ros_map(self, map_filestem: str, reason: str, timeout_sec: float) -> bool:
         if timeout_sec <= 0.0:
@@ -256,15 +309,26 @@ class MapAutoSaver(Node):
             rclpy.spin_until_future_complete(self, future, timeout_sec=write_state_timeout_sec)
 
             if future.done() and future.result() is not None:
+                if os.path.getsize(output_path) < self.min_pbstream_bytes:
+                    self.get_logger().warn(
+                        f'Map save skipped export: pbstream too small ({os.path.getsize(output_path)} bytes). '
+                        'Drive the car slowly so Cartographer can build a map first.'
+                    )
+                    return False
+
                 self.get_logger().info('Map saved successfully.')
+                ros_map_yaml = None
                 if export_ros_map:
-                    if not self._save_ros_map(map_filestem, reason, ros_map_timeout_sec):
-                        self._save_ros_map_from_pbstream(
-                            map_filestem,
-                            output_path,
-                            reason,
-                            ros_map_timeout_sec,
-                        )
+                    if self._save_ros_map(map_filestem, reason, ros_map_timeout_sec):
+                        ros_map_yaml = f'{map_filestem}.yaml'
+                    elif self._save_ros_map_from_pbstream(
+                        map_filestem,
+                        output_path,
+                        reason,
+                        ros_map_timeout_sec,
+                    ):
+                        ros_map_yaml = f'{map_filestem}_rosmap.yaml'
+                self._write_mapping_origin_yaml(map_filestem, output_path, ros_map_yaml)
                 return True
 
             self.get_logger().error('Map save failed or timed out.')

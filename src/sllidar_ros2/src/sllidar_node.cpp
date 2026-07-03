@@ -77,8 +77,9 @@ class SLlidarNode : public rclcpp::Node
         this->declare_parameter<std::string>("frame_id","laser_frame");
         this->declare_parameter<bool>("inverted", false);
         this->declare_parameter<bool>("angle_compensate", false);
+        this->declare_parameter<float>("angle_offset", 0.0);
         this->declare_parameter<std::string>("scan_mode",std::string());
-        this->declare_parameter<float>("scan_frequency",10);
+        this->declare_parameter<float>("scan_frequency",40.0);
         
         this->get_parameter_or<std::string>("channel_type", channel_type, "serial");
         this->get_parameter_or<std::string>("tcp_ip", tcp_ip, "192.168.0.7"); 
@@ -90,9 +91,10 @@ class SLlidarNode : public rclcpp::Node
         this->get_parameter_or<std::string>("frame_id", frame_id, "laser_frame");
         this->get_parameter_or<bool>("inverted", inverted, false);
         this->get_parameter_or<bool>("angle_compensate", angle_compensate, false);
+        this->get_parameter_or<float>("angle_offset", angle_offset, 0.0);
         this->get_parameter_or<std::string>("scan_mode", scan_mode, std::string());
         if(channel_type == "udp")
-            this->get_parameter_or<float>("scan_frequency", scan_frequency, 20.0);
+            this->get_parameter_or<float>("scan_frequency", scan_frequency, 40.0);
         else
             this->get_parameter_or<float>("scan_frequency", scan_frequency, 10.0);
     }
@@ -205,6 +207,7 @@ class SLlidarNode : public rclcpp::Node
                   size_t node_count, rclcpp::Time start,
                   double scan_time, bool inverted,
                   float angle_min, float angle_max,
+                  float angle_offset,
                   float max_distance,
                   std::string frame_id)
     {
@@ -223,6 +226,8 @@ class SLlidarNode : public rclcpp::Node
             scan_msg->angle_min =  M_PI - angle_min;
             scan_msg->angle_max =  M_PI - angle_max;
         }
+        scan_msg->angle_min += angle_offset;
+        scan_msg->angle_max += angle_offset;
         scan_msg->angle_increment = (scan_msg->angle_max - scan_msg->angle_min) / (double)(node_count-1);
 
         scan_msg->scan_time = scan_time;
@@ -415,7 +420,7 @@ public:
     
                         publish_scan(scan_pub, angle_compensate_nodes, angle_compensate_nodes_count,
                                 start_scan_time, scan_duration, inverted,
-                                angle_min, angle_max, max_distance,
+                                angle_min, angle_max, angle_offset, max_distance,
                                 frame_id);
 
                         if (angle_compensate_nodes) {
@@ -437,7 +442,7 @@ public:
 
                         publish_scan(scan_pub, &nodes[start_node], end_node-start_node +1,
                                 start_scan_time, scan_duration, inverted,
-                                angle_min, angle_max, max_distance,
+                                angle_min, angle_max, angle_offset, max_distance,
                                 frame_id);
                     }
                 } else if (op_result == SL_RESULT_OPERATION_FAIL) {
@@ -446,7 +451,7 @@ public:
                     float angle_max = DEG2RAD(359.0f);
                     publish_scan(scan_pub, nodes, count,
                                 start_scan_time, scan_duration, inverted,
-                                angle_min, angle_max, max_distance,
+                                angle_min, angle_max, angle_offset, max_distance,
                                 frame_id);
                 }
             }
@@ -478,6 +483,7 @@ public:
     std::string frame_id;
     bool inverted = false;
     bool angle_compensate = true;
+    float angle_offset = 0.0;
     float max_distance = 8.0;
     size_t angle_compensate_multiple = 1;//it stand of angle compensate at per 1 degree
     std::string scan_mode;

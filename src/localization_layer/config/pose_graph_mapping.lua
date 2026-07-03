@@ -66,7 +66,7 @@ POSE_GRAPH = {
     ceres_solver_options = {
       use_nonmonotonic_steps = false,
       max_num_iterations = 50,
-      num_threads = 7,
+      num_threads = 6,
     },
   },
   max_num_final_iterations = 120,

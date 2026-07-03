@@ -32,15 +32,11 @@ options = {
 MAP_BUILDER.use_trajectory_builder_2d = true
 
 TRAJECTORY_BUILDER_2D.use_imu_data = false
--- In repetitive corridor-like maps, online correlative matching can snap to
--- a wrong but similar-looking pose and cause TF jumps.
 TRAJECTORY_BUILDER_2D.use_online_correlative_scan_matching = false
 TRAJECTORY_BUILDER_2D.real_time_correlative_scan_matcher.linear_search_window = 0.08
 TRAJECTORY_BUILDER_2D.real_time_correlative_scan_matcher.angular_search_window = math.rad(4.)
 TRAJECTORY_BUILDER_2D.real_time_correlative_scan_matcher.translation_delta_cost_weight = 2.0
 TRAJECTORY_BUILDER_2D.real_time_correlative_scan_matcher.rotation_delta_cost_weight = 3.0
--- Waypoint-lock mapping mode:
--- trust odom trajectory almost entirely and use scan only for map painting.
 TRAJECTORY_BUILDER_2D.ceres_scan_matcher.occupied_space_weight = 1e-3
 TRAJECTORY_BUILDER_2D.ceres_scan_matcher.translation_weight = 1e6
 TRAJECTORY_BUILDER_2D.ceres_scan_matcher.rotation_weight = 1e6
@@ -49,11 +45,7 @@ TRAJECTORY_BUILDER_2D.motion_filter.max_distance_meters = 0.02
 TRAJECTORY_BUILDER_2D.motion_filter.max_angle_radians = math.rad(0.2)
 TRAJECTORY_BUILDER_2D.submaps.num_range_data = 80
 
--- Jump-suppression mode for repetitive corridor-like tracks:
--- prioritize local consistency and disable global loop-closure corrections.
 POSE_GRAPH.optimize_every_n_nodes = 0
--- Keep normal sampling ratios so Cartographer does not continuously warn about
--- dropping all data. optimize_every_n_nodes=0 already prevents global corrections.
 POSE_GRAPH.constraint_builder.sampling_ratio = 1.0
 POSE_GRAPH.global_sampling_ratio = 1.0
 POSE_GRAPH.constraint_builder.min_score = 0.82

@@ -1,43 +1,97 @@
 import os
+import sys
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch.actions import IncludeLaunchDescription
-from launch.conditions import IfCondition
-from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.actions import DeclareLaunchArgument, LogInfo, OpaqueFunction, SetEnvironmentVariable, TimerAction
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
+_LAUNCH_DIR = os.path.dirname(os.path.abspath(__file__))
+if _LAUNCH_DIR not in sys.path:
+    sys.path.insert(0, _LAUNCH_DIR)
+
+from localization_launch_common import (
+    delayed_cartographer_stack,
+    is_enabled,
+    register_lidar_network_bringup,
+    sensor_bringup_include,
+    sensor_launch_arguments,
+)
+
+
+def _launch_setup(context, *args, **kwargs):
+    enable_sensor_bringup = is_enabled(
+        LaunchConfiguration('enable_sensor_bringup').perform(context)
+    )
+    enable_lidar_network_setup = is_enabled(
+        LaunchConfiguration('enable_lidar_network_setup').perform(context)
+    )
+    cartographer_delay = float(
+        LaunchConfiguration('cartographer_startup_delay_sec').perform(context)
+    )
+    use_rviz = is_enabled(LaunchConfiguration('use_rviz').perform(context))
+
+    rviz_actions = []
+    if use_rviz:
+        rviz_config = os.path.join(
+            get_package_share_directory('localization_layer'),
+            'rviz',
+            'localization.rviz',
+        )
+        rviz_actions.append(
+            TimerAction(
+                period=max(cartographer_delay + 1.0, 2.0),
+                actions=[
+                    Node(
+                        package='rviz2',
+                        executable='rviz2',
+                        name='rviz2',
+                        output='screen',
+                        arguments=['-d', rviz_config],
+                    ),
+                ],
+            )
+        )
+
+    def _after_network(context):
+        return [
+            LogInfo(msg='=== localization: network ready, starting sensors ==='),
+            sensor_bringup_include(),
+            *delayed_cartographer_stack(context, cartographer_delay),
+            *rviz_actions,
+        ]
+
+    if enable_sensor_bringup and enable_lidar_network_setup:
+        return register_lidar_network_bringup(_after_network)
+
+    if enable_sensor_bringup:
+        return [
+            LogInfo(msg='=== localization: starting sensors (network setup skipped) ==='),
+            sensor_bringup_include(),
+            *delayed_cartographer_stack(context, cartographer_delay),
+            *rviz_actions,
+        ]
+
+    from localization_launch_common import localization_stack_with_map
+    return localization_stack_with_map(context, 0.0)
+
 
 def generate_launch_description():
-    localization_dir = get_package_share_directory('localization_layer')
-    config_dir = os.path.join(localization_dir, 'config')
-
-    use_sim_time = LaunchConfiguration('use_sim_time')
-    pbstream_filename = LaunchConfiguration('pbstream_filename')
-    imu_topic = LaunchConfiguration('imu_topic')
-    odom_topic = LaunchConfiguration('odom_topic')
-    scan_topic = LaunchConfiguration('scan_topic')
-    enable_sensor_bringup = LaunchConfiguration('enable_sensor_bringup')
-    ebimu_port = LaunchConfiguration('ebimu_port')
-    ebimu_baud = LaunchConfiguration('ebimu_baud')
-    lidar_channel_type = LaunchConfiguration('lidar_channel_type')
-    lidar_udp_ip = LaunchConfiguration('lidar_udp_ip')
-    lidar_udp_port = LaunchConfiguration('lidar_udp_port')
-    lidar_frame_id = LaunchConfiguration('lidar_frame_id')
-    lidar_inverted = LaunchConfiguration('lidar_inverted')
-    lidar_angle_compensate = LaunchConfiguration('lidar_angle_compensate')
-    lidar_scan_mode = LaunchConfiguration('lidar_scan_mode')
+    maps_dir = '/home/nvidia/f1tenth_ajou/maps'
+    default_pbstream = os.path.join(
+        maps_dir,
+        'cartographer_map_20260628_220238.pbstream',
+    )
 
     return LaunchDescription([
-        DeclareLaunchArgument(
-            'use_sim_time',
-            default_value='false',
-            description='Use simulation (Gazebo) clock if true',
-        ),
+        SetEnvironmentVariable('ROS_LOCALHOST_ONLY', '0'),
+        LogInfo(msg=(
+            'RViz는 Jetson 데스크톱에서 launch와 같은 setup.bash source 후 실행'
+        )),
         DeclareLaunchArgument(
             'pbstream_filename',
+            default_value=default_pbstream,
             description='Absolute path to .pbstream map file',
         ),
         DeclareLaunchArgument(
@@ -48,7 +102,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             'odom_topic',
             default_value='/odom',
-            description='Odometry topic used by Cartographer',
+            description='Odometry topic used by Cartographer (unused when use_odometry=false)',
         ),
         DeclareLaunchArgument(
             'scan_topic',
@@ -57,98 +111,58 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             'enable_sensor_bringup',
-            default_value='false',
-            description='Include sensor_layer launch for IMU/LiDAR/TF when true',
-        ),
-        DeclareLaunchArgument(
-            'ebimu_port',
-            default_value='/dev/ttyUSB0',
-            description='EBIMU serial port (used when sensor bringup is enabled)',
-        ),
-        DeclareLaunchArgument(
-            'ebimu_baud',
-            default_value='115200',
-            description='EBIMU baud rate (used when sensor bringup is enabled)',
-        ),
-        DeclareLaunchArgument(
-            'lidar_channel_type',
-            default_value='udp',
-            description='LiDAR channel type (used when sensor bringup is enabled)',
-        ),
-        DeclareLaunchArgument(
-            'lidar_udp_ip',
-            default_value='192.168.11.2',
-            description='LiDAR UDP IP (used when sensor bringup is enabled)',
-        ),
-        DeclareLaunchArgument(
-            'lidar_udp_port',
-            default_value='8089',
-            description='LiDAR UDP port (used when sensor bringup is enabled)',
-        ),
-        DeclareLaunchArgument(
-            'lidar_frame_id',
-            default_value='laser',
-            description='LiDAR frame_id (used when sensor bringup is enabled)',
-        ),
-        DeclareLaunchArgument(
-            'lidar_inverted',
-            default_value='false',
-            description='LiDAR inverted flag (used when sensor bringup is enabled)',
-        ),
-        DeclareLaunchArgument(
-            'lidar_angle_compensate',
             default_value='true',
-            description='LiDAR angle compensation flag (used when sensor bringup is enabled)',
+            description='Include sensor bringup for IMU/LiDAR/TF when true',
+        ),
+        *sensor_launch_arguments(),
+        DeclareLaunchArgument(
+            'cartographer_startup_delay_sec',
+            default_value='6.0',
+            description='Delay after sensor start before Cartographer (IMU must publish first)',
         ),
         DeclareLaunchArgument(
-            'lidar_scan_mode',
-            default_value='Sensitivity',
-            description='LiDAR scan mode (used when sensor bringup is enabled)',
+            'enable_initial_pose_reset',
+            default_value='true',
+            description='Run localization pose manager (finish auto trajectory + set pose)',
         ),
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                os.path.join(
-                    get_package_share_directory('sensor_layer'),
-                    'launch',
-                    'sensor_layer_launch.py',
-                )
-            ),
-            condition=IfCondition(enable_sensor_bringup),
-            launch_arguments={
-                'channel_type': lidar_channel_type,
-                'udp_ip': lidar_udp_ip,
-                'udp_port': lidar_udp_port,
-                'frame_id': lidar_frame_id,
-                'inverted': lidar_inverted,
-                'angle_compensate': lidar_angle_compensate,
-                'scan_mode': lidar_scan_mode,
-                'ebimu_port': ebimu_port,
-                'ebimu_baud': ebimu_baud,
-            }.items(),
+        DeclareLaunchArgument(
+            'wait_for_rviz_initial_pose',
+            default_value='true',
+            description='Wait for RViz 2D Pose Estimate instead of assuming mapping origin',
         ),
-        Node(
-            package='cartographer_ros',
-            executable='cartographer_node',
-            name='cartographer_node',
-            output='screen',
-            parameters=[{'use_sim_time': use_sim_time}],
-            arguments=[
-                '-configuration_directory', config_dir,
-                '-configuration_basename', 'cartographer_2d_localization.lua',
-                '-load_state_filename', pbstream_filename,
-                '-load_frozen_state', 'true',
-            ],
-            remappings=[
-                ('imu', imu_topic),
-                ('odom', odom_topic),
-                ('scan', scan_topic),
-            ],
+        DeclareLaunchArgument(
+            'use_saved_mapping_origin',
+            default_value='false',
+            description='Use <pbstream_stem>_origin.yaml when wait_for_rviz_initial_pose is false',
         ),
-        Node(
-            package='cartographer_ros',
-            executable='cartographer_occupancy_grid_node',
-            name='occupancy_grid_node',
-            output='screen',
-            parameters=[{'use_sim_time': use_sim_time}],
+        DeclareLaunchArgument(
+            'initial_pose_x',
+            default_value='nan',
+            description='Optional manual initial pose x in map frame',
         ),
+        DeclareLaunchArgument(
+            'initial_pose_y',
+            default_value='nan',
+            description='Optional manual initial pose y in map frame',
+        ),
+        DeclareLaunchArgument(
+            'initial_pose_yaw',
+            default_value='nan',
+            description='Optional manual initial pose yaw in radians',
+        ),
+        DeclareLaunchArgument(
+            'initial_pose_startup_delay_sec',
+            default_value='2.0',
+            description='Delay after cartographer start before pose manager runs',
+        ),
+        DeclareLaunchArgument(
+            'use_rviz',
+            default_value='false',
+            description='Launch RViz on this machine (needs DISPLAY; use false over SSH)',
+        ),
+        LogInfo(msg=(
+            'RViz (Jetson 데스크톱, launch와 같은 ROS):\n'
+            '  ros2 run localization_layer run_localization_rviz.sh'
+        )),
+        OpaqueFunction(function=_launch_setup),
     ])

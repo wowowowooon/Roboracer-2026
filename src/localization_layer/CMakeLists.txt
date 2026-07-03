@@ -12,13 +12,24 @@ find_package(cartographer_ros REQUIRED)
 # Install launch files
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 
+# Install rviz config
+install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME})
+
 # Install config files
 install(DIRECTORY config DESTINATION share/${PROJECT_NAME})
 
 # Install helper scripts
-install(PROGRAMS
+  install(PROGRAMS
   scripts/map_auto_saver.py
-  scripts/fake_sensor_publisher.py
+  scripts/localization_initial_pose_setter.py
+  scripts/static_map_publisher.py
+  scripts/setup_lidar_network.sh
+  scripts/install_lidar_network.sh
+  scripts/run_localization_rviz.sh
+  scripts/localization_rviz.sh
+  scripts/install_rviz_desktop_access.sh
+  scripts/fix_rviz_x11_access.sh
+  scripts/rviz-xhost-at-boot.sh
   DESTINATION lib/${PROJECT_NAME}
 )
 

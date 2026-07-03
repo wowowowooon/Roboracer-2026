@@ -23,7 +23,6 @@ def generate_launch_description():
     world_type = LaunchConfiguration("world_type")
     map_yaml_path = LaunchConfiguration("map_yaml_path")
     centerline_csv_path = LaunchConfiguration("centerline_csv_path")
-    use_sim_time = LaunchConfiguration("use_sim_time")
     sensor_params_file = LaunchConfiguration("sensor_params_file")
     map_path_speed_mps = LaunchConfiguration("map_path_speed_mps")
     sim_motion_source = LaunchConfiguration("sim_motion_source")
@@ -52,7 +51,6 @@ def generate_launch_description():
             "centerline_csv_path",
             default_value="/home/tkddn647/test/maps/sim_map_20260304_181103_centerline.csv",
         ),
-        DeclareLaunchArgument("use_sim_time", default_value="false"),
         DeclareLaunchArgument("sensor_params_file", default_value=default_params),
         # Keep localization motion conservative. High speed with sparse scan causes
         # scan-matching jumps in repetitive track sections.
@@ -111,7 +109,6 @@ def generate_launch_description():
             PythonLaunchDescriptionSource(localization_launch),
             launch_arguments={
                 "pbstream_filename": pbstream_filename,
-                "use_sim_time": use_sim_time,
                 "imu_topic": "/ebimu/imu",
                 "odom_topic": "/odom",
                 "scan_topic": "/scan",
