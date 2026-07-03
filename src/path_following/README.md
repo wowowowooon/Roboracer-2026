@@ -431,3 +431,33 @@ ros2 run path_following control_node
 source /opt/ros/humble/setup.bash
 source /home/nvidia/f1tenth_ajou/install/setup.bash
 ros2 run path_following drive_monitor
+
+
+
+git 업로드
+전체 선택
+cd /home/nvidia/f1tenth_ajou
+git add .
+git commit -m "오늘 작업 전체 백업"
+git push roboracer 
+
+roboracer이건 내 레포 origin이건 팀 레포
+
+일부만 업로드
+cd /home/nvidia/f1tenth_ajou
+git add src/path_following/path_following/control_node.py
+git commit -m "fix: control_node 수정"
+git push roboracer
+
+일부만 빼고 싶을 때
+cd /home/nvidia/f1tenth_ajou
+git add .
+git reset maps/
+git reset *.csv
+
+코드만 수정
+cd /home/nvidia/f1tenth_ajou
+git add src/ README.md .gitignore
+git commit -m "path_following 수정"
+git push roboracer
+
