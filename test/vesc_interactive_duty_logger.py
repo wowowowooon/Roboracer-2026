@@ -26,6 +26,7 @@ except ImportError as exc:
 
 COMM_GET_VALUES = 4
 COMM_SET_DUTY = 5
+DUTY_OUTPUT_SIGN = -1.0
 
 STOP_COMMANDS = {"stop", "q", "quit", "exit"}
 ZERO_COMMANDS = {"z", "zero"}
@@ -133,8 +134,14 @@ def move_toward(current, target, step):
 
 
 def set_vesc_duty(ser, duty):
-    """Send COMM_SET_DUTY. VESC expects duty * 100000 as big-endian int32."""
-    duty_raw = int(duty * 100000)
+    """
+    Send COMM_SET_DUTY.
+
+    DUTY_OUTPUT_SIGN reverses the motor direction in software. With the current
+    setting, terminal input +0.05 is sent to the VESC as -0.05.
+    """
+    vesc_duty = duty * DUTY_OUTPUT_SIGN
+    duty_raw = int(vesc_duty * 100000)
     payload = bytearray()
     payload.append(COMM_SET_DUTY)
     payload.extend(struct.pack(">i", duty_raw))
@@ -354,6 +361,7 @@ def print_startup_help(args):
     print("============================================================")
     print(f"Port: {args.port}, baud: {args.baud}, CSV: {args.csv}")
     print(f"max-duty: +/-{args.max_duty:.3f}, ramp-step: {args.ramp_step:.4f}")
+    print("duty-output: inverted (+input sends -VESC duty)")
     print(f"pole-pairs: {args.pole_pairs:.1f}")
     print(f"gear-ratio: {args.gear_ratio:.1f}")
     print()

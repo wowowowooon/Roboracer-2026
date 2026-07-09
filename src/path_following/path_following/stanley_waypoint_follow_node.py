@@ -33,7 +33,7 @@ from path_following.track_sliding import (
 # ============================================================
 CFG = {
     "csv_path": "",
-    "reverse_track_direction": True,  # CSV 점 순서 반전 (주행 방향 맞출 때)
+    "reverse_track_direction": False,  # 150929 raceline: False (True면 hdg_err ~140° 반대)
     "path_window_size": 140,
     "path_anchor_half_width": 120,
     "map_frame": "map",
@@ -45,19 +45,19 @@ CFG = {
     "drive_topic": "/drive",
     "tracked_path_topic": "/waypoint_tracked_path",
     "timer_period_ms": 30,
-    "nominal_speed": 2.5,
+    "nominal_speed": 0.8,
     "use_planner_speed_scale": True,
     "planner_speed_stale_sec": 0.75,
-    "max_drive_speed": 2.5,
+    "max_drive_speed": 0.8,
     "speed_smooth_alpha": 0.2,
     "speed_slew_mps": 1.0,
-    "max_steering_angle": 0.6981,  # ±40° — ESP LEFT=50, CENTER=90, RIGHT=130
-    "steering_smooth_alpha": 0.45,
+    "max_steering_angle": 0.60,
+    "steering_smooth_alpha": 0.15,
     "wheelbase": 0.33,
-    "stanley_k": 3.0,
-    "stanley_softening": 0.20,
+    "stanley_k": 2.5,
+    "stanley_softening": 0.12,
     # |cte|가 클수록 heading_error 가중치↓ (직선 평행주행 시 상쇄 방지)
-    "stanley_heading_cte_blend_m": 0.1,
+    "stanley_heading_cte_blend_m": 0.08,
     "stanley_heading_min_weight": 0.25,
     "stanley_debug_log_hz": 2.0,
     "status_log_hz": 2.0,
@@ -375,7 +375,8 @@ class StanleyWaypointFollowNode(Node):
         )
         steering = hdg_w * heading_error + cte_term
 
-        steering = wrap_pi(steering)
+        # Stanley 조향값은 원형 각도가 아니라 bounded control input 이므로
+        # wrap_pi()로 다시 감싸면 반응이 과하게 휘어질 수 있다.
         steering = max(-self.max_steering, min(self.max_steering, steering))
 
         if self._stanley_debug_period > 0.0:

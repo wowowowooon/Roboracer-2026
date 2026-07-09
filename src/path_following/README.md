@@ -83,7 +83,7 @@ pip3 install numpy scipy pyyaml pillow scikit-image
 ```bash
 cd /home/nvidia/f1tenth_ajou/src/path_following/scripts
 python3 extract_centerline_from_map.py
-# 기본 맵: maps/cartographer_map_20260628_145249_rosmap.yaml
+# 기본 맵: maps/cartographer_map_20260704_150929_rosmap.yaml
 
 
 # 다른 맵:
@@ -108,7 +108,7 @@ python3 generate_raceline_from_centerline.py
 # 또는 경로 직접 지정:
 python3 generate_raceline_from_centerline.py \
   --centerline ../config/centerline.csv \
-  --map /home/nvidia/f1tenth_ajou/maps/cartographer_map_20260628_145249_rosmap.yaml \
+  --map /home/nvidia/f1tenth_ajou/maps/cartographer_map_20260704_150929_rosmap.yaml \
   --out ../config/raceline.csv
 ```
 
@@ -128,7 +128,7 @@ source install/setup.bash
 | 로컬 `pbstream_filename` | **위 맵과 쌍을 이루는 `.pbstream`** |
 | `config/raceline.csv` | 위 YAML에서 뽑은 경로 |
 
-예: CSV를 `145249` 맵으로 만들었다면 로컬도 `145249.pbstream`을 쓴다.
+예: CSV를 `150929` 맵으로 만들었다면 로컬도 `150929.pbstream`을 쓴다.
 
 ---
 
@@ -167,20 +167,20 @@ ros2 launch localization_layer cartographer_localization_launch.py
 
 기본 pbstream (런치 파일 기준):
 
-`/home/nvidia/f1tenth_ajou/maps/cartographer_map_20260628_220238.pbstream`
+`/home/nvidia/f1tenth_ajou/maps/cartographer_map_20260704_150929.pbstream`
 
-**현재 `config/raceline.csv`가 `145249` 맵 기준이면** pbstream을 맞춰 실행:
+**현재 `config/raceline.csv`는 `150929` 맵 기준** (launch 기본 pbstream과 동일):
 
 ```bash
 ros2 launch localization_layer cartographer_localization_launch.py \
-  pbstream_filename:=/home/nvidia/f1tenth_ajou/maps/cartographer_map_20260628_145249.pbstream
+  pbstream_filename:=/home/nvidia/f1tenth_ajou/maps/cartographer_map_20260704_150929.pbstream
 ```
 
 자주 쓰는 옵션:
 
 | 인자 | 기본 | 설명 |
 |------|------|------|
-| `pbstream_filename` | `220238.pbstream` | 로드할 맵 |
+| `pbstream_filename` | `150929.pbstream` | 로드할 맵 |
 | `enable_sensor_bringup` | `true` | LiDAR·IMU·TF 자동 기동 |
 | `cartographer_startup_delay_sec` | `6.0` | 센서 워밍업 후 Cartographer 시작 |
 | `wait_for_rviz_initial_pose` | `true` | RViz 2D Pose Estimate 대기 |
@@ -238,7 +238,7 @@ source /opt/ros/humble/setup.bash
 source /home/nvidia/f1tenth_ajou/install/setup.bash
 
 ros2 launch localization_layer cartographer_localization_launch.py \
-  pbstream_filename:=/home/nvidia/f1tenth_ajou/maps/cartographer_map_20260628_145249.pbstream
+  pbstream_filename:=/home/nvidia/f1tenth_ajou/maps/cartographer_map_20260704_150929.pbstream
 ```
 
 RViz에서 **2D Pose Estimate**로 차량 위치를 맞춘다 (`wait_for_rviz_initial_pose:=true`일 때).
@@ -435,6 +435,13 @@ ros2 run path_following drive_monitor
 
 
 git 업로드
+
+팀 레포
+cd /home/nvidia/f1tenth_ajou
+git add src/
+git commit -m "작업 내용"
+git push roboracer-ajou
+
 전체 선택
 cd /home/nvidia/f1tenth_ajou
 git add .

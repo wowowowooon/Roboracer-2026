@@ -81,7 +81,7 @@ def generate_launch_description():
     maps_dir = '/home/nvidia/f1tenth_ajou/maps'
     default_pbstream = os.path.join(
         maps_dir,
-        'cartographer_map_20260628_220238.pbstream',
+        'cartographer_map_20260704_150929.pbstream',
     )
 
     return LaunchDescription([

@@ -343,6 +343,19 @@ class DriveMonitor(Node):
             )
         else:
             lines.append("  VESC duty     : — (control_node /vehicle/telemetry 없음)")
+        if len(self._tel) >= 19:
+            lines.append(
+                f"  VESC 속도     : {self._tel[10]:+.2f} m/s  "
+                f"(target {self._tel[11]:.2f}, err {self._tel[12]:+.2f})"
+            )
+            lines.append(
+                f"  Speed PI      : ff {self._tel[13]:+.3f}, cmd {self._tel[14]:+.3f}, "
+                f"erpm {self._tel[15]:+.0f}"
+            )
+            lines.append(
+                f"  VESC 전원     : motor {self._tel[17]:+.2f} A, "
+                f"in {self._tel[16]:+.2f} A, {self._tel[18]:.1f} V"
+            )
         lines.append(
             f"  속도 배율     : strategy×{self._strategy_mul:.2f}  "
             f"planner×{self._planner_speed_scale:.2f}  cond={self._speed_cond}"
