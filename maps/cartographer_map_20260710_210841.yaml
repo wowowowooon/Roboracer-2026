@@ -1,0 +1,7 @@
+image: cartographer_map_20260710_210841.png
+mode: trinary
+resolution: 0.08
+origin: [-4.36, -19.6, 0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.25
