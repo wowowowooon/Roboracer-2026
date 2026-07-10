@@ -12,7 +12,9 @@ ESP → Jetson: RC,ch1_us,ch2_us,ch5_us,0  (raw PWM us, 1000~2000)
 """
 from __future__ import annotations
 
+import csv
 import math
+import os
 import select
 import struct
 import sys
@@ -42,11 +44,11 @@ CFG = {
     "max_steering_angle_rad": 0.6981,  # ±40° — ESP normToAngle: S±1 → 50°/130°
     "max_duty": 0.20,           # VESC duty 상한 20% (송신기 풀스틱 = 최대 20%)
     "speed_scale": 1.0,         # 추가 감쇠 (1.0=끔)
-    "min_move_duty": 0.06,      # 정지마찰 극복용 최소 duty (speed>threshold 일 때)
-    "min_move_speed_mps": 0.08,
+    "min_move_duty": 0.08,      # 정지마찰 극복용 최소 duty (speed>threshold 일 때)
+    "min_move_speed_mps": 0.10,
     "debug_log_hz": 1.0,
-    "max_steer": 0.55,          # ESP 조향 명령 범위. 1.0이면 서보 ±40°까지 사용
-    "steer_rate_limit_per_sec": 1.5,
+    "max_steer": 1.0,           # ESP 조향 명령 범위. 1.0 = 서보 ±40° 풀사용
+    "steer_rate_limit_per_sec": 4.0,
     "steer_cmd_format": "prefixed",  # plain: "0.500\n" | prefixed: "S:0.500\n"
     "invert_speed": False,      # legacy AUTO sign flag; prefer auto_duty_output_sign
     # 원본 ESP normToAngle: S:-1→좌(50°), S:+1→우(130°) — INVERT_RC_STEER 미적용
@@ -85,6 +87,8 @@ CFG = {
     "pole_pairs": 2,
     "gear_ratio": 12.0,
     "wheel_diameter": 0.10,
+    "enable_csv_log": True,
+    "csv_log_path": "run_logs/vesc_control_log.csv",
 }
 
 
@@ -171,6 +175,12 @@ class VehicleControlNode(Node):
         self._last_vesc_poll_time = 0.0
         self._last_vesc_telemetry_time = 0.0
         self._vesc_rx_buffer = bytearray()
+        self._csv_enabled = bool(CFG.get("enable_csv_log", False))
+        self._csv_path = self._resolve_csv_path(
+            str(CFG.get("csv_log_path", "run_logs/vesc_control_log.csv"))
+        )
+        self._csv_file = None
+        self._csv_writer = None
         self._erpm = 0.0
         self._measured_speed_mps = 0.0
         self._current_motor = 0.0
@@ -196,6 +206,8 @@ class VehicleControlNode(Node):
         )
 
         time.sleep(float(CFG["serial_open_delay_sec"]))
+
+        self._init_csv_logging()
 
         self.create_subscription(
             AckermannDriveStamped,
@@ -234,6 +246,64 @@ class VehicleControlNode(Node):
             self.get_logger().info(
                 f"Keyboard ESTOP: Space=stop(latch), {self._estop_reset_key.upper()}=reset"
             )
+
+    @staticmethod
+    def _resolve_csv_path(csv_path: str) -> str:
+        """install/ 실행이어도 src/path_following/run_logs 에 저장."""
+        if os.path.isabs(csv_path):
+            return csv_path
+
+        pkg_dir = os.path.dirname(os.path.abspath(__file__))
+        install_marker = f"{os.sep}install{os.sep}"
+        if install_marker in pkg_dir:
+            ws_root = pkg_dir.split(install_marker, 1)[0]
+            src_pkg = os.path.join(ws_root, "src", "path_following")
+            if os.path.isdir(src_pkg):
+                return os.path.abspath(os.path.join(src_pkg, csv_path))
+        # path_following/path_following/*.py → 패키지 루트는 한 단계 위
+        pkg_root = os.path.dirname(pkg_dir)
+        return os.path.abspath(os.path.join(pkg_root, csv_path))
+
+    def _init_csv_logging(self) -> None:
+        if not self._csv_enabled:
+            return
+        try:
+            parent_dir = os.path.dirname(self._csv_path)
+            if parent_dir:
+                os.makedirs(parent_dir, exist_ok=True)
+            self._csv_file = open(self._csv_path, "w", newline="")
+            self._csv_writer = csv.writer(self._csv_file)
+            self._csv_writer.writerow(
+                ["time", "voltage_v", "erpm", "rpm", "steer_rad", "steer_cmd"]
+            )
+            self._csv_file.flush()
+            self.get_logger().info(f"CSV logging enabled: {self._csv_path}")
+        except Exception as exc:
+            self.get_logger().error(f"Failed to open CSV log file: {exc}")
+            self._csv_enabled = False
+            self._csv_file = None
+            self._csv_writer = None
+
+    def _write_csv_row(self) -> None:
+        if not self._csv_enabled or self._csv_writer is None or self._csv_file is None:
+            return
+        try:
+            wheel_rpm = (self._erpm / max(self._pole_pairs, 1e-6)) / max(
+                self._gear_ratio, 1e-6
+            )
+            self._csv_writer.writerow(
+                [
+                    time.time(),
+                    self._input_voltage,
+                    self._erpm,
+                    wheel_rpm,
+                    self._last_steering_rad,
+                    self.current_steer,
+                ]
+            )
+            self._csv_file.flush()
+        except Exception as exc:
+            self.get_logger().error(f"Failed to write CSV log row: {exc}")
 
     def _is_estop_latched(self) -> bool:
         with self._estop_lock:
@@ -624,6 +694,7 @@ class VehicleControlNode(Node):
         self._publish_telemetry(autonomous)
         self._publish_speed()
         self._maybe_log_debug()
+        self._write_csv_row()
 
     def _publish_telemetry(self, autonomous: bool) -> None:
         msg = Float64MultiArray()
@@ -750,6 +821,14 @@ class VehicleControlNode(Node):
             self.vesc.close()
         except Exception:
             pass
+
+        if self._csv_file is not None:
+            try:
+                self._csv_file.close()
+            except Exception:
+                pass
+            self._csv_file = None
+            self._csv_writer = None
 
         super().destroy_node()
 

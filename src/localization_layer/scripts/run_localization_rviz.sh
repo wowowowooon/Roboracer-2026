@@ -48,7 +48,14 @@ if ! ros2 topic info /map 2>/dev/null | grep -qE 'Publisher count: [1-9]'; then
   echo ""
 fi
 
+if ! ros2 topic info /tf 2>/dev/null | grep -qE 'Publisher count: [1-9]'; then
+  echo "WARNING: /tf publisher 없음 — map 프레임이 없으면 스캔이 안 보입니다."
+  echo "  localization launch가 켜져 있는지 확인하세요."
+  echo ""
+fi
+
 CONFIG="$(ros2 pkg prefix localization_layer)/share/localization_layer/rviz/localization.rviz"
 echo "RViz localization (Fixed Frame=map, Map=/map, LaserScan=/scan)"
+echo "  조금 움직이면 자동으로 위치 찾음. 수동은 2D Pose Estimate."
 echo "  DISPLAY=${DISPLAY}  config=${CONFIG}"
 exec ros2 run rviz2 rviz2 -d "${CONFIG}"

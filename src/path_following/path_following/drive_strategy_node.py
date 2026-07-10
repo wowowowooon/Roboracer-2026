@@ -38,7 +38,7 @@ from path_following.track_sliding import (
 # ============================================================
 CFG = {
     "csv_path": "",
-    "reverse_track_direction": True,
+    "reverse_track_direction": False,
     "map_frame": "map",
     "base_frame": "base_link",
     "tf_lookup_timeout_sec": 0.2,

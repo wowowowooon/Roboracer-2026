@@ -81,14 +81,11 @@ def generate_launch_description():
     maps_dir = '/home/nvidia/f1tenth_ajou/maps'
     default_pbstream = os.path.join(
         maps_dir,
-        'cartographer_map_20260704_150929.pbstream',
+        'cartographer_map_20260710_210821.pbstream',
     )
 
     return LaunchDescription([
         SetEnvironmentVariable('ROS_LOCALHOST_ONLY', '0'),
-        LogInfo(msg=(
-            'RViz는 Jetson 데스크톱에서 launch와 같은 setup.bash source 후 실행'
-        )),
         DeclareLaunchArgument(
             'pbstream_filename',
             default_value=default_pbstream,
@@ -127,12 +124,12 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             'wait_for_rviz_initial_pose',
-            default_value='true',
-            description='Wait for RViz 2D Pose Estimate instead of assuming mapping origin',
+            default_value='false',
+            description='Wait for RViz 2D Pose Estimate instead of saved mapping origin',
         ),
         DeclareLaunchArgument(
             'use_saved_mapping_origin',
-            default_value='false',
+            default_value='true',
             description='Use <pbstream_stem>_origin.yaml when wait_for_rviz_initial_pose is false',
         ),
         DeclareLaunchArgument(
@@ -161,8 +158,10 @@ def generate_launch_description():
             description='Launch RViz on this machine (needs DISPLAY; use false over SSH)',
         ),
         LogInfo(msg=(
-            'RViz (Jetson 데스크톱, launch와 같은 ROS):\n'
-            '  ros2 run localization_layer run_localization_rviz.sh'
+            '=== 210821 맵 localization (루프 클로저 ON, 자동 시작) ===\n'
+            '  ros2 launch localization_layer cartographer_localization_launch.py\n'
+            '  → 매핑 원점(_origin.yaml)에서 자동 Localization OK\n'
+            '  수동 보정: wait_for_rviz_initial_pose:=true + RViz 2D Pose Estimate'
         )),
         OpaqueFunction(function=_launch_setup),
     ])

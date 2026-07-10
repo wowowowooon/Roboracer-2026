@@ -51,8 +51,8 @@ CFG = {
     "max_drive_speed": 0.8,
     "speed_smooth_alpha": 0.2,
     "speed_slew_mps": 1.0,
-    "max_steering_angle": 0.60,
-    "steering_smooth_alpha": 0.15,
+    "max_steering_angle": 0.6981,  # ±40° — control_node / ESP S±1.0 과 동일
+    "steering_smooth_alpha": 0.35,
     "wheelbase": 0.33,
     "stanley_k": 2.5,
     "stanley_softening": 0.12,
@@ -62,7 +62,7 @@ CFG = {
     "stanley_debug_log_hz": 2.0,
     "status_log_hz": 2.0,
     "planner_gate_stale_sec": 0.15,  # override False 미수신 시 빠르게 CSV 복귀
-    "steering_rate_limit_radps": 3.0,
+    "steering_rate_limit_radps": 5.0,
     "publish_tracked_path": True,
 }
 

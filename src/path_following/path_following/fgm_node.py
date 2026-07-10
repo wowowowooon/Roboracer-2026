@@ -2,10 +2,12 @@
 """
 FGM (Follow the Gap Method) 노드.
 
-/scan + /static_obstacles → FOV, Safety Bubble, Max Gap → /fgm_target.
+회피의 주 경로 생성기:
+  - 장애 접근/AVOID 중 /planner/fgm_enable=True → 스캔 FOV 갭 추종
+  - 벽–벽 갭 중심, 장애 있으면 버블로 장애–벽 갭으로 자연 전환
+  - REJOIN 은 local_planner 의 CSV 복귀 보조 (여기선 enable OFF)
 
-**타이밍·게이트(언제 LOCAL_PATH 쓸지)는 local_planner_node CFG 에서만 조정.**
-여기는 갭 추종 알고리즘·스무딩 파라미터만.
+/scan + (/static_obstacles 버블) + /planner/fgm_enable → /fgm_target
 """
 from __future__ import annotations
 
@@ -16,7 +18,7 @@ import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Point, PointStamped
 from sensor_msgs.msg import LaserScan
-from std_msgs.msg import Float32MultiArray
+from std_msgs.msg import Bool, Float32MultiArray
 from visualization_msgs.msg import Marker
 
 
@@ -29,13 +31,18 @@ CFG = {
     "scan_topic": "/scan",
     "laser_frame": "laser",
     "obstacle_topic": "/static_obstacles",
+    "fgm_enable_topic": "/planner/fgm_enable",
+    # True면 local_planner 의 /planner/fgm_enable 이 True 일 때만 갭 계산
+    "require_planner_enable": True,
+    # False면 enable 중 스캔만으로 갭 추종 (장애 목록 없어도 AVOID 유지)
+    "require_static_obstacles": False,
     "target_topic": "/fgm_target",
     "publish_debug_scan": False,
     # 스캔 전처리·갭 (알고리즘)
-    "fov_half_deg": 60.0,
+    "fov_half_deg": 80.0,  # 총 160° (±80°)
     "preprocess_max_range_m": 2.0,
     "bubble_radius_m": 0.20,
-    "obstacle_bubble_trigger_dist_m": 0.5,
+    "obstacle_bubble_trigger_dist_m": 0.7,
     "gap_threshold_primary_m": 1.5,
     "gap_threshold_fallback_m": 0.5,
     "min_gap_width_bins": 4,
@@ -74,11 +81,23 @@ class FGMNode(Node):
         obs_t = self.get_parameter("obstacle_topic").value
         tgt_t = self.get_parameter("target_topic").value
         self._laser_frame = str(self.get_parameter("laser_frame").value)
+        self.require_planner_enable = _param_bool(
+            self.get_parameter("require_planner_enable").value
+        )
+        self.require_static_obstacles = _param_bool(
+            self.get_parameter("require_static_obstacles").value
+        )
+        fgm_en_t = str(self.get_parameter("fgm_enable_topic").value)
 
         self.scan_sub = self.create_subscription(LaserScan, scan_t, self.scan_callback, 10)
         self.obstacle_sub = self.create_subscription(
             Float32MultiArray, obs_t, self.obstacle_callback, 10
         )
+        self._fgm_enabled = not self.require_planner_enable
+        if self.require_planner_enable:
+            self.fgm_enable_sub = self.create_subscription(
+                Bool, fgm_en_t, self.fgm_enable_callback, 10
+            )
 
         self.target_pub = self.create_publisher(PointStamped, tgt_t, 10)
         self.debug_scan_pub = self.create_publisher(LaserScan, "/fgm_debug_scan", 10)
@@ -140,12 +159,21 @@ class FGMNode(Node):
         self.get_logger().info(
             f"FGM started | target={self.target_dist_default}m, "
             f"preprocess={self.preprocess_dist}m, "
-            f"bubble≤{self.obstacle_bubble_trigger_dist_m}m, "
+            f"bubble={self.bubble_radius}m≤{self.obstacle_bubble_trigger_dist_m}m, "
+            f"planner_enable={self.require_planner_enable}({fgm_en_t}), "
+            f"require_obs={self.require_static_obstacles}, "
             f"marker scale={self.gap_marker_arm_scale} max={_gmax}m"
         )
 
     def obstacle_callback(self, msg: Float32MultiArray) -> None:
         self.latest_obstacles = list(msg.data)
+
+    def fgm_enable_callback(self, msg: Bool) -> None:
+        was = self._fgm_enabled
+        self._fgm_enabled = bool(msg.data)
+        if was and not self._fgm_enabled:
+            self._reset_fgm_filter_state()
+            self._publish_gap_marker_delete()
 
     def _reset_fgm_filter_state(self) -> None:
         self._last_gap_center_idx = None
@@ -250,6 +278,16 @@ class FGMNode(Node):
         return float(ox), float(oy)
 
     def scan_callback(self, scan_msg: LaserScan) -> None:
+        # AVOID/접근 중 planner enable → 갭 추종 (장애 목록 없어도 유지)
+        if self.require_planner_enable and not self._fgm_enabled:
+            self._reset_fgm_filter_state()
+            self._publish_gap_marker_delete()
+            return
+        if self.require_static_obstacles and len(self.latest_obstacles) < 4:
+            self._reset_fgm_filter_state()
+            self._publish_gap_marker_delete()
+            return
+
         ranges = np.array(scan_msg.ranges, dtype=np.float64)
         ranges = np.where(np.isinf(ranges), self.preprocess_dist, ranges)
         ranges = np.where(np.isnan(ranges), 0.0, ranges)
@@ -380,6 +418,7 @@ class FGMNode(Node):
         angle_inc: float,
         stamp_msg,
     ) -> None:
+        """선택 갭 양끝 V자 — 장애 시 갭이 좁아지는 모션이 그대로 보임."""
         marker = Marker()
         marker.header.stamp = stamp_msg
         marker.header.frame_id = self._laser_frame
@@ -388,7 +427,6 @@ class FGMNode(Node):
         marker.type = Marker.LINE_LIST
         marker.action = Marker.ADD
         marker.scale.x = 0.05
-
         marker.color.r = 1.0
         marker.color.g = 0.0
         marker.color.b = 0.0
@@ -401,6 +439,9 @@ class FGMNode(Node):
 
         start_angle = angle_min + start_idx * angle_inc
         end_angle = angle_min + end_idx * angle_inc
+        # FOV 밖이면 표시만 클램프 (추종 각도는 갭 인덱스 그대로)
+        start_angle = max(-self.fov_angle, min(self.fov_angle, start_angle))
+        end_angle = max(-self.fov_angle, min(self.fov_angle, end_angle))
 
         r_s = max(float(ranges[start_idx]), 1e-6)
         r_e = max(float(ranges[end_idx]), 1e-6)
@@ -426,10 +467,8 @@ class FGMNode(Node):
 
         marker.points.append(p_origin)
         marker.points.append(p_start)
-
         marker.points.append(p_origin)
         marker.points.append(p_end)
-
         self.gap_marker_pub.publish(marker)
 
     def create_bubble(

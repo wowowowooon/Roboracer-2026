@@ -10,8 +10,8 @@
   **True** = 지금 회피·재합류 궤적을 `/local_path` 로 내고 있으니 웨이포인트가 그거 사용.
 - GLOBAL/AVOID/REJOIN 상태 머신으로 회피·Frenet Quintic 재합류를 관리.
 
-`static_obstacle_node` / `fgm_node` 는 **기능만** (클러스터·갭).  
-**장애 게이트·LOCAL_PATH/FGM 타이밍은 이 파일 CFG 만 수정.**
+`static_obstacle_node` 는 맵잔차 장애 검출, `fgm_node` 는 **회피 주 경로(갭)**.
+REJOIN 은 CSV 복귀 보조. **게이트·AVOID 타이밍은 이 파일 CFG.**
 
 CSV 전 코스 시각화(선택): `csv_track_viz_topic`(기본 `/raceline_csv_path`).
 
@@ -36,6 +36,8 @@ from tf2_ros import Buffer, TransformListener, TransformException
 
 from path_following.obstacle_filter import (
     closest_obstacle_surface_m,
+    csv_path_blocked_by_obstacles,
+    filter_obstacles_for_exit,
     filter_obstacles_laser_frame,
     obstacles_remain_for_avoid,
 )
@@ -59,38 +61,55 @@ CFG = {
     "local_path_topic": "/local_path",
     "planner_path_override_topic": "/planner_path_override_active",
     # --- 장애물 게이트 (static 출력 → planner 사용) ---
+    # 트랙폭~1m: 벽 오검이 코리도로 들어오지 않게 좁게
     "raceline_corridor_enable": True,
-    "corridor_max_lateral_from_raceline_m": 0.68,
+    "corridor_max_lateral_from_raceline_m": 0.32,
     "obstacle_forward_min_m": 0.30,
     "obstacle_forward_max_m": 10.0,
-    "obstacle_lateral_abs_max_m": 0.65,
+    "obstacle_lateral_abs_max_m": 0.40,
     "obstacle_tf_timeout_sec": 0.15,
-    # --- LOCAL_PATH 상태머신 (CSV ↔ 회피) ---
+    # laser → base_link 전방 오프셋
+    "laser_to_base_x_m": 0.275,
+    # --- LOCAL_PATH 상태머신 ---
+    # FGM = 회피 주 경로 (AVOID 전 구간 갭 추종). REJOIN = CSV 복귀 보조(보험).
     "use_fgm": True,
-    "avoid_on_m": 1.8,
-    "avoid_off_m": 2.5,
-    "avoid_on_count_th": 3,
-    "avoid_off_count_th": 2,
-    "forward_cone_deg": 70.0,
+    # base_link 기준 표면거리 ≤ 이 값이면 AVOID 진입
+    "avoid_on_m": 1.0,
+    "avoid_off_m": 1.8,
+    # 접근 시 FGM 미리 켜기 + AVOID 중에는 거리와 무관하게 FGM ON
+    "fgm_enable_m": 3.0,
+    "fgm_enable_topic": "/planner/fgm_enable",
+    "avoid_on_count_th": 5,
+    "avoid_off_count_th": 4,
+    "forward_cone_deg": 55.0,
     "avoid_min_forward_x_m": 0.2,
-    "avoid_trigger_lateral_abs_max_m": 0.65,
+    "avoid_trigger_lateral_abs_max_m": 0.40,
     "fgm_target_stale_sec": 0.25,
-    # AVOID 해제: 장애 후미(x-r)가 pass_rear_x_m 뒤로 넘어갈 때까지 (속도 무관)
+    # AVOID 해제: 장애물 후방 완전 통과 후에만 (회피 중 옆이탈로 놓치지 않게 lateral 넓게)
     "avoid_exit_use_passed": True,
-    "avoid_pass_rear_x_m": -0.35,
+    "avoid_pass_rear_x_m": -1.20,
+    "avoid_exit_lateral_abs_max_m": 2.80,
     "avoid_exit_use_trigger_cone": False,
+    # 전방 CSV 클리어 — CTE 복귀 게이트와 별개. 실차에선 False 권장(오검으로 AVOID 고착 방지)
+    "exit_require_csv_clear": False,
+    "exit_csv_clear_lookahead_m": 2.5,
+    "exit_csv_clear_radius_m": 0.45,
     # 회피 중 경로: FGM → 차량 heading 직진 (CSV 꼬리는 통과 후만)
     "avoid_forward_step_m": 0.15,
     "avoid_forward_num_points": 30,
-    # --- REJOIN (CSV 복귀) ---
+    # --- REJOIN 비활성: AVOID 종료 후 바로 CSV(GLOBAL). 필요 시 True 로 복구 ---
     "rejoin_enable": False,
-    "rejoin_min_length_m": 0.8,
-    "rejoin_time_sec": 1.5,
-    "rejoin_max_length_m": 1.0,
-    "rejoin_sample_count": 50,
-    "rejoin_tail_count": 100,
-    "rejoin_finish_lateral_m": 0.25,
-    "rejoin_finish_heading_deg": 10.0,
+    "rejoin_min_length_m": 0.50,
+    "rejoin_time_sec": 0.8,
+    "rejoin_max_length_m": 0.70,
+    "rejoin_sample_count": 30,
+    "rejoin_tail_count": 40,
+    # Frenet |CTE|≤이 값일 때만 AVOID→CSV (급전환 흔들림 방지)
+    "rejoin_finish_lateral_m": 0.20,
+    "rejoin_finish_require_heading": False,
+    "rejoin_finish_heading_deg": 15.0,
+    # 회피 중 CTE가 작아도 REJOIN/GLOBAL 스킵 금지 (조기 복귀→충돌)
+    "avoid_skip_rejoin_if_cte_ok": False,
     "rejoin_speed_scale": 0.5,
     "avoid_merge_tail_max": 180,
     "publish_hz": 50.0,
@@ -191,6 +210,10 @@ class LocalPlannerNode(Node):
         self.avoid_off_m = float(self.get_parameter("avoid_off_m").value)
         if self.avoid_off_m <= self.avoid_on_m:
             self.avoid_off_m = self.avoid_on_m + 0.3
+        self.fgm_enable_m = max(
+            self.avoid_on_m,
+            float(self.get_parameter("fgm_enable_m").value),
+        )
         self.avoid_on_count_th = max(
             1, int(self.get_parameter("avoid_on_count_th").value)
         )
@@ -199,7 +222,7 @@ class LocalPlannerNode(Node):
         )
         self.rejoin_enable = param_bool(self.get_parameter("rejoin_enable").value)
         self.rejoin_min_length_m = max(
-            0.5, float(self.get_parameter("rejoin_min_length_m").value)
+            0.15, float(self.get_parameter("rejoin_min_length_m").value)
         )
         self.rejoin_time_sec = max(
             0.1, float(self.get_parameter("rejoin_time_sec").value)
@@ -215,10 +238,16 @@ class LocalPlannerNode(Node):
             0, int(self.get_parameter("rejoin_tail_count").value)
         )
         self.rejoin_finish_lateral_m = max(
-            0.05, float(self.get_parameter("rejoin_finish_lateral_m").value)
+            0.02, float(self.get_parameter("rejoin_finish_lateral_m").value)
+        )
+        self.rejoin_finish_require_heading = param_bool(
+            self.get_parameter("rejoin_finish_require_heading").value
         )
         self.rejoin_finish_heading_rad = math.radians(
             max(1.0, float(self.get_parameter("rejoin_finish_heading_deg").value))
+        )
+        self.avoid_skip_rejoin_if_cte_ok = param_bool(
+            self.get_parameter("avoid_skip_rejoin_if_cte_ok").value
         )
         self.rejoin_speed_scale = max(
             0.05, float(self.get_parameter("rejoin_speed_scale").value)
@@ -242,6 +271,22 @@ class LocalPlannerNode(Node):
         )
         self.avoid_pass_rear_x_m = float(
             self.get_parameter("avoid_pass_rear_x_m").value
+        )
+        self.avoid_exit_lateral_abs_max_m = max(
+            self._obstacle_lateral_abs_max_m,
+            float(self.get_parameter("avoid_exit_lateral_abs_max_m").value),
+        )
+        self.laser_to_base_x_m = max(
+            0.0, float(self.get_parameter("laser_to_base_x_m").value)
+        )
+        self.exit_require_csv_clear = param_bool(
+            self.get_parameter("exit_require_csv_clear").value
+        )
+        self.exit_csv_clear_lookahead_m = max(
+            0.0, float(self.get_parameter("exit_csv_clear_lookahead_m").value)
+        )
+        self.exit_csv_clear_radius_m = max(
+            0.05, float(self.get_parameter("exit_csv_clear_radius_m").value)
         )
         self.avoid_forward_step_m = max(
             0.05, float(self.get_parameter("avoid_forward_step_m").value)
@@ -313,6 +358,8 @@ class LocalPlannerNode(Node):
         self.pub_planner_speed_condition = self.create_publisher(UInt8, out_co, 10)
         mode_topic = self.get_parameter("planner_mode_topic").value
         self.pub_planner_mode = self.create_publisher(String, mode_topic, 10)
+        fgm_en_topic = self.get_parameter("fgm_enable_topic").value
+        self.pub_fgm_enable = self.create_publisher(Bool, fgm_en_topic, 10)
         self._strategy_mul_recv = 1.0
         self._strategy_cond_recv = 0
         self.mode = "GLOBAL"
@@ -321,6 +368,8 @@ class LocalPlannerNode(Node):
         self._rejoin_path_msg: Path | None = None
         self._rejoin_target_s: float | None = None
         self._last_mode_log_ns = 0
+        self._last_avoid_path: Path | None = None
+        self._last_avoid_warn_ns = 0
         self.create_subscription(Float64, st_mul, self._cb_strategy_multiplier, 10)
         self.create_subscription(UInt8, st_cond, self._cb_strategy_condition, 10)
         self.create_timer(0.05, self._republish_planner_speed)
@@ -386,6 +435,7 @@ class LocalPlannerNode(Node):
             f"corridor≤{self._corridor_max_lat}m fwd=[{self._obstacle_forward_min_m},"
             f"{self._obstacle_forward_max_m}]m, "
             f"avoid_on≤{self.avoid_on_m}m avoid_off≥{self.avoid_off_m}m "
+            f"fgm_enable≤{self.fgm_enable_m}m->{fgm_en_topic}, "
             f"cone={cone_deg}deg, rejoin={self.rejoin_enable}, use_fgm={self.use_fgm}"
             + dbg_bits
             + (
@@ -414,9 +464,10 @@ class LocalPlannerNode(Node):
             if now_ns - self._last_tf_warn_ns > 2_000_000_000:
                 self.get_logger().warn(
                     f"TF {self.map_frame}<-{self.laser_frame} 실패 — "
-                    "코리도 필터 생략(벽 오검 가능)."
+                    "코리도 필수: 회피 게이트 장애 없음으로 처리(벽 오검 방지)."
                 )
                 self._last_tf_warn_ns = now_ns
+            return []
 
         tr = tf_lm.transform if tf_lm is not None else None
 
@@ -443,13 +494,105 @@ class LocalPlannerNode(Node):
             corridor_max_lat_m=self._corridor_max_lat,
             track_pts=self.points,
             laser_to_map=laser_to_map if corridor_on else None,
+            require_corridor_tf=True,
+        )
+
+    def _filter_obstacles_for_exit(self, raw: list) -> list:
+        """회피 해제용: 코리도 안 장애만 (벽 raw 제외)."""
+        corridor_on = self._raceline_corridor_enable and len(self.points) >= 2
+        tf_lm = self._lookup_laser_to_map_transform() if corridor_on else None
+        if corridor_on and tf_lm is None:
+            return []
+
+        tr = tf_lm.transform if tf_lm is not None else None
+
+        def laser_to_map(lx: float, ly: float):
+            if tr is None:
+                return None
+            return _point_laser_to_map(
+                lx,
+                ly,
+                tr.translation.x,
+                tr.translation.y,
+                tr.rotation.w,
+                tr.rotation.x,
+                tr.rotation.y,
+                tr.rotation.z,
+            )
+
+        return filter_obstacles_for_exit(
+            raw,
+            pass_rear_x_m=self.avoid_pass_rear_x_m,
+            lateral_abs_max_m=self.avoid_exit_lateral_abs_max_m,
+            corridor_enable=corridor_on,
+            corridor_max_lat_m=self._corridor_max_lat,
+            track_pts=self.points,
+            laser_to_map=laser_to_map if corridor_on else None,
         )
 
     def _obstacles_remain(self, filtered: list) -> bool:
+        """
+        AVOID 유지용. 회피 중 옆으로 빠져도 장애를 놓치지 않도록
+        exit lateral 을 넓게 쓴다. 후방(pass_rear) 완전 통과 전엔 True.
+        """
+        exit_obs = self._filter_obstacles_for_exit(self._obstacle_data)
+        # exit 가 비면(전부 후방) → 통과. filtered 로 폴백하지 않음
+        # (폴백 시 옆이탈 장애가 게이트에서 빠져 조기 clear 됨)
+        if len(exit_obs) < 4:
+            return False
         return obstacles_remain_for_avoid(
-            filtered,
+            exit_obs,
             pass_rear_x_m=self.avoid_pass_rear_x_m,
-            lateral_abs_max_m=self._obstacle_lateral_abs_max_m,
+            lateral_abs_max_m=self.avoid_exit_lateral_abs_max_m,
+        )
+
+    def _avoidance_fully_cleared(
+        self, filtered: list, current_pose: PoseStamped | None
+    ) -> bool:
+        """장애 후방 통과 + (옵션) 전방 CSV 클리어 — 둘 다 만족해야 REJOIN."""
+        if self._obstacles_remain(filtered):
+            return False
+        if self.exit_require_csv_clear and self._csv_ahead_blocked(current_pose):
+            return False
+        return True
+
+    def _csv_ahead_blocked(self, current_pose: PoseStamped | None) -> bool:
+        if not self.exit_require_csv_clear or current_pose is None:
+            return False
+        # 코리도 안 장애만 — 벽이 CSV 근처라고 계속 blocked 되면 안 됨
+        corridor_obs = self._filter_obstacles_for_planner(self._obstacle_data)
+        exit_obs = self._filter_obstacles_for_exit(self._obstacle_data)
+        obs = exit_obs if len(exit_obs) >= 4 else corridor_obs
+        if len(obs) < 4 or len(self.points) < 2:
+            return False
+
+        tf_lm = self._lookup_laser_to_map_transform()
+        if tf_lm is None:
+            return False
+        tr = tf_lm.transform
+
+        def laser_to_map(lx: float, ly: float):
+            return _point_laser_to_map(
+                lx,
+                ly,
+                tr.translation.x,
+                tr.translation.y,
+                tr.rotation.w,
+                tr.rotation.x,
+                tr.rotation.y,
+                tr.rotation.z,
+            )
+
+        return csv_path_blocked_by_obstacles(
+            obs,
+            track_pts=self.points,
+            vehicle_xy=(
+                float(current_pose.pose.position.x),
+                float(current_pose.pose.position.y),
+            ),
+            laser_to_map=laser_to_map,
+            lookahead_m=self.exit_csv_clear_lookahead_m,
+            clear_radius_m=self.exit_csv_clear_radius_m,
         )
 
     def _planner_gate_closest_m(self, filtered: list) -> float:
@@ -459,6 +602,7 @@ class LocalPlannerNode(Node):
             forward_cone_rad=None,
             min_forward_x_m=self.avoid_min_forward_x_m,
             lateral_abs_max_m=self._obstacle_lateral_abs_max_m,
+            laser_to_base_x_m=self.laser_to_base_x_m,
         )
 
     def _planner_closest_obstacle_m(self, filtered: list) -> float:
@@ -467,6 +611,7 @@ class LocalPlannerNode(Node):
             forward_cone_rad=self.forward_cone_rad,
             min_forward_x_m=self.avoid_min_forward_x_m,
             lateral_abs_max_m=self.avoid_trigger_lateral_abs_max_m,
+            laser_to_base_x_m=self.laser_to_base_x_m,
         )
 
     @staticmethod
@@ -832,15 +977,32 @@ class LocalPlannerNode(Node):
             )
         return out
 
+    def _csv_cte_abs_m(self, current_pose: PoseStamped) -> float:
+        """CSV(raceline) 기준 |CTE| = Frenet lateral |d|."""
+        x = current_pose.pose.position.x
+        y = current_pose.pose.position.y
+        yaw = _quat_to_yaw(current_pose.pose.orientation)
+        _, d_now, _, _, _, _ = self._project_to_frenet(x, y, yaw)
+        return abs(float(d_now))
+
     def _is_rejoin_finished(self, current_pose: PoseStamped) -> bool:
+        """CTE(|d|) ≤ rejoin_finish_lateral_m 이면 CSV 복귀 완료."""
         x = current_pose.pose.position.x
         y = current_pose.pose.position.y
         yaw = _quat_to_yaw(current_pose.pose.orientation)
         _, d_now, _, _, _, yaw_err = self._project_to_frenet(x, y, yaw)
-        return (
-            abs(d_now) < self.rejoin_finish_lateral_m
-            and abs(yaw_err) < self.rejoin_finish_heading_rad
-        )
+        if abs(d_now) >= self.rejoin_finish_lateral_m:
+            return False
+        if self.rejoin_finish_require_heading:
+            return abs(yaw_err) < self.rejoin_finish_heading_rad
+        return True
+
+    def _go_global(self) -> None:
+        self.mode = "GLOBAL"
+        self._rejoin_path_msg = None
+        self._last_avoid_path = None
+        self._avoid_on_count = 0
+        self._avoid_off_count = 0
 
     def _log_mode_transition(self, old_mode: str, d_closest: float) -> None:
         if not self.verbose_logs:
@@ -863,21 +1025,13 @@ class LocalPlannerNode(Node):
     ) -> None:
         if not self.use_fgm and self.mode == "AVOID":
             old_mode = self.mode
-            self.mode = "GLOBAL"
-            self._rejoin_path_msg = None
+            self._go_global()
             if old_mode != self.mode:
                 self._log_mode_transition(old_mode, d_closest)
             return
 
         obstacle_on = d_closest <= self.avoid_on_m
         still_blocking = self._obstacles_remain(filtered)
-
-        if self._avoid_exit_use_passed:
-            obstacle_clear = not still_blocking
-        elif self._avoid_exit_use_trigger_cone:
-            obstacle_clear = d_closest >= self.avoid_off_m or d_closest == float("inf")
-        else:
-            obstacle_clear = d_gate >= self.avoid_off_m or d_gate == float("inf")
 
         old_mode = self.mode
 
@@ -893,9 +1047,23 @@ class LocalPlannerNode(Node):
                 self._rejoin_path_msg = None
 
         elif self.mode == "AVOID":
-            if obstacle_clear:
+            # 장애 인지/통과 전: CTE와 무관하게 AVOID 유지 (LOCAL↔CSV 깜빡임 방지)
+            # 통과 후: CTE≤0.2m 일 때만 CSV(GLOBAL) 복귀
+            cte_ok = (
+                current_pose is not None
+                and self._csv_cte_abs_m(current_pose)
+                <= self.rejoin_finish_lateral_m
+            )
+            obstacle_active = still_blocking or obstacle_on
+            if self.exit_require_csv_clear and self._csv_ahead_blocked(current_pose):
+                obstacle_active = True
+
+            if obstacle_active:
+                self._avoid_off_count = 0
+            elif cte_ok:
                 self._avoid_off_count += 1
             else:
+                # 통과했지만 CTE 큼 → FGM 유지, CSV 복귀 대기
                 self._avoid_off_count = 0
 
             if self._avoid_off_count >= self.avoid_off_count_th:
@@ -909,22 +1077,18 @@ class LocalPlannerNode(Node):
                     ):
                         self.mode = "REJOIN"
                     else:
-                        self.mode = "GLOBAL"
-                        self._rejoin_path_msg = None
+                        self._go_global()
                 else:
-                    self.mode = "GLOBAL"
-                    self._rejoin_path_msg = None
+                    self._go_global()
 
         elif self.mode == "REJOIN":
+            # 아직 장애가 옆/앞이면 다시 AVOID (조기 리조인 보정)
             if (obstacle_on or still_blocking) and self.use_fgm:
                 self.mode = "AVOID"
                 self._rejoin_path_msg = None
                 self._avoid_off_count = 0
             elif current_pose is not None and self._is_rejoin_finished(current_pose):
-                self.mode = "GLOBAL"
-                self._rejoin_path_msg = None
-                self._avoid_on_count = 0
-                self._avoid_off_count = 0
+                self._go_global()
 
         if old_mode != self.mode:
             self._log_mode_transition(old_mode, d_closest)
@@ -992,6 +1156,21 @@ class LocalPlannerNode(Node):
 
         return out
 
+    def _publish_fgm_enable(self, filtered: list, d_gate: float) -> None:
+        """
+        FGM = 회피 주체. AVOID 전 구간 켜 두고, 접근 중에도 미리 켠다.
+        GLOBAL(및 REJOIN) 에서는 끔 → Stanley CSV.
+        """
+        approaching = (
+            len(filtered) >= 4
+            and math.isfinite(d_gate)
+            and d_gate <= self.fgm_enable_m
+        )
+        enable = self.use_fgm and (self.mode == "AVOID" or approaching)
+        msg = Bool()
+        msg.data = bool(enable)
+        self.pub_fgm_enable.publish(msg)
+
     def timer_publish(self):
         filtered = self._filter_obstacles_for_planner(self._obstacle_data)
         d_closest = self._planner_closest_obstacle_m(filtered)
@@ -1001,6 +1180,7 @@ class LocalPlannerNode(Node):
         self._update_mode(d_closest, d_gate, filtered, current)
         self._publish_planner_speed_out()
         self.pub_planner_mode.publish(String(data=self.mode))
+        self._publish_fgm_enable(filtered, d_gate)
 
         if self.mode == "GLOBAL":
             self._publish_override_gate(False)
@@ -1009,24 +1189,28 @@ class LocalPlannerNode(Node):
         if self.mode == "AVOID":
             fgm_xy = self._get_fgm_target_in_map()
             if current is None or fgm_xy is None:
-                if not hasattr(self, "_last_avoid_warn_ns"):
-                    self._last_avoid_warn_ns = 0
                 now_ns = self.get_clock().now().nanoseconds
                 if now_ns - self._last_avoid_warn_ns > 2_000_000_000:
                     self.get_logger().warn(
-                        "FGM 회피 분기인데 pose 또는 /fgm_target 없음 — /local_path 미발행."
+                        "FGM 회피 분기인데 pose 또는 /fgm_target 없음 — "
+                        "이전 회피경로 유지(CSV로 떨어지지 않음)."
                     )
                     self._last_avoid_warn_ns = now_ns
-                self._publish_override_gate(False)
+                # AVOID 중에는 게이트 True 유지 — CTE/CSV로 깜빡이지 않게
+                if self._last_avoid_path is not None and len(self._last_avoid_path.poses) >= 2:
+                    self._last_avoid_path.header.stamp = self.get_clock().now().to_msg()
+                    self.pub_path.publish(self._last_avoid_path)
+                self._publish_override_gate(True)
                 return
 
             fgm_x, fgm_y = fgm_xy[0], fgm_xy[1]
-            merge_csv = not self._obstacles_remain(filtered)
+            # AVOID 중에는 FGM 갭 경로만 — CSV 꼬리 병합 금지 (복귀는 CTE 게이트)
             out = self._build_avoid_path(
-                current, fgm_x, fgm_y, merge_csv_tail=merge_csv
+                current, fgm_x, fgm_y, merge_csv_tail=False
             )
 
             if len(out.poses) >= 2:
+                self._last_avoid_path = out
                 base_path = (
                     self._build_sliding_path(
                         current.pose.position.x, current.pose.position.y
@@ -1062,7 +1246,8 @@ class LocalPlannerNode(Node):
                     )
                     self._last_latency_log_ns = now_ns
             else:
-                self._publish_override_gate(False)
+                # 경로 생성 실패해도 AVOID면 CSV로 안 떨어짐
+                self._publish_override_gate(True)
             return
 
         if self.mode == "REJOIN":

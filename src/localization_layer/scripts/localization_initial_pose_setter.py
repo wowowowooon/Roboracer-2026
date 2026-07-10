@@ -214,7 +214,7 @@ class LocalizationInitialPoseSetter(Node):
             history=HistoryPolicy.KEEP_LAST,
             depth=1,
             reliability=ReliabilityPolicy.RELIABLE,
-            durability=DurabilityPolicy.VOLATILE,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL,
         )
         self._map_msg: OccupancyGrid | None = None
         self._latest_scan: LaserScan | None = None
