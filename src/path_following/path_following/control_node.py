@@ -60,8 +60,8 @@ CFG = {
     "enable_keyboard_estop": True,
     "estop_reset_key": "r",
     # RC (ESP -> RC,ch1_us,ch2_us,mode_us,0)  raw PWM us
-    "ch5_manual_us": 1300,        # CH5 <= 1300 수동(1000)
-    "ch5_auto_us": 1700,          # CH5 >= 1700 자율(2000)
+    "ch5_manual_us": 1300,        # CH5 <= 1300 자동(1000)
+    "ch5_auto_us": 1700,          # CH5 >= 1700 수동(2000)
     "rc_center_ch2": 1500,
     "rc_min_val": 0,
     "rc_max_val": 3000,
@@ -248,10 +248,18 @@ class VehicleControlNode(Node):
             )
 
     @staticmethod
+    def _append_timestamp_to_csv_path(csv_path: str) -> str:
+        if not csv_path.lower().endswith(".csv"):
+            return csv_path
+        base, ext = os.path.splitext(csv_path)
+        timestamp = time.strftime("%Y%m%d_%H%M%S", time.localtime())
+        return f"{base}_{timestamp}{ext}"
+
+    @staticmethod
     def _resolve_csv_path(csv_path: str) -> str:
         """install/ 실행이어도 src/path_following/run_logs 에 저장."""
         if os.path.isabs(csv_path):
-            return csv_path
+            return VehicleControlNode._append_timestamp_to_csv_path(csv_path)
 
         pkg_dir = os.path.dirname(os.path.abspath(__file__))
         install_marker = f"{os.sep}install{os.sep}"
@@ -259,10 +267,14 @@ class VehicleControlNode(Node):
             ws_root = pkg_dir.split(install_marker, 1)[0]
             src_pkg = os.path.join(ws_root, "src", "path_following")
             if os.path.isdir(src_pkg):
-                return os.path.abspath(os.path.join(src_pkg, csv_path))
+                return VehicleControlNode._append_timestamp_to_csv_path(
+                    os.path.abspath(os.path.join(src_pkg, csv_path))
+                )
         # path_following/path_following/*.py → 패키지 루트는 한 단계 위
         pkg_root = os.path.dirname(pkg_dir)
-        return os.path.abspath(os.path.join(pkg_root, csv_path))
+        return VehicleControlNode._append_timestamp_to_csv_path(
+            os.path.abspath(os.path.join(pkg_root, csv_path))
+        )
 
     def _init_csv_logging(self) -> None:
         if not self._csv_enabled:
@@ -439,11 +451,11 @@ class VehicleControlNode(Node):
         if ch5 <= 0:
             return self._mode_auto_latched
         if ch5 <= self._ch5_manual_us:
-            self._mode_auto_latched = False
-            return False
-        if ch5 >= self._ch5_auto_us:
             self._mode_auto_latched = True
             return True
+        if ch5 >= self._ch5_auto_us:
+            self._mode_auto_latched = False
+            return False
         return self._mode_auto_latched
 
     def _rc_ch2_to_duty(self, ch2: int) -> float:
