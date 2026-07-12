@@ -1,0 +1,11 @@
+[INFO] [1783771519.760216167] [map_saver]: 
+	map_saver lifecycle node launched. 
+	Waiting on external lifecycle transitions to activate
+	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[INFO] [1783771519.760489449] [map_saver]: Creating
+[INFO] [1783771519.760616170] [map_saver]: Configuring
+[INFO] [1783771519.762511125] [map_saver]: Saving map from '/map' topic to '/home/nvidia/f1tenth_ajou/maps/cartographer_map_20260711_210518' file
+[WARN] [1783771519.762559637] [map_saver]: Free threshold unspecified. Setting it to default value: 0.250000
+[WARN] [1783771519.762584565] [map_saver]: Occupied threshold unspecified. Setting it to default value: 0.650000
+[ERROR] [1783771521.765237875] [map_saver]: Failed to spin map subscription
+[INFO] [1783771521.990896398] [map_saver]: Destroying

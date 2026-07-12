@@ -1,6 +1,0 @@
-image: /home/nvidia/f1tenth_ajou/maps/cartographer_map_20260710_210821_rosmap.png
-resolution: 0.050000
-origin: [-3.950194, -19.414755, 0.0]
-negate: 0
-occupied_thresh: 0.65
-free_thresh: 0.196

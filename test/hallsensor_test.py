@@ -778,3 +778,4 @@ if __name__ == "__main__":
 #
 # Duty only after hand-roll succeeds and with the wheel lifted:
 # python3 hallsensor_test.py --mode duty --port /dev/ttyACM0 --baud 115200 --hz 20 --duty 0.05 --duration 5 --ramp-time 1.5 --max-duty 0.10 --pole-pairs 7 --gear-ratio 1.0 --wheel-radius 0.05 --csv real_duty_005_raw.csv
+

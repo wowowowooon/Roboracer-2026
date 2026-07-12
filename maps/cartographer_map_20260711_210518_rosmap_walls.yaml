@@ -1,0 +1,8 @@
+# Wall prior for Map Residual (static_obstacle_node).
+# Real-car cartographer map — same image as rosmap (no painted boxes).
+image: /home/nvidia/f1tenth_ajou/maps/cartographer_map_20260711_210518_rosmap.pgm
+resolution: 0.050000
+origin: [-7.216315, -2.975758, 0.0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
