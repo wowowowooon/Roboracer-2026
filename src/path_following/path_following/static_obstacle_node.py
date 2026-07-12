@@ -2,18 +2,7 @@
 """
 정적 장애물 노드: Map Residual (Static Map Subtraction).
 
-대표 아이디어 (자율주행/실내 로봇에서 흔함):
-  - 사전 occupancy map 의 벽은 고정으로 간주
-  - LiDAR 엔드포인트를 map 프레임으로 변환
-  - 맵 점유(벽) 근처 히트 → 벽으로 버리고
-  - 맵 자유공간에 찍힌 히트 → 예상 밖 = 장애물
-  - 장애물 히트만 클러스터링 → /static_obstacles
-
-시뮬: gym 맵에는 장애물을 그려도 되고, 이 노드의 wall prior 는
-**장애물 없는 벽 맵**(`*_walls.yaml` → `*_no_obstacle.png`)을 써야
-그린 박스가 벽으로 흡수되지 않는다.
-
-**회피 타이밍·코리도는 local_planner_node CFG.**
+시뮬과 동일 알고리즘. 실차: laser_frame / map_yaml 만 젯슨 경로.
 """
 from __future__ import annotations
 
@@ -34,35 +23,30 @@ from visualization_msgs.msg import Marker, MarkerArray
 from path_following.track_sliding import param_bool
 
 
-# ============================================================
-# USER TUNING — 맵 잔차 장애 검출 (게이트는 local_planner)
-# ============================================================
 CFG = {
-    "laser_frame": "laser",
+    "laser_frame": "laser",  # 실차 (시뮬: ego_racecar/laser)
     "map_frame": "map",
     "scan_topic": "/scan",
     "obstacles_topic": "/static_obstacles",
     "markers_topic": "/visualization_marker_array",
-    # 벽 prior (장애물 없는 맵 YAML). 실차: cartographer rosmap.
     "map_yaml": (
         "/home/nvidia/f1tenth_ajou/maps/"
-        "cartographer_map_20260710_210821_rosmap.yaml"
+        "cartographer_map_20260712_225113_rosmap_walls.yaml"
     ),
-    # 맵 벽 셀과의 매칭 반경 [m] — 로컬라이즈 오차 시 벽이 장애로 새는 것 억제
-    "wall_match_radius_m": 0.35,
+    # 실차 TF/맵 어긋남 여유 (시뮬 0.18 → 살짝 키워 벽을 잔차로 안 잡게)
+    "wall_match_radius_m": 0.28,
     "tf_timeout_sec": 0.10,
-    # --- clustering (맵에 없는 히트만) ---
     "cluster_gap_threshold_m": 0.28,
-    "min_cluster_points": 8,
+    "min_cluster_points": 6,
     "max_obstacle_size_m": 0.85,
-    "min_obstacle_size_m": 0.12,
+    "min_obstacle_size_m": 0.08,
     "log_detections": True,
     "log_throttle_sec": 2.0,
 }
 
 
 class StaticMap:
-    """ROS map YAML + PNG → 팽창된 벽 occupancy."""
+    """ROS map YAML + PNG/PGM → 팽창된 벽 occupancy."""
 
     def __init__(self, yaml_path: str, wall_match_radius_m: float):
         path = Path(yaml_path).expanduser().resolve()
@@ -87,7 +71,6 @@ class StaticMap:
         self.occupied_thresh = float(meta.get("occupied_thresh", 0.65))
 
         gray = np.asarray(Image.open(img_path).convert("L"), dtype=np.float64)
-        # ROS map_server: negate=0 → black(0) = occupied
         if self.negate:
             occ_prob = gray / 255.0
         else:
@@ -121,7 +104,6 @@ class StaticMap:
         return out
 
     def world_to_cell(self, x: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-        # ROS: row 0 = top of image = origin_y + height*res
         col = np.floor((x - self.origin_x) / self.resolution).astype(np.int64)
         row = np.floor(
             (self.origin_y + self.height * self.resolution - y) / self.resolution
@@ -129,7 +111,6 @@ class StaticMap:
         return row, col
 
     def is_wall(self, x: np.ndarray, y: np.ndarray) -> np.ndarray:
-        """맵 프레임 (x,y)가 팽창 벽이면 True."""
         row, col = self.world_to_cell(x, y)
         inside = (
             (row >= 0)
@@ -137,7 +118,7 @@ class StaticMap:
             & (col >= 0)
             & (col < self.width)
         )
-        out = np.ones(x.shape, dtype=bool)  # 맵 밖 = 벽으로 취급(오검출 억제)
+        out = np.ones(x.shape, dtype=bool)
         out[inside] = self.wall[row[inside], col[inside]]
         return out
 
@@ -188,7 +169,7 @@ class StaticObstacleNode(Node):
         self.obstacle_pub = self.create_publisher(Float32MultiArray, obstacles_topic, 10)
 
         self.get_logger().info(
-            "static_obstacle: Map Residual (static map subtraction) | "
+            "static_obstacle: Map Residual (sim algorithm) | "
             f"walls={self.static_map.yaml_path} "
             f"img={Path(self.static_map.image_path).name} "
             f"match_r={self.static_map.wall_match_radius_m:.2f}m "
@@ -206,9 +187,6 @@ class StaticObstacleNode(Node):
         obs_msg.data = []
         self.obstacle_pub.publish(obs_msg)
 
-    def _valid_range(self, r: float) -> bool:
-        return math.isfinite(r) and r > 0.05
-
     def _lookup_laser_to_map(self):
         try:
             return self.tf_buffer.lookup_transform(
@@ -225,7 +203,6 @@ class StaticObstacleNode(Node):
         t, lx: np.ndarray, ly: np.ndarray
     ) -> tuple[np.ndarray, np.ndarray]:
         q = t.transform.rotation
-        # yaw from quaternion
         siny_cosp = 2.0 * (q.w * q.z + q.x * q.y)
         cosy_cosp = 1.0 - 2.0 * (q.y * q.y + q.z * q.z)
         yaw = math.atan2(siny_cosp, cosy_cosp)
@@ -237,7 +214,6 @@ class StaticObstacleNode(Node):
         return mx, my
 
     def _cluster_xy(self, px: np.ndarray, py: np.ndarray) -> list[tuple[np.ndarray, np.ndarray]]:
-        """레이저 프레임 점열을 인접 거리로 클러스터."""
         n = int(px.size)
         if n == 0:
             return []
@@ -286,7 +262,6 @@ class StaticObstacleNode(Node):
         ly = r * np.sin(th)
         mx, my = self._transform_xy(tf, lx, ly)
 
-        # 맵 벽(팽창)에 매칭되면 버리고, 나머지가 장애 후보
         wall_hit = self.static_map.is_wall(mx, my)
         obs_mask = ~wall_hit
         if not np.any(obs_mask):

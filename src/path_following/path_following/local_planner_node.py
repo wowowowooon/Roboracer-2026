@@ -55,60 +55,51 @@ from path_following.track_sliding import (
 # ============================================================
 CFG = {
     "csv_path": "",
-    "reverse_track_direction": True,
+    # 실차 CSV 방향 유지 (시뮬은 True일 수 있음 — 조향/트랙 방향 건드리지 않음)
+    "reverse_track_direction": False,
     "static_obstacles_topic": "/static_obstacles",
     "fgm_target_topic": "/fgm_target",
     "local_path_topic": "/local_path",
     "planner_path_override_topic": "/planner_path_override_active",
-    # --- 장애물 게이트 (static 출력 → planner 사용) ---
-    # 트랙폭~1m: 벽 오검이 코리도로 들어오지 않게 좁게
+    # --- 장애물 게이트 (실차 TF/맵 오차 여유 — 벽은 코리도 밖으로) ---
     "raceline_corridor_enable": True,
-    "corridor_max_lateral_from_raceline_m": 0.32,
+    "corridor_max_lateral_from_raceline_m": 0.40,
     "obstacle_forward_min_m": 0.30,
     "obstacle_forward_max_m": 10.0,
-    "obstacle_lateral_abs_max_m": 0.40,
+    "obstacle_lateral_abs_max_m": 0.42,
     "obstacle_tf_timeout_sec": 0.15,
-    # laser → base_link 전방 오프셋
     "laser_to_base_x_m": 0.275,
     # --- LOCAL_PATH 상태머신 ---
-    # FGM = 회피 주 경로 (AVOID 전 구간 갭 추종). REJOIN = CSV 복귀 보조(보험).
+    # AVOID→CSV: 전방 장애 통과 후에만 CTE≤0.2 로 복귀 (회피 중 CTE로 조기 복귀 금지)
     "use_fgm": True,
-    # base_link 기준 표면거리 ≤ 이 값이면 AVOID 진입
-    "avoid_on_m": 1.0,
-    "avoid_off_m": 1.8,
-    # 접근 시 FGM 미리 켜기 + AVOID 중에는 거리와 무관하게 FGM ON
-    "fgm_enable_m": 3.0,
+    "avoid_on_m": 2.0,
+    "avoid_off_m": 3.6,
+    "fgm_enable_m": 6.0,
     "fgm_enable_topic": "/planner/fgm_enable",
-    "avoid_on_count_th": 5,
+    "avoid_on_count_th": 2,
     "avoid_off_count_th": 4,
-    "forward_cone_deg": 55.0,
+    "forward_cone_deg": 70.0,
     "avoid_min_forward_x_m": 0.2,
-    "avoid_trigger_lateral_abs_max_m": 0.40,
+    "avoid_trigger_lateral_abs_max_m": 0.48,
     "fgm_target_stale_sec": 0.25,
-    # AVOID 해제: 장애물 후방 완전 통과 후에만 (회피 중 옆이탈로 놓치지 않게 lateral 넓게)
     "avoid_exit_use_passed": True,
     "avoid_pass_rear_x_m": -1.20,
     "avoid_exit_lateral_abs_max_m": 2.80,
     "avoid_exit_use_trigger_cone": False,
-    # 전방 CSV 클리어 — CTE 복귀 게이트와 별개. 실차에선 False 권장(오검으로 AVOID 고착 방지)
-    "exit_require_csv_clear": False,
+    "exit_require_csv_clear": True,
     "exit_csv_clear_lookahead_m": 2.5,
     "exit_csv_clear_radius_m": 0.45,
-    # 회피 중 경로: FGM → 차량 heading 직진 (CSV 꼬리는 통과 후만)
     "avoid_forward_step_m": 0.15,
     "avoid_forward_num_points": 30,
-    # --- REJOIN 비활성: AVOID 종료 후 바로 CSV(GLOBAL). 필요 시 True 로 복구 ---
     "rejoin_enable": False,
     "rejoin_min_length_m": 0.50,
     "rejoin_time_sec": 0.8,
     "rejoin_max_length_m": 0.70,
     "rejoin_sample_count": 30,
     "rejoin_tail_count": 40,
-    # Frenet |CTE|≤이 값일 때만 AVOID→CSV (급전환 흔들림 방지)
     "rejoin_finish_lateral_m": 0.20,
     "rejoin_finish_require_heading": False,
     "rejoin_finish_heading_deg": 15.0,
-    # 회피 중 CTE가 작아도 REJOIN/GLOBAL 스킵 금지 (조기 복귀→충돌)
     "avoid_skip_rejoin_if_cte_ok": False,
     "rejoin_speed_scale": 0.5,
     "avoid_merge_tail_max": 180,
@@ -1032,6 +1023,7 @@ class LocalPlannerNode(Node):
 
         obstacle_on = d_closest <= self.avoid_on_m
         still_blocking = self._obstacles_remain(filtered)
+        fully_cleared = self._avoidance_fully_cleared(filtered, current_pose)
 
         old_mode = self.mode
 
@@ -1047,27 +1039,33 @@ class LocalPlannerNode(Node):
                 self._rejoin_path_msg = None
 
         elif self.mode == "AVOID":
-            # 장애 인지/통과 전: CTE와 무관하게 AVOID 유지 (LOCAL↔CSV 깜빡임 방지)
-            # 통과 후: CTE≤0.2m 일 때만 CSV(GLOBAL) 복귀
-            cte_ok = (
-                current_pose is not None
-                and self._csv_cte_abs_m(current_pose)
-                <= self.rejoin_finish_lateral_m
+            # 전방에 장애가 남아 있으면 CTE와 무관하게 AVOID 유지
+            # (회피 시작 직후 CTE≤0.2 라도 CSV로 조기 복귀 → 충돌 방지)
+            obstacle_still_ahead = still_blocking or (
+                math.isfinite(d_gate) and d_gate <= self.fgm_enable_m
+            ) or (
+                math.isfinite(d_closest) and d_closest <= self.fgm_enable_m
             )
-            obstacle_active = still_blocking or obstacle_on
-            if self.exit_require_csv_clear and self._csv_ahead_blocked(current_pose):
-                obstacle_active = True
-
-            if obstacle_active:
+            if obstacle_still_ahead:
                 self._avoid_off_count = 0
-            elif cte_ok:
+            elif fully_cleared:
                 self._avoid_off_count += 1
             else:
-                # 통과했지만 CTE 큼 → FGM 유지, CSV 복귀 대기
                 self._avoid_off_count = 0
 
-            if self._avoid_off_count >= self.avoid_off_count_th:
-                if current_pose is not None and self.rejoin_enable:
+            if (
+                not obstacle_still_ahead
+                and self._avoid_off_count >= self.avoid_off_count_th
+            ):
+                cte_ok = (
+                    current_pose is not None
+                    and self._csv_cte_abs_m(current_pose)
+                    <= self.rejoin_finish_lateral_m
+                )
+                if not cte_ok:
+                    # 통과했지만 CSV에서 멀면 FGM 유지 → CTE≤0.2 될 때 CSV
+                    pass
+                elif current_pose is not None and self.rejoin_enable:
                     self._rejoin_path_msg = self._build_frenet_quintic_rejoin_path(
                         current_pose
                     )
@@ -1082,7 +1080,6 @@ class LocalPlannerNode(Node):
                     self._go_global()
 
         elif self.mode == "REJOIN":
-            # 아직 장애가 옆/앞이면 다시 AVOID (조기 리조인 보정)
             if (obstacle_on or still_blocking) and self.use_fgm:
                 self.mode = "AVOID"
                 self._rejoin_path_msg = None
@@ -1118,6 +1115,8 @@ class LocalPlannerNode(Node):
         p1.pose.orientation.w = 1.0
         out.poses.append(p1)
 
+        # 시뮬과 동일: FGM 목표 이후는 차량 heading 직진
+        # (갭 방향 연장은 좁은 트랙에서 벽으로 꽂히는 경우가 많음)
         yaw = _quat_to_yaw(current.pose.orientation)
         fx = math.cos(yaw)
         fy = math.sin(yaw)
@@ -1189,28 +1188,23 @@ class LocalPlannerNode(Node):
         if self.mode == "AVOID":
             fgm_xy = self._get_fgm_target_in_map()
             if current is None or fgm_xy is None:
+                if not hasattr(self, "_last_avoid_warn_ns"):
+                    self._last_avoid_warn_ns = 0
                 now_ns = self.get_clock().now().nanoseconds
                 if now_ns - self._last_avoid_warn_ns > 2_000_000_000:
                     self.get_logger().warn(
-                        "FGM 회피 분기인데 pose 또는 /fgm_target 없음 — "
-                        "이전 회피경로 유지(CSV로 떨어지지 않음)."
+                        "FGM 회피 분기인데 pose 또는 /fgm_target 없음 — /local_path 미발행."
                     )
                     self._last_avoid_warn_ns = now_ns
-                # AVOID 중에는 게이트 True 유지 — CTE/CSV로 깜빡이지 않게
-                if self._last_avoid_path is not None and len(self._last_avoid_path.poses) >= 2:
-                    self._last_avoid_path.header.stamp = self.get_clock().now().to_msg()
-                    self.pub_path.publish(self._last_avoid_path)
-                self._publish_override_gate(True)
+                self._publish_override_gate(False)
                 return
 
             fgm_x, fgm_y = fgm_xy[0], fgm_xy[1]
-            # AVOID 중에는 FGM 갭 경로만 — CSV 꼬리 병합 금지 (복귀는 CTE 게이트)
             out = self._build_avoid_path(
                 current, fgm_x, fgm_y, merge_csv_tail=False
             )
 
             if len(out.poses) >= 2:
-                self._last_avoid_path = out
                 base_path = (
                     self._build_sliding_path(
                         current.pose.position.x, current.pose.position.y
@@ -1246,8 +1240,7 @@ class LocalPlannerNode(Node):
                     )
                     self._last_latency_log_ns = now_ns
             else:
-                # 경로 생성 실패해도 AVOID면 CSV로 안 떨어짐
-                self._publish_override_gate(True)
+                self._publish_override_gate(False)
             return
 
         if self.mode == "REJOIN":

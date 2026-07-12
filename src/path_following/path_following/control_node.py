@@ -3,8 +3,8 @@
 실차 하드웨어 제어: /drive (AckermannDriveStamped) → ESP32 조향 + VESC duty.
 
 CH5 (PPM index [4] ONLY) 로 수동/자율:
-  - CH5 <= 1300 (1000, 수동): CH1→ESP, CH2→VESC
-  - CH5 >= 1700 (2000, 자율): /drive.speed 목표속도 PI→VESC + S:→ESP
+  - CH5 <= 1300 (1000, 자율): /drive.speed 목표속도 PI→VESC + S:→ESP
+  - CH5 >= 1700 (2000, 수동): CH1→ESP, CH2→VESC
 
 ESP → Jetson: RC,ch1_us,ch2_us,ch5_us,0  (raw PWM us, 1000~2000)
 
@@ -12,9 +12,7 @@ ESP → Jetson: RC,ch1_us,ch2_us,ch5_us,0  (raw PWM us, 1000~2000)
 """
 from __future__ import annotations
 
-import csv
 import math
-import os
 import select
 import struct
 import sys
@@ -60,7 +58,7 @@ CFG = {
     "enable_keyboard_estop": True,
     "estop_reset_key": "r",
     # RC (ESP -> RC,ch1_us,ch2_us,mode_us,0)  raw PWM us
-    "ch5_manual_us": 1300,        # CH5 <= 1300 자동(1000)
+    "ch5_manual_us": 1300,        # CH5 <= 1300 자율(1000)
     "ch5_auto_us": 1700,          # CH5 >= 1700 수동(2000)
     "rc_center_ch2": 1500,
     "rc_min_val": 0,
@@ -80,15 +78,15 @@ CFG = {
     "speed_kp": 0.04,
     "speed_ki": 0.015,
     "integral_limit": 0.5,
-    "duty_rate_limit_per_sec": 0.15,
+    "duty_rate_limit_per_sec": 0.15,       # AUTO 가속 duty 변화율
+    "duty_decel_rate_limit_per_sec": 0.20, # AUTO 감속: 최대 duty→0 약 0.6초
+    "max_auto_brake_duty": 0.03,           # 속도 오버슈트 시 역방향 제동 duty 제한
     "vesc_telemetry_timeout_sec": 0.3,
     "vesc_poll_period_sec": 0.05,
     "invert_speed_sign": True,
     "pole_pairs": 2,
     "gear_ratio": 12.0,
     "wheel_diameter": 0.10,
-    "enable_csv_log": True,
-    "csv_log_path": "run_logs/vesc_control_log.csv",
 }
 
 
@@ -138,6 +136,12 @@ class VehicleControlNode(Node):
         self._duty_rate_limit_per_sec = max(
             0.0, float(CFG.get("duty_rate_limit_per_sec", 0.15))
         )
+        self._duty_decel_rate_limit_per_sec = max(
+            0.0, float(CFG.get("duty_decel_rate_limit_per_sec", 0.20))
+        )
+        self._max_auto_brake_duty = max(
+            0.0, float(CFG.get("max_auto_brake_duty", 0.03))
+        )
         self._vesc_telemetry_timeout = max(
             0.0, float(CFG.get("vesc_telemetry_timeout_sec", 0.3))
         )
@@ -175,17 +179,15 @@ class VehicleControlNode(Node):
         self._last_vesc_poll_time = 0.0
         self._last_vesc_telemetry_time = 0.0
         self._vesc_rx_buffer = bytearray()
-        self._csv_enabled = bool(CFG.get("enable_csv_log", False))
-        self._csv_path = self._resolve_csv_path(
-            str(CFG.get("csv_log_path", "run_logs/vesc_control_log.csv"))
-        )
-        self._csv_file = None
-        self._csv_writer = None
         self._erpm = 0.0
         self._measured_speed_mps = 0.0
         self._current_motor = 0.0
         self._current_in = 0.0
         self._input_voltage = 0.0
+        self._vesc_duty_now = 0.0
+        self._vesc_temp = math.nan
+        self._motor_temp = math.nan
+        self._fault_code = 0
 
         self._rc_ch1 = 1497
         self._rc_ch2 = 1497
@@ -207,8 +209,6 @@ class VehicleControlNode(Node):
 
         time.sleep(float(CFG["serial_open_delay_sec"]))
 
-        self._init_csv_logging()
-
         self.create_subscription(
             AckermannDriveStamped,
             self._drive_topic,
@@ -220,6 +220,18 @@ class VehicleControlNode(Node):
         self._telemetry_pub = self.create_publisher(Float64MultiArray, tel_topic, 10)
         speed_topic = str(CFG.get("speed_topic", "/vehicle/speed_mps"))
         self._speed_pub = self.create_publisher(Float64, speed_topic, 10)
+        self._vesc_status_pub = self.create_publisher(
+            Float64MultiArray, "/vesc/status", 10
+        )
+        self._rc_state_pub = self.create_publisher(
+            Float64MultiArray, "/rc/state", 10
+        )
+        self._control_state_pub = self.create_publisher(
+            Float64MultiArray, "/control/state", 10
+        )
+        self._safety_state_pub = self.create_publisher(
+            Float64MultiArray, "/safety/state", 10
+        )
 
         if bool(CFG["enable_keyboard_estop"]):
             self._start_keyboard_estop()
@@ -233,89 +245,21 @@ class VehicleControlNode(Node):
         )
         self.get_logger().info("Output: ESP32 steering + VESC duty (CH5 mode switch)")
         self.get_logger().info(
-            f"RC manual: CH5<={self._ch5_manual_us} -> CH2->VESC, "
-            f"CH5>={self._ch5_auto_us} -> /drive->VESC + S:->ESP"
+            f"RC auto: CH5<={self._ch5_manual_us} -> /drive->VESC + S:->ESP, "
+            f"CH5>={self._ch5_auto_us} -> CH2->VESC (manual)"
         )
         self.get_logger().info(
             f"AUTO speed PI: target≤{self._max_target_speed_mps:.2f} m/s, "
             f"duty≤{self._max_auto_duty:.2f}, kp={self._speed_kp:.3f}, "
             f"ki={self._speed_ki:.3f}, ff={self._speed_ff_duty_per_mps:.4f}, "
-            f"rate≤{self._duty_rate_limit_per_sec:.2f}/s"
+            f"accel≤{self._duty_rate_limit_per_sec:.2f}/s, "
+            f"decel≤{self._duty_decel_rate_limit_per_sec:.2f}/s, "
+            f"brake duty≤{self._max_auto_brake_duty:.2f}"
         )
         if bool(CFG["enable_keyboard_estop"]) and sys.stdin.isatty():
             self.get_logger().info(
                 f"Keyboard ESTOP: Space=stop(latch), {self._estop_reset_key.upper()}=reset"
             )
-
-    @staticmethod
-    def _append_timestamp_to_csv_path(csv_path: str) -> str:
-        if not csv_path.lower().endswith(".csv"):
-            return csv_path
-        base, ext = os.path.splitext(csv_path)
-        timestamp = time.strftime("%Y%m%d_%H%M%S", time.localtime())
-        return f"{base}_{timestamp}{ext}"
-
-    @staticmethod
-    def _resolve_csv_path(csv_path: str) -> str:
-        """install/ 실행이어도 src/path_following/run_logs 에 저장."""
-        if os.path.isabs(csv_path):
-            return VehicleControlNode._append_timestamp_to_csv_path(csv_path)
-
-        pkg_dir = os.path.dirname(os.path.abspath(__file__))
-        install_marker = f"{os.sep}install{os.sep}"
-        if install_marker in pkg_dir:
-            ws_root = pkg_dir.split(install_marker, 1)[0]
-            src_pkg = os.path.join(ws_root, "src", "path_following")
-            if os.path.isdir(src_pkg):
-                return VehicleControlNode._append_timestamp_to_csv_path(
-                    os.path.abspath(os.path.join(src_pkg, csv_path))
-                )
-        # path_following/path_following/*.py → 패키지 루트는 한 단계 위
-        pkg_root = os.path.dirname(pkg_dir)
-        return VehicleControlNode._append_timestamp_to_csv_path(
-            os.path.abspath(os.path.join(pkg_root, csv_path))
-        )
-
-    def _init_csv_logging(self) -> None:
-        if not self._csv_enabled:
-            return
-        try:
-            parent_dir = os.path.dirname(self._csv_path)
-            if parent_dir:
-                os.makedirs(parent_dir, exist_ok=True)
-            self._csv_file = open(self._csv_path, "w", newline="")
-            self._csv_writer = csv.writer(self._csv_file)
-            self._csv_writer.writerow(
-                ["time", "voltage_v", "erpm", "rpm", "steer_rad", "steer_cmd"]
-            )
-            self._csv_file.flush()
-            self.get_logger().info(f"CSV logging enabled: {self._csv_path}")
-        except Exception as exc:
-            self.get_logger().error(f"Failed to open CSV log file: {exc}")
-            self._csv_enabled = False
-            self._csv_file = None
-            self._csv_writer = None
-
-    def _write_csv_row(self) -> None:
-        if not self._csv_enabled or self._csv_writer is None or self._csv_file is None:
-            return
-        try:
-            wheel_rpm = (self._erpm / max(self._pole_pairs, 1e-6)) / max(
-                self._gear_ratio, 1e-6
-            )
-            self._csv_writer.writerow(
-                [
-                    time.time(),
-                    self._input_voltage,
-                    self._erpm,
-                    wheel_rpm,
-                    self._last_steering_rad,
-                    self.current_steer,
-                ]
-            )
-            self._csv_file.flush()
-        except Exception as exc:
-            self.get_logger().error(f"Failed to write CSV log row: {exc}")
 
     def _is_estop_latched(self) -> bool:
         with self._estop_lock:
@@ -522,14 +466,62 @@ class VehicleControlNode(Node):
         self._auto_steer_applied = 0.0
 
     def _apply_duty_rate_limit(self, target_duty: float, dt: float) -> float:
-        if self._duty_rate_limit_per_sec <= 0.0:
+        decelerating = (
+            target_duty == 0.0
+            or target_duty * self._last_auto_duty_cmd < 0.0
+            or (
+                target_duty * self._last_auto_duty_cmd > 0.0
+                and abs(target_duty) < abs(self._last_auto_duty_cmd)
+            )
+        )
+        rate_limit = (
+            self._duty_decel_rate_limit_per_sec
+            if decelerating
+            else self._duty_rate_limit_per_sec
+        )
+        if rate_limit <= 0.0:
             return target_duty
         dt = self.clamp(dt, 1e-4, 0.1)
-        max_step = self._duty_rate_limit_per_sec * dt
+        max_step = rate_limit * dt
         diff = target_duty - self._last_auto_duty_cmd
         if abs(diff) <= max_step:
             return target_duty
         return self._last_auto_duty_cmd + math.copysign(max_step, diff)
+
+    def _coast_auto_duty_to_zero(self, dt: float) -> float:
+        """일반 정지 명령은 duty를 즉시 끊지 않고 감속 제한을 적용한다."""
+        duty_cmd = self._apply_duty_rate_limit(0.0, dt)
+        self._speed_integral = 0.0
+        self._speed_error = 0.0
+        self._duty_ff = 0.0
+        self._speed_duty_cmd = duty_cmd
+        self._last_auto_duty_cmd = duty_cmd
+        self._auto_duty = duty_cmd
+        self._auto_duty_applied = duty_cmd
+        return duty_cmd
+
+    def _apply_manual_duty_rate_limit(self, target_duty: float, dt: float) -> float:
+        """수동 가속은 즉시 반영하고 중립/역방향 감속만 완만하게 제한한다."""
+        decelerating = (
+            target_duty == 0.0
+            or target_duty * self.current_duty < 0.0
+            or (
+                target_duty * self.current_duty > 0.0
+                and abs(target_duty) < abs(self.current_duty)
+            )
+        )
+        if not decelerating:
+            return target_duty
+
+        rate_limit = self._duty_decel_rate_limit_per_sec
+        if rate_limit <= 0.0:
+            return target_duty
+        dt = self.clamp(dt, 1e-4, 0.1)
+        max_step = rate_limit * dt
+        diff = target_duty - self.current_duty
+        if abs(diff) <= max_step:
+            return target_duty
+        return self.current_duty + math.copysign(max_step, diff)
 
     def _apply_steer_rate_limit(self, target_steer: float, dt: float) -> float:
         target_steer = self.clamp(target_steer, -self._max_steer, self._max_steer)
@@ -569,6 +561,11 @@ class VehicleControlNode(Node):
             + self._speed_ki * self._speed_integral
         )
         duty_cmd *= self._auto_duty_output_sign
+        # 진행 duty와 반대 부호는 회생/제동 토크이므로 별도 상한을 적용한다.
+        if duty_cmd * self._auto_duty_output_sign < 0.0:
+            duty_cmd = self.clamp(
+                duty_cmd, -self._max_auto_brake_duty, self._max_auto_brake_duty
+            )
         duty_cmd = self.clamp(duty_cmd, -self._max_auto_duty, self._max_auto_duty)
         duty_cmd = self._apply_duty_rate_limit(duty_cmd, dt)
         duty_cmd = self.clamp(duty_cmd, -self._max_auto_duty, self._max_auto_duty)
@@ -632,8 +629,11 @@ class VehicleControlNode(Node):
             return
 
         try:
+            vesc_temp = struct.unpack(">h", payload[1:3])[0] / 10.0
+            motor_temp = struct.unpack(">h", payload[3:5])[0] / 10.0
             current_motor = struct.unpack(">i", payload[5:9])[0] / 100.0
             current_in = struct.unpack(">i", payload[9:13])[0] / 100.0
+            duty_now = struct.unpack(">h", payload[21:23])[0] / 1000.0
             erpm = float(struct.unpack(">i", payload[23:27])[0])
             input_voltage = struct.unpack(">h", payload[27:29])[0] / 10.0
         except struct.error:
@@ -643,6 +643,10 @@ class VehicleControlNode(Node):
         self._current_motor = current_motor
         self._current_in = current_in
         self._input_voltage = input_voltage
+        self._vesc_duty_now = duty_now
+        self._vesc_temp = vesc_temp
+        self._motor_temp = motor_temp if motor_temp > -200.0 else math.nan
+        self._fault_code = int(payload[53]) if len(payload) > 53 else 0
         self._measured_speed_mps = self._compute_speed_from_erpm(erpm)
         self._last_vesc_telemetry_time = now
 
@@ -661,6 +665,14 @@ class VehicleControlNode(Node):
         self._poll_vesc_telemetry(now)
         autonomous = self._is_autonomous_mode()
         self._control_mode = "AUTO" if autonomous else "MANUAL"
+        rc_fresh = (
+            self._last_rc_time > 0.0
+            and (now - self._last_rc_time) <= self._rc_timeout
+        )
+        timeout_active = (
+            (autonomous and now - self.last_cmd_time > self._cmd_timeout)
+            or (not autonomous and not rc_fresh)
+        )
 
         if self._is_estop_latched():
             self.current_duty = 0.0
@@ -679,8 +691,7 @@ class VehicleControlNode(Node):
                 )
                 self.current_steer = self._apply_steer_rate_limit(self._auto_steer, dt)
                 if target_speed <= 1e-6:
-                    self.current_duty = 0.0
-                    self._reset_speed_controller()
+                    self.current_duty = self._coast_auto_duty_to_zero(dt)
                 elif not self._vesc_telemetry_fresh(now):
                     self.current_duty = 0.0
                     self._reset_speed_controller()
@@ -692,21 +703,22 @@ class VehicleControlNode(Node):
         else:
             self._reset_speed_controller()
             self._reset_auto_steer()
-            rc_fresh = (
-                self._last_rc_time > 0.0
-                and (time.time() - self._last_rc_time) <= self._rc_timeout
-            )
-            self.current_duty = (
-                self._rc_ch2_to_duty(self._rc_ch2) if rc_fresh else 0.0
-            )
+            if rc_fresh:
+                manual_target_duty = self._rc_ch2_to_duty(self._rc_ch2)
+                self.current_duty = self._apply_manual_duty_rate_limit(
+                    manual_target_duty, dt
+                )
+            else:
+                # RC 통신이 끊긴 경우에는 감속감보다 안전 정지를 우선한다.
+                self.current_duty = 0.0
             self.current_steer = 0.0
             # 수동: 조향은 ESP/RC CH1, Jetson은 UART 조향 안 보냄
 
         self.set_vesc_duty(self.current_duty)
         self._publish_telemetry(autonomous)
+        self._publish_state_topics(autonomous, timeout_active)
         self._publish_speed()
         self._maybe_log_debug()
-        self._write_csv_row()
 
     def _publish_telemetry(self, autonomous: bool) -> None:
         msg = Float64MultiArray()
@@ -732,6 +744,75 @@ class VehicleControlNode(Node):
             float(self._input_voltage),
         ]
         self._telemetry_pub.publish(msg)
+
+    def _publish_state_topics(
+        self, autonomous: bool, timeout_active: bool
+    ) -> None:
+        stamp = self.get_clock().now().nanoseconds * 1e-9
+
+        if self._last_vesc_telemetry_time > 0.0:
+            vesc_msg = Float64MultiArray()
+            vesc_msg.data = [
+                stamp,
+                float(self._input_voltage),
+                float(self._current_in),
+                float(self._current_motor),
+                float(self._vesc_duty_now),
+                float(self._erpm),
+                float(self._vesc_temp),
+                float(self._motor_temp),
+                float(self._fault_code),
+            ]
+            self._vesc_status_pub.publish(vesc_msg)
+
+        if self._last_rc_time > 0.0:
+            ch6 = self._rc_ch6 if self._rc_ch6 > 0 else -1
+            rc_estop = ch6 >= self._ch6_estop_us
+            rc_msg = Float64MultiArray()
+            rc_msg.data = [
+                stamp,
+                float(self._rc_ch1),
+                float(self._rc_ch2),
+                float(self._rc_ch5),
+                float(ch6),
+                0.0 if autonomous else 1.0,
+                1.0 if autonomous else 0.0,
+                1.0 if rc_estop else 0.0,
+            ]
+            self._rc_state_pub.publish(rc_msg)
+
+        control_msg = Float64MultiArray()
+        control_msg.data = [
+            stamp,
+            float(self._speed_duty_cmd),
+            float(self._last_steering_rad),
+        ]
+        self._control_state_pub.publish(control_msg)
+
+        estop_active = self._is_estop_latched()
+        manual_override = not autonomous
+        if estop_active:
+            reason_code = 1.0
+        elif timeout_active:
+            reason_code = 2.0
+        elif manual_override:
+            reason_code = 3.0
+        else:
+            reason_code = 0.0
+        safety_msg = Float64MultiArray()
+        safety_msg.data = [
+            stamp,
+            1.0 if estop_active else 0.0,
+            1.0 if manual_override else 0.0,
+            1.0 if timeout_active else 0.0,
+            0.0,  # TODO: duty limiter activation state
+            float(self._speed_duty_cmd),
+            float(self.current_duty),
+            float(self.current_duty),
+            float(self.current_steer),
+            reason_code,
+        ]
+        self._safety_state_pub.publish(safety_msg)
 
     def _publish_speed(self) -> None:
         msg = Float64()
@@ -833,14 +914,6 @@ class VehicleControlNode(Node):
             self.vesc.close()
         except Exception:
             pass
-
-        if self._csv_file is not None:
-            try:
-                self._csv_file.close()
-            except Exception:
-                pass
-            self._csv_file = None
-            self._csv_writer = None
 
         super().destroy_node()
 

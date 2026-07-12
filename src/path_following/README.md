@@ -83,7 +83,7 @@ pip3 install numpy scipy pyyaml pillow scikit-image
 ```bash
 cd /home/nvidia/f1tenth_ajou/src/path_following/scripts
 python3 extract_centerline_from_map.py
-# 기본 맵: maps/cartographer_map_20260704_150929_rosmap.yaml
+# 기본 맵: maps/cartographer_map_20260711_200005.yaml
 
 
 # 다른 맵:
@@ -108,7 +108,7 @@ python3 generate_raceline_from_centerline.py
 # 또는 경로 직접 지정:
 python3 generate_raceline_from_centerline.py \
   --centerline ../config/centerline.csv \
-  --map /home/nvidia/f1tenth_ajou/maps/cartographer_map_20260704_150929_rosmap.yaml \
+  --map /home/nvidia/f1tenth_ajou/maps/cartographer_map_20260711_200005.yaml \
   --out ../config/raceline.csv
 ```
 
@@ -128,7 +128,7 @@ source install/setup.bash
 | 로컬 `pbstream_filename` | **위 맵과 쌍을 이루는 `.pbstream`** |
 | `config/raceline.csv` | 위 YAML에서 뽑은 경로 |
 
-예: CSV를 `150929` 맵으로 만들었다면 로컬도 `150929.pbstream`을 쓴다.
+예: CSV를 `200005` 맵으로 만들었다면 로컬도 `200005.pbstream`을 쓴다.
 
 ---
 
@@ -167,20 +167,20 @@ ros2 launch localization_layer cartographer_localization_launch.py
 
 기본 pbstream (런치 파일 기준):
 
-`/home/nvidia/f1tenth_ajou/maps/cartographer_map_20260704_150929.pbstream`
+`/home/nvidia/f1tenth_ajou/maps/cartographer_map_20260711_200005.pbstream`
 
-**현재 `config/raceline.csv`는 `150929` 맵 기준** (launch 기본 pbstream과 동일):
+**현재 `config/raceline.csv`는 `200005` 맵 기준** (launch 기본 pbstream과 동일):
 
 ```bash
 ros2 launch localization_layer cartographer_localization_launch.py \
-  pbstream_filename:=/home/nvidia/f1tenth_ajou/maps/cartographer_map_20260704_150929.pbstream
+  pbstream_filename:=/home/nvidia/f1tenth_ajou/maps/cartographer_map_20260711_200005.pbstream
 ```
 
 자주 쓰는 옵션:
 
 | 인자 | 기본 | 설명 |
 |------|------|------|
-| `pbstream_filename` | `150929.pbstream` | 로드할 맵 |
+| `pbstream_filename` | `200005.pbstream` | 로드할 맵 |
 | `enable_sensor_bringup` | `true` | LiDAR·IMU·TF 자동 기동 |
 | `cartographer_startup_delay_sec` | `6.0` | 센서 워밍업 후 Cartographer 시작 |
 | `wait_for_rviz_initial_pose` | `true` | RViz 2D Pose Estimate 대기 |
@@ -238,7 +238,7 @@ source /opt/ros/humble/setup.bash
 source /home/nvidia/f1tenth_ajou/install/setup.bash
 
 ros2 launch localization_layer cartographer_localization_launch.py \
-  pbstream_filename:=/home/nvidia/f1tenth_ajou/maps/cartographer_map_20260704_150929.pbstream
+  pbstream_filename:=/home/nvidia/f1tenth_ajou/maps/cartographer_map_20260711_200005.pbstream
 ```
 
 RViz에서 **2D Pose Estimate**로 차량 위치를 맞춘다 (`wait_for_rviz_initial_pose:=true`일 때).
@@ -391,6 +391,17 @@ source install/setup.bash
 | `static_obstacle_node` | `max_obstacle_size_m` 0.6, `min_obstacle_size_m` 0.1 |
 | `control_node` | `max_duty` 0.20, `invert_steer` false |
 
+### 조향 부호 통일 (실차 / ESP)
+
+서보 `LEFT_ANGLE`/`RIGHT_ANGLE` 이름과 **실제 차량 좌우가 반대**다.
+(MANUAL에서 CH1 1000→`RIGHT_ANGLE`이어야 좌로 꺾임.)
+
+| 계층 | 규약 |
+|------|------|
+| `/drive`, ESP `S:` | **+ = 좌**, **- = 우** (`S:+1`→140°=좌, `S:-1`→40°=우) |
+| `invert_steer` | `false` |
+| map / laser / FGM | ROS TF (**+x 전방, +y 좌**) |
+
 프레임 (실차): `map` / `base_link` / `laser`
 
 
@@ -432,6 +443,9 @@ source /opt/ros/humble/setup.bash
 source /home/nvidia/f1tenth_ajou/install/setup.bash
 ros2 run path_following drive_monitor
 
+
+젯슨 실제 확인
+ros2 launch foxglove_bridge foxglove_bridge_launch.xml port:=8765
 
 
 git 업로드

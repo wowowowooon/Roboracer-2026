@@ -203,8 +203,11 @@ def resolve_static_map_yaml(pbstream_path: str) -> str | None:
             with open(origin_yaml, 'r', encoding='utf-8') as f:
                 data = yaml.safe_load(f) or {}
             ros_map = data.get('ros_map_yaml')
-            if isinstance(ros_map, str) and os.path.isfile(ros_map):
-                return ros_map
+            if isinstance(ros_map, str):
+                if not os.path.isabs(ros_map):
+                    ros_map = os.path.join(os.path.dirname(origin_yaml), ros_map)
+                if os.path.isfile(ros_map):
+                    return ros_map
         except OSError:
             pass
 

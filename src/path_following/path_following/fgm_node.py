@@ -8,6 +8,8 @@ FGM (Follow the Gap Method) 노드.
   - REJOIN 은 local_planner 의 CSV 복귀 보조 (여기선 enable OFF)
 
 /scan + (/static_obstacles 버블) + /planner/fgm_enable → /fgm_target
+
+실차: 시뮬과 동일 알고리즘. laser_frame 만 "laser".
 """
 from __future__ import annotations
 
@@ -24,12 +26,12 @@ from visualization_msgs.msg import Marker
 
 # ============================================================
 # USER TUNING — FGM 파라미터 (여기만 수정)
-# launch에서 같은 이름으로 넣으면 launch 값이 우선.
+# launch에서 같은 이름으로 넣면 launch 값이 우선.
 # ============================================================
 CFG = {
     # Topics
     "scan_topic": "/scan",
-    "laser_frame": "laser",
+    "laser_frame": "laser",  # 실차 (시뮬: ego_racecar/laser)
     "obstacle_topic": "/static_obstacles",
     "fgm_enable_topic": "/planner/fgm_enable",
     # True면 local_planner 의 /planner/fgm_enable 이 True 일 때만 갭 계산
@@ -39,7 +41,9 @@ CFG = {
     "target_topic": "/fgm_target",
     "publish_debug_scan": False,
     # 스캔 전처리·갭 (알고리즘)
-    "fov_half_deg": 80.0,  # 총 160° (±80°)
+    # 정면(레이저 +x) 기준 ±fov_half_deg 만 사용. ≤0 이면 스캔 전체.
+    # Slamtec 0~360° 스캔도 wrap 후 정면 기준으로 자름.
+    "fov_half_deg": 80.0,
     "preprocess_max_range_m": 2.0,
     "bubble_radius_m": 0.20,
     "obstacle_bubble_trigger_dist_m": 0.7,
@@ -49,8 +53,9 @@ CFG = {
     "gap_hysteresis_len_ratio": 0.78,
     # 목표점 (레이저 프레임, 갭 방향 거리 [m])
     "target_distance_m": 0.5,
-    "gap_lateral_gain": 0.8,
-    "max_avoid_heading_deg": 45.0,
+    "gap_lateral_gain": 1.0,
+    # ≤0 → 목표 각도 클램프 없음 (FOV 안 갭 각도 그대로)
+    "max_avoid_heading_deg": 0.0,
     # 목표 스무딩
     "target_smooth_alpha": 0.36,
     "target_max_step_m": 0.17,
@@ -68,6 +73,14 @@ def _param_bool(val) -> bool:
     if isinstance(val, bool):
         return val
     return str(val).lower() in ("1", "true", "yes")
+
+
+def _wrap_pi(a: float) -> float:
+    return math.atan2(math.sin(a), math.cos(a))
+
+
+def _wrap_pi_np(a: np.ndarray) -> np.ndarray:
+    return np.arctan2(np.sin(a), np.cos(a))
 
 
 class FGMNode(Node):
@@ -111,6 +124,8 @@ class FGMNode(Node):
         self.publish_debug_scan = _param_bool(self.get_parameter("publish_debug_scan").value)
 
         self.fov_angle = math.radians(float(self.get_parameter("fov_half_deg").value))
+        # ≤0 이면 FOV 크롭 안 함 (스캔 전방향)
+        self._use_full_scan_fov = float(self.get_parameter("fov_half_deg").value) <= 0.0
         self.gap_thr_primary = float(self.get_parameter("gap_threshold_primary_m").value)
         self.gap_thr_fallback = float(self.get_parameter("gap_threshold_fallback_m").value)
         self.target_dist_default = float(self.get_parameter("target_distance_m").value)
@@ -135,8 +150,11 @@ class FGMNode(Node):
         self.gap_lateral_gain = min(
             1.0, max(0.05, float(self.get_parameter("gap_lateral_gain").value))
         )
-        self.max_avoid_heading_rad = math.radians(
-            max(5.0, min(85.0, float(self.get_parameter("max_avoid_heading_deg").value)))
+        _max_hdg = float(self.get_parameter("max_avoid_heading_deg").value)
+        self.max_avoid_heading_rad = (
+            None
+            if _max_hdg <= 0.0
+            else math.radians(max(5.0, min(179.0, _max_hdg)))
         )
 
         self.gap_marker_arm_scale = max(
@@ -157,11 +175,14 @@ class FGMNode(Node):
         self._last_raw_y: float | None = None
 
         self.get_logger().info(
-            f"FGM started | target={self.target_dist_default}m, "
+            f"FGM started (sim algorithm) | frame={self._laser_frame}, "
+            f"target={self.target_dist_default}m, "
             f"preprocess={self.preprocess_dist}m, "
             f"bubble={self.bubble_radius}m≤{self.obstacle_bubble_trigger_dist_m}m, "
             f"planner_enable={self.require_planner_enable}({fgm_en_t}), "
             f"require_obs={self.require_static_obstacles}, "
+            f"fov={'FULL' if self._use_full_scan_fov else f'±{math.degrees(self.fov_angle):.0f}°'}, "
+            f"hdg_limit={'OFF' if self.max_avoid_heading_rad is None else f'{math.degrees(self.max_avoid_heading_rad):.0f}°'}, "
             f"marker scale={self.gap_marker_arm_scale} max={_gmax}m"
         )
 
@@ -172,11 +193,12 @@ class FGMNode(Node):
         was = self._fgm_enabled
         self._fgm_enabled = bool(msg.data)
         if was and not self._fgm_enabled:
-            self._reset_fgm_filter_state()
-            self._publish_gap_marker_delete()
+            # 목표 스무딩만 리셋 — 갭 마커/히스테리시스는 유지
+            self._reset_fgm_filter_state(keep_gap_hysteresis=True)
 
-    def _reset_fgm_filter_state(self) -> None:
-        self._last_gap_center_idx = None
+    def _reset_fgm_filter_state(self, *, keep_gap_hysteresis: bool = False) -> None:
+        if not keep_gap_hysteresis:
+            self._last_gap_center_idx = None
         self._filt_x = self._filt_y = None
         self._out_x = self._out_y = None
         self._prev_pub_x = self._prev_pub_y = None
@@ -278,15 +300,15 @@ class FGMNode(Node):
         return float(ox), float(oy)
 
     def scan_callback(self, scan_msg: LaserScan) -> None:
-        # AVOID/접근 중 planner enable → 갭 추종 (장애 목록 없어도 유지)
-        if self.require_planner_enable and not self._fgm_enabled:
-            self._reset_fgm_filter_state()
-            self._publish_gap_marker_delete()
-            return
-        if self.require_static_obstacles and len(self.latest_obstacles) < 4:
-            self._reset_fgm_filter_state()
-            self._publish_gap_marker_delete()
-            return
+        # 갭 마커는 항상 계산·발행. /fgm_target 은 planner enable 일 때만.
+        publish_target = (not self.require_planner_enable) or self._fgm_enabled
+        if (
+            self.require_static_obstacles
+            and len(self.latest_obstacles) < 4
+            and publish_target
+        ):
+            self._reset_fgm_filter_state(keep_gap_hysteresis=True)
+            # 마커는 스캔만으로 계속 계산
 
         ranges = np.array(scan_msg.ranges, dtype=np.float64)
         ranges = np.where(np.isinf(ranges), self.preprocess_dist, ranges)
@@ -299,13 +321,17 @@ class FGMNode(Node):
             self.get_logger().warn("LaserScan angle_increment too small.")
             return
 
-        start_fov_idx = int((-self.fov_angle - angle_min) / angle_inc)
-        end_fov_idx = int((self.fov_angle - angle_min) / angle_inc)
-        start_fov_idx = max(0, start_fov_idx)
-        end_fov_idx = min(len(ranges), end_fov_idx)
+        n = len(ranges)
+        beam_angles = angle_min + np.arange(n, dtype=np.float64) * angle_inc
+        # 정면(+x)=0 기준 [-pi,pi]. Slamtec 0~360° 도 오른쪽이 음각으로 맞춰짐.
+        wrapped = _wrap_pi_np(beam_angles)
 
-        ranges[:start_fov_idx] = 0.0
-        ranges[end_fov_idx:] = 0.0
+        if self._use_full_scan_fov:
+            fov_mask = np.ones(n, dtype=bool)
+        else:
+            fov_mask = np.abs(wrapped) <= self.fov_angle
+            ranges = ranges.copy()
+            ranges[~fov_mask] = 0.0
 
         valid_indices = np.where(ranges > 0.0)[0]
         if len(valid_indices) > 0:
@@ -324,8 +350,10 @@ class FGMNode(Node):
                 if obs_dist > self.obstacle_bubble_trigger_dist_m:
                     continue
                 obs_angle = math.atan2(obs_y, obs_x)
-                obs_idx = int((obs_angle - angle_min) / angle_inc)
-                if 0 <= obs_idx < len(ranges):
+                if (not self._use_full_scan_fov) and abs(obs_angle) > self.fov_angle:
+                    continue
+                obs_idx = int(np.argmin(np.abs(wrapped - _wrap_pi(obs_angle))))
+                if 0 <= obs_idx < len(ranges) and fov_mask[obs_idx]:
                     effective_radius = self.bubble_radius + obs_r
                     self.create_bubble(
                         ranges,
@@ -335,13 +363,21 @@ class FGMNode(Node):
                         radius_override=effective_radius,
                     )
 
+        # 인덱스 공간이 아니라 정면 기준 각도 순서로 갭 탐색
+        # (Slamtec 0~360°에서 ±80°가 인덱스상 두 조각으로 갈라지는 문제 방지)
+        fov_idx = np.where(fov_mask)[0]
+        if fov_idx.size == 0:
+            return
+        order = np.argsort(wrapped[fov_idx])
+        sorted_orig = fov_idx[order]
+        work = ranges[sorted_orig].copy()
+
         gap_threshold = self.gap_thr_primary
-        threshold_indices = np.where(ranges > gap_threshold)[0]
+        threshold_indices = np.where(work > gap_threshold)[0]
         if len(threshold_indices) == 0:
             gap_threshold = self.gap_thr_fallback
-            threshold_indices = np.where(ranges > gap_threshold)[0]
+            threshold_indices = np.where(work > gap_threshold)[0]
             if len(threshold_indices) == 0:
-                # 갭이 없을 땐 이전 출력 반복 발행 금지(게이트 켠 상태에서만 여기 도달)
                 return
 
         splits = np.where(np.diff(threshold_indices) > 1)[0] + 1
@@ -354,15 +390,46 @@ class FGMNode(Node):
         if chosen is None or len(chosen) == 0:
             return
 
-        self._last_gap_center_idx = int(chosen[len(chosen) // 2])
+        # chosen = work 배열 인덱스 → 원본 빔 / 정면 기준 각도
+        center_work = int(chosen[len(chosen) // 2])
+        gap_start_orig = int(sorted_orig[int(chosen[0])])
+        gap_end_orig = int(sorted_orig[int(chosen[-1])])
+        best_orig = int(sorted_orig[center_work])
+        self._last_gap_center_idx = center_work
 
-        gap_start_idx = int(chosen[0])
-        gap_end_idx = int(chosen[-1])
-        best_idx = int(chosen[len(chosen) // 2])
-        raw_angle = angle_min + best_idx * angle_inc
+        gap_start_angle = float(wrapped[gap_start_orig])
+        gap_end_angle = float(wrapped[gap_end_orig])
+        raw_angle = float(wrapped[best_orig])
+        viz_stamp = self.get_clock().now().to_msg()
+
+        self.publish_gap_marker_angles(
+            gap_start_angle,
+            gap_end_angle,
+            float(ranges[gap_start_orig]),
+            float(ranges[gap_end_orig]),
+            viz_stamp,
+        )
+
+        if self.publish_debug_scan:
+            debug_msg = LaserScan()
+            debug_msg.header = scan_msg.header
+            debug_msg.angle_min = scan_msg.angle_min
+            debug_msg.angle_max = scan_msg.angle_max
+            debug_msg.angle_increment = scan_msg.angle_increment
+            debug_msg.range_min = scan_msg.range_min
+            debug_msg.range_max = scan_msg.range_max
+            debug_msg.time_increment = scan_msg.time_increment
+            debug_msg.scan_time = scan_msg.scan_time
+            debug_msg.ranges = [float(r) for r in ranges]
+            debug_msg.header.stamp = viz_stamp
+            self.debug_scan_pub.publish(debug_msg)
+
+        if not publish_target:
+            return
+
         eff_angle = raw_angle * self.gap_lateral_gain
         ma = self.max_avoid_heading_rad
-        if abs(eff_angle) > ma:
+        if ma is not None and abs(eff_angle) > ma:
             eff_angle = math.copysign(ma, eff_angle)
 
         target_dist = self.target_dist_default
@@ -375,8 +442,6 @@ class FGMNode(Node):
         fx, fy = self._first_stage_smooth(rx, ry)
         ox, oy = self._second_stage_and_damp(fx, fy)
 
-        viz_stamp = self.get_clock().now().to_msg()
-
         point_msg = PointStamped()
         point_msg.header.stamp = viz_stamp
         point_msg.header.frame_id = self._laser_frame
@@ -385,40 +450,15 @@ class FGMNode(Node):
         point_msg.point.z = 0.0
         self.target_pub.publish(point_msg)
 
-        debug_msg = LaserScan()
-        debug_msg.header = scan_msg.header
-        debug_msg.angle_min = scan_msg.angle_min
-        debug_msg.angle_max = scan_msg.angle_max
-        debug_msg.angle_increment = scan_msg.angle_increment
-        debug_msg.range_min = scan_msg.range_min
-        debug_msg.range_max = scan_msg.range_max
-        debug_msg.time_increment = scan_msg.time_increment
-        debug_msg.scan_time = scan_msg.scan_time
-        debug_msg.ranges = [float(r) for r in ranges]
-
-        debug_msg.header.stamp = viz_stamp
-        if self.publish_debug_scan:
-            self.debug_scan_pub.publish(debug_msg)
-
-        self.publish_gap_marker(
-            gap_start_idx,
-            gap_end_idx,
-            ranges,
-            angle_min,
-            angle_inc,
-            viz_stamp,
-        )
-
-    def publish_gap_marker(
+    def publish_gap_marker_angles(
         self,
-        start_idx: int,
-        end_idx: int,
-        ranges: np.ndarray,
-        angle_min: float,
-        angle_inc: float,
+        start_angle: float,
+        end_angle: float,
+        range_start: float,
+        range_end: float,
         stamp_msg,
     ) -> None:
-        """선택 갭 양끝 V자 — 장애 시 갭이 좁아지는 모션이 그대로 보임."""
+        """선택 갭 양끝 V자 (정면 기준 wrap 각도)."""
         marker = Marker()
         marker.header.stamp = stamp_msg
         marker.header.frame_id = self._laser_frame
@@ -437,14 +477,12 @@ class FGMNode(Node):
         p_origin.y = 0.0
         p_origin.z = 0.0
 
-        start_angle = angle_min + start_idx * angle_inc
-        end_angle = angle_min + end_idx * angle_inc
-        # FOV 밖이면 표시만 클램프 (추종 각도는 갭 인덱스 그대로)
-        start_angle = max(-self.fov_angle, min(self.fov_angle, start_angle))
-        end_angle = max(-self.fov_angle, min(self.fov_angle, end_angle))
+        if not self._use_full_scan_fov:
+            start_angle = max(-self.fov_angle, min(self.fov_angle, start_angle))
+            end_angle = max(-self.fov_angle, min(self.fov_angle, end_angle))
 
-        r_s = max(float(ranges[start_idx]), 1e-6)
-        r_e = max(float(ranges[end_idx]), 1e-6)
+        r_s = max(float(range_start), 1e-6)
+        r_e = max(float(range_end), 1e-6)
         scale = self.gap_marker_arm_scale if self.gap_marker_arm_scale > 0.0 else 1.0
         len_s = r_s * scale
         len_e = r_e * scale
@@ -470,6 +508,26 @@ class FGMNode(Node):
         marker.points.append(p_origin)
         marker.points.append(p_end)
         self.gap_marker_pub.publish(marker)
+
+    def publish_gap_marker(
+        self,
+        start_idx: int,
+        end_idx: int,
+        ranges: np.ndarray,
+        angle_min: float,
+        angle_inc: float,
+        stamp_msg,
+    ) -> None:
+        """호환용: 인덱스 → wrap 각도 마커."""
+        start_angle = _wrap_pi(angle_min + start_idx * angle_inc)
+        end_angle = _wrap_pi(angle_min + end_idx * angle_inc)
+        self.publish_gap_marker_angles(
+            start_angle,
+            end_angle,
+            float(ranges[start_idx]),
+            float(ranges[end_idx]),
+            stamp_msg,
+        )
 
     def create_bubble(
         self,

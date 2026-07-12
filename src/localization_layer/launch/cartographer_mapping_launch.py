@@ -77,7 +77,7 @@ def _build_cartographer_stack(context):
       executable='cartographer_occupancy_grid_node',
       name='occupancy_grid_node',
       output='log',
-      arguments=['-resolution', '0.08', '-publish_period_sec', '1.0'],
+      arguments=['-resolution', '0.05', '-publish_period_sec', '2.0'],
     ),
     Node(
       package='localization_layer',
@@ -205,8 +205,8 @@ def generate_launch_description():
     ),
     DeclareLaunchArgument(
       'include_unfinished_submaps',
-      default_value='true',
-      description='Include unfinished submaps when exporting',
+      default_value='false',
+      description='Include unfinished submaps when exporting (false = cleaner walls)',
     ),
     DeclareLaunchArgument(
       'save_on_shutdown',
@@ -215,8 +215,8 @@ def generate_launch_description():
     ),
     DeclareLaunchArgument(
       'save_interval_sec',
-      default_value='20.0',
-      description='Periodic export interval in seconds (0 disables periodic export)',
+      default_value='60.0',
+      description='Periodic export interval in seconds (0 = shutdown only)',
     ),
     DeclareLaunchArgument(
       'export_ros_map',
@@ -245,22 +245,22 @@ def generate_launch_description():
     ),
     DeclareLaunchArgument(
       'ros_map_timeout_sec',
-      default_value='20.0',
+      default_value='45.0',
       description='Timeout for map_saver_cli command',
     ),
     DeclareLaunchArgument(
       'write_state_timeout_sec',
-      default_value='60.0',
-      description='Timeout for /write_state service response during runtime saves',
+      default_value='120.0',
+      description='Timeout for /write_state during periodic saves (large maps need time)',
     ),
     DeclareLaunchArgument(
       'shutdown_write_state_timeout_sec',
-      default_value='60.0',
+      default_value='120.0',
       description='Timeout for /write_state service response during shutdown save',
     ),
     DeclareLaunchArgument(
       'shutdown_ros_map_timeout_sec',
-      default_value='40.0',
+      default_value='60.0',
       description='Timeout for map_saver_cli during shutdown map export',
     ),
     DeclareLaunchArgument(

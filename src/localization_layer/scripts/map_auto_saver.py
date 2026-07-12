@@ -21,17 +21,17 @@ class MapAutoSaver(Node):
         self.declare_parameter('map_file_prefix', 'cartographer_map')
         self.declare_parameter('include_unfinished_submaps', True)
         self.declare_parameter('save_on_shutdown', True)
-        self.declare_parameter('save_interval_sec', 20.0)
+        self.declare_parameter('save_interval_sec', 60.0)
         self.declare_parameter('export_ros_map', True)
         self.declare_parameter('ros_map_topic', '/map')
         self.declare_parameter('ros_map_format', 'png')
         self.declare_parameter('ros_map_mode', 'trinary')
-        self.declare_parameter('ros_map_timeout_sec', 20.0)
-        self.declare_parameter('write_state_timeout_sec', 15.0)
-        self.declare_parameter('service_wait_timeout_sec', 3.0)
-        self.declare_parameter('export_ros_map_on_shutdown', False)
-        self.declare_parameter('shutdown_write_state_timeout_sec', 4.0)
-        self.declare_parameter('shutdown_ros_map_timeout_sec', 2.0)
+        self.declare_parameter('ros_map_timeout_sec', 45.0)
+        self.declare_parameter('write_state_timeout_sec', 120.0)
+        self.declare_parameter('service_wait_timeout_sec', 5.0)
+        self.declare_parameter('export_ros_map_on_shutdown', True)
+        self.declare_parameter('shutdown_write_state_timeout_sec', 120.0)
+        self.declare_parameter('shutdown_ros_map_timeout_sec', 60.0)
         self.declare_parameter('pbstream_to_ros_map_resolution', 0.05)
         self.declare_parameter('min_pbstream_bytes', 4096)
 
@@ -83,7 +83,12 @@ class MapAutoSaver(Node):
         if self.save_interval_sec > 0.0:
             self.create_timer(self.save_interval_sec, self._periodic_save_callback)
             self.get_logger().info(
-                f'Periodic auto-save enabled: every {self.save_interval_sec:.1f}s -> {self.map_save_dir}'
+                f'Periodic auto-save: every {self.save_interval_sec:.0f}s -> {self.map_save_dir}'
+            )
+        else:
+            self.get_logger().warn(
+                'Periodic auto-save OFF (save_interval_sec=0). '
+                'pbstream/png는 Ctrl+C 종료 시에만 저장됩니다.'
             )
 
     def _context_ok(self) -> bool:
@@ -256,6 +261,11 @@ class MapAutoSaver(Node):
         self.get_logger().info('Fallback ROS map export from pbstream succeeded.')
         return True
 
+    def _should_export_ros_map(self, on_shutdown: bool) -> bool:
+        if on_shutdown:
+            return self.export_ros_map or self.export_ros_map_on_shutdown
+        return self.export_ros_map
+
     def save_map(
         self,
         reason: str,
@@ -265,6 +275,7 @@ class MapAutoSaver(Node):
         export_ros_map: bool | None = None,
         ros_map_timeout_sec: float | None = None,
         allow_when_context_invalid: bool = False,
+        on_shutdown: bool = False,
     ) -> bool:
         with self._save_lock:
             if not allow_when_context_invalid and not self._context_ok():
@@ -280,7 +291,11 @@ class MapAutoSaver(Node):
                 if write_state_timeout_sec is None
                 else write_state_timeout_sec
             )
-            export_ros_map = self.export_ros_map if export_ros_map is None else export_ros_map
+            export_ros_map = (
+                self._should_export_ros_map(on_shutdown)
+                if export_ros_map is None
+                else export_ros_map
+            )
             ros_map_timeout_sec = (
                 self.ros_map_timeout_sec
                 if ros_map_timeout_sec is None
@@ -351,10 +366,10 @@ class MapAutoSaver(Node):
             return
         self.save_map(
             'shutdown',
-            service_wait_timeout_sec=min(1.5, self.service_wait_timeout_sec),
+            service_wait_timeout_sec=min(3.0, self.service_wait_timeout_sec),
             write_state_timeout_sec=self.shutdown_write_state_timeout_sec,
-            export_ros_map=self.export_ros_map_on_shutdown,
             ros_map_timeout_sec=self.shutdown_ros_map_timeout_sec,
+            on_shutdown=True,
         )
 
 
@@ -373,11 +388,11 @@ def main(args=None):
         node._shutdown_save_done = True
         node.save_map(
             'shutdown',
-            service_wait_timeout_sec=min(1.5, node.service_wait_timeout_sec),
+            service_wait_timeout_sec=min(3.0, node.service_wait_timeout_sec),
             write_state_timeout_sec=node.shutdown_write_state_timeout_sec,
-            export_ros_map=node.export_ros_map_on_shutdown,
             ros_map_timeout_sec=node.shutdown_ros_map_timeout_sec,
             allow_when_context_invalid=True,
+            on_shutdown=True,
         )
     finally:
         node.save_once_on_shutdown()

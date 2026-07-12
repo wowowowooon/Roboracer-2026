@@ -28,7 +28,8 @@ def _rad2deg(r: float) -> float:
 
 
 def _esp_steer_to_servo_deg(norm: float) -> float:
-    return 90.0 + float(norm) * 40.0
+    """ESP: S:+1→140°(실차 좌), S:-1→40°(실차 우)."""
+    return 90.0 + float(norm) * 50.0
 
 
 def _age_str(last_mono: float | None, *, stale: float = 0.5) -> str:

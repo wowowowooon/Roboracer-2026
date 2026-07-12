@@ -525,12 +525,12 @@ def main():
     )
     ws_root = os.path.abspath(os.path.join(script_dir, "..", "..", ".."))
     default_map = os.path.join(
-        ws_root, "maps", "cartographer_map_20260704_150929_rosmap.yaml"
+        ws_root, "maps", "cartographer_map_20260711_200005.yaml"
     )
     parser.add_argument(
         "--map",
         default=default_map,
-        help="Map YAML path (default: f1tenth_ajou/maps/150929_rosmap)",
+        help="Map YAML path (default: f1tenth_ajou/maps/200005)",
     )
     parser.add_argument(
         "--out",
