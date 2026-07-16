@@ -446,6 +446,13 @@ ros2 run path_following drive_monitor
 
 젯슨 실제 확인
 ros2 launch foxglove_bridge foxglove_bridge_launch.xml port:=8765
+ws://192.168.137.161:8765
+
+로거 노드
+source /opt/ros/humble/setup.bash
+source /home/nvidia/f1tenth_ajou/install/setup.bash
+ros2 launch path_following csv_logger_launch.py
+
 
 
 git 업로드

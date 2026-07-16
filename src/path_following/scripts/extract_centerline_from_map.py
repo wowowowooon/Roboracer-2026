@@ -1031,7 +1031,7 @@ def main() -> int:
     script_dir = os.path.dirname(os.path.abspath(__file__))
     ws_root = os.path.abspath(os.path.join(script_dir, "..", "..", ".."))
     default_map = os.path.join(
-        ws_root, "maps", "cartographer_map_20260711_200005.yaml"
+        ws_root, "maps", "cartographer_map_20260716_195826_rosmap.yaml"
     )
     parser.add_argument(
         "--map",

@@ -48,6 +48,8 @@ CFG = {
     "drive_topic": "/drive",
     "tracked_path_topic": "/waypoint_tracked_path",
     "timer_period_ms": 30,
+    # /drive.speed 는 발행하지 않음(0). 실제 속도는 control_node auto_cruise.
+    "publish_drive_speed": False,
     "nominal_speed": 1.6,
     "use_planner_speed_scale": True,
     "planner_speed_stale_sec": 0.75,
@@ -57,7 +59,7 @@ CFG = {
     "max_steering_angle": 0.6981,  # ±40° — control_node / ESP S±1.0 과 동일
     "steering_smooth_alpha": 0.35,
     "wheelbase": 0.33,
-    "stanley_k": 2.5,
+    "stanley_k": 1.5,
     "stanley_softening": 0.12,
     # |cte|가 클수록 heading_error 가중치↓ (직선 평행주행 시 상쇄 방지)
     "stanley_heading_cte_blend_m": 0.08,
@@ -140,6 +142,9 @@ class StanleyWaypointFollowNode(Node):
 
         self.timer_period = float(self.get_parameter("timer_period_ms").value) / 1000.0
 
+        self.publish_drive_speed = param_bool(
+            self.get_parameter("publish_drive_speed").value
+        )
         self.nominal_speed = float(self.get_parameter("nominal_speed").value)
         _ups = self.get_parameter("use_planner_speed_scale").value
         self.use_planner_speed_scale = param_bool(_ups)
@@ -629,12 +634,13 @@ class StanleyWaypointFollowNode(Node):
         self.path_curvature_pub.publish(msg)
 
     def _publish_drive(self, speed: float, steering: float) -> None:
-        if abs(speed) < 1e-6:
+        # 실제 속도는 control_node. /drive 에는 조향만 (publish_drive_speed=False).
+        if self.publish_drive_speed and abs(speed) < 1e-6:
             self._last_speed_cmd = None
 
         msg = AckermannDriveStamped()
         msg.header.stamp = self.get_clock().now().to_msg()
-        msg.drive.speed = float(speed)
+        msg.drive.speed = float(speed) if self.publish_drive_speed else 0.0
         msg.drive.steering_angle = float(steering)
         self.drive_pub.publish(msg)
 

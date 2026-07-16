@@ -45,7 +45,8 @@ CFG = {
     # Slamtec 0~360° 스캔도 wrap 후 정면 기준으로 자름.
     "fov_half_deg": 80.0,
     "preprocess_max_range_m": 2.0,
-    "bubble_radius_m": 0.20,
+    # 세이프티 버블: 최근접 스캔/static 장애에 각도 팽창 (차폭 여유). 지금은 최소.
+    "bubble_radius_m": 0.15,
     "obstacle_bubble_trigger_dist_m": 0.7,
     "gap_threshold_primary_m": 1.5,
     "gap_threshold_fallback_m": 0.5,

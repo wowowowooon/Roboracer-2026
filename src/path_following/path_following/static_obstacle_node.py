@@ -31,7 +31,7 @@ CFG = {
     "markers_topic": "/visualization_marker_array",
     "map_yaml": (
         "/home/nvidia/f1tenth_ajou/maps/"
-        "cartographer_map_20260712_225113_rosmap_walls.yaml"
+        "cartographer_map_20260713_002437.yaml"
     ),
     # 실차 TF/맵 어긋남 여유 (시뮬 0.18 → 살짝 키워 벽을 잔차로 안 잡게)
     "wall_match_radius_m": 0.28,

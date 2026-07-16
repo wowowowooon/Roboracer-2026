@@ -58,13 +58,14 @@ def generate_launch_description():
                 output="screen",
                 arguments=_QUIET,
             ),
-            Node(
-                package="path_following",
-                executable="drive_strategy_node",
-                name="drive_strategy_node",
-                output="screen",
-                arguments=_QUIET,
-            ),
+            # 임시 OFF — 다시 켤 때 아래 Node 블록 복구
+            # Node(
+            #     package="path_following",
+            #     executable="drive_strategy_node",
+            #     name="drive_strategy_node",
+            #     output="screen",
+            #     arguments=_QUIET,
+            # ),
             Node(
                 package="path_following",
                 executable="local_planner_node",

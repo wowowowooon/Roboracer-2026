@@ -3,7 +3,7 @@
 실차 하드웨어 제어: /drive (AckermannDriveStamped) → ESP32 조향 + VESC duty.
 
 CH5 (PPM index [4] ONLY) 로 수동/자율:
-  - CH5 <= 1300 (1000, 자율): /drive.speed 목표속도 PI→VESC + S:→ESP
+  - CH5 <= 1300 (1000, 자율): /drive.steering → ESP, 속도는 max_target_speed_mps PI→VESC
   - CH5 >= 1700 (2000, 수동): CH1→ESP, CH2→VESC
 
 ESP → Jetson: RC,ch1_us,ch2_us,ch5_us,0  (raw PWM us, 1000~2000)
@@ -71,9 +71,9 @@ CFG = {
     "telemetry_topic": "/vehicle/telemetry",  # drive_monitor.py 구독
     "speed_topic": "/vehicle/speed_mps",
     # AUTO closed-loop speed control (/drive.speed is target speed [m/s])
-    "max_auto_duty": 0.12,
-    "max_target_speed_mps": 1.0,
-    "speed_ff_duty_per_mps": 1.0 / 14.2,
+    "max_auto_duty": 0.10, # 0.2 최대 5당 0.1
+    "max_target_speed_mps": 1.0, # m/s 속도
+    "speed_ff_duty_per_mps": 1.0 / 14.2,  #분자를 5당 1
     "auto_duty_output_sign": -1.0,  # 이 차량은 전진 목표속도 -> 음수 VESC raw duty
     "speed_kp": 0.04,
     "speed_ki": 0.015,
@@ -249,7 +249,8 @@ class VehicleControlNode(Node):
             f"CH5>={self._ch5_auto_us} -> CH2->VESC (manual)"
         )
         self.get_logger().info(
-            f"AUTO speed PI: target≤{self._max_target_speed_mps:.2f} m/s, "
+            f"AUTO speed PI: target={self._max_target_speed_mps:.2f} m/s "
+            f"(/drive.speed ignore, steer-only), "
             f"duty≤{self._max_auto_duty:.2f}, kp={self._speed_kp:.3f}, "
             f"ki={self._speed_ki:.3f}, ff={self._speed_ff_duty_per_mps:.4f}, "
             f"accel≤{self._duty_rate_limit_per_sec:.2f}/s, "
@@ -330,9 +331,8 @@ class VehicleControlNode(Node):
 
         self.last_cmd_time = time.time()
 
-        target_speed_mps = self.clamp(
-            float(msg.drive.speed), 0.0, self._max_target_speed_mps
-        )
+        # /drive 는 조향만. AUTO 목표속도 = max_target_speed_mps
+        target_speed_mps = self._max_target_speed_mps
         steering_rad = float(msg.drive.steering_angle)
 
         if self._invert_steer:
