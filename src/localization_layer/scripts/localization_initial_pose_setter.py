@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Cartographer localization pose: RViz /initialpose + optional scan refine."""
+"""Cartographer localization pose: RViz /initialpose (optional scan refine)."""
 
 from __future__ import annotations
 
@@ -87,9 +87,11 @@ def _score_pose(
     sin_y = math.sin(yaw)
     score = 0.0
     used = 0
+    step = max(1, int(round(math.radians(2.0) / max(scan.angle_increment, 1e-6))))
 
-    for i, rng in enumerate(scan.ranges):
-        if not math.isfinite(rng) or rng < scan.range_min or rng > scan.range_max:
+    for i in range(0, len(scan.ranges), step):
+        rng = scan.ranges[i]
+        if not math.isfinite(rng) or rng < scan.range_min or rng > min(scan.range_max, 12.0):
             continue
         angle = scan.angle_min + i * scan.angle_increment
         lx = _LIDAR_X_IN_BASE + rng * math.cos(angle)
@@ -105,7 +107,7 @@ def _score_pose(
         elif occ == 0:
             score -= 0.5
 
-    return float('-inf') if used == 0 else score / used
+    return float('-inf') if used < 8 else score / used
 
 
 def _refine_pose(
@@ -123,6 +125,10 @@ def _refine_pose(
     grid = np.array(map_msg.data, dtype=np.int16).reshape(
         (map_msg.info.height, map_msg.info.width)
     )
+    # Reject jumping into unknown / outside free corridor.
+    if _grid_lookup(grid, map_msg, x, y) != 0:
+        return x, y, yaw, float('-inf')
+
     best = (float('-inf'), x, y, yaw)
     yaw_step = math.radians(yaw_step_deg)
     yaw_window = math.radians(yaw_window_deg)
@@ -134,9 +140,13 @@ def _refine_pose(
         while dy <= xy_window_m + 1e-9:
             dx = -xy_window_m
             while dx <= xy_window_m + 1e-9:
-                s = _score_pose(scan, grid, map_msg, x + dx, y + dy, cyaw)
+                cx, cy = x + dx, y + dy
+                if _grid_lookup(grid, map_msg, cx, cy) != 0:
+                    dx += xy_step_m
+                    continue
+                s = _score_pose(scan, grid, map_msg, cx, cy, cyaw)
                 if s > best[0]:
-                    best = (s, x + dx, y + dy, cyaw)
+                    best = (s, cx, cy, cyaw)
                 dx += xy_step_m
             dy += xy_step_m
         dyaw += yaw_step
@@ -153,11 +163,12 @@ class LocalizationInitialPoseSetter(Node):
         self.declare_parameter('configuration_basename', 'cartographer_2d_localization.lua')
         self.declare_parameter('use_saved_mapping_origin', False)
         self.declare_parameter('wait_for_rviz_initial_pose', True)
-        self.declare_parameter('refine_with_scan_matching', True)
-        self.declare_parameter('refine_xy_window_m', 5.0)
-        self.declare_parameter('refine_xy_step_m', 0.15)
-        self.declare_parameter('refine_yaw_window_deg', 180.0)
-        self.declare_parameter('refine_yaw_step_deg', 5.0)
+        # Default OFF: rosmap is sparse; auto refine/relock caused outside-map snaps.
+        self.declare_parameter('refine_with_scan_matching', False)
+        self.declare_parameter('refine_xy_window_m', 0.5)
+        self.declare_parameter('refine_xy_step_m', 0.08)
+        self.declare_parameter('refine_yaw_window_deg', 20.0)
+        self.declare_parameter('refine_yaw_step_deg', 4.0)
         self.declare_parameter('initial_pose_x', float('nan'))
         self.declare_parameter('initial_pose_y', float('nan'))
         self.declare_parameter('initial_pose_yaw', float('nan'))
@@ -168,7 +179,7 @@ class LocalizationInitialPoseSetter(Node):
         self.declare_parameter('service_retry_sec', 0.15)
         self.declare_parameter('finish_settle_sec', 0.4)
         self.declare_parameter('start_trajectory_max_attempts', 5)
-        self.declare_parameter('refine_min_score', 0.15)
+        self.declare_parameter('refine_min_score', 0.4)
 
         self._config_dir = self.get_parameter('configuration_directory').get_parameter_value().string_value
         self._config_base = self.get_parameter('configuration_basename').get_parameter_value().string_value
@@ -241,7 +252,7 @@ class LocalizationInitialPoseSetter(Node):
         self.create_timer(3.0, self._check_initialpose_publishers)
 
         self.get_logger().info(
-            f'Pose manager ready (config_dir={self._config_dir}, topic={initial_pose_topic})'
+            f'Pose manager ready (refine={self._refine}, topic={initial_pose_topic})'
         )
 
     def _check_initialpose_publishers(self):
@@ -400,9 +411,7 @@ class LocalizationInitialPoseSetter(Node):
         map_msg = self._map_msg
         if self._refine:
             if scan is None or map_msg is None or map_msg.info.width == 0:
-                self.get_logger().warn(
-                    '/map 또는 /scan 대기 중 — pose 재시도 예정'
-                )
+                self.get_logger().warn('/map 또는 /scan 대기 중 — pose 재시도 예정')
                 with self._lock:
                     self._apply_pose = (x, y, yaw)
                 return True
@@ -425,7 +434,7 @@ class LocalizationInitialPoseSetter(Node):
             if (
                 math.isfinite(best_score)
                 and best_score >= self._refine_min_score
-                and best_score > clicked_score + 0.05
+                and best_score > clicked_score + 0.15
             ):
                 self.get_logger().info(
                     f'Scan refine: ({x:.2f},{y:.2f},{math.degrees(yaw):.0f}°) -> '
@@ -434,9 +443,9 @@ class LocalizationInitialPoseSetter(Node):
                 )
                 x, y, yaw = rx, ry, ryaw
             else:
-                self.get_logger().warn(
-                    f'Scan refine skipped (clicked score={clicked_score:.2f}, '
-                    f'best={best_score:.2f}) — RViz 클릭 pose 사용'
+                self.get_logger().info(
+                    f'Scan refine skipped (clicked={clicked_score:.2f}, best={best_score:.2f}) '
+                    '— RViz/seed pose 그대로 사용'
                 )
 
         ok = self._restart_localization(x, y, yaw)
@@ -460,9 +469,9 @@ class LocalizationInitialPoseSetter(Node):
                 self._logged_wait = True
                 self.get_logger().warn(
                     '=== RViz: Fixed Frame=map ===\n'
-                    '  1) 흰 스캔 모양이 맵 벽과 비슷한 위치에 "2D Pose Estimate" 클릭\n'
-                    '  2) launch 터미널에 "Localization OK" 확인 → 스캔이 벽에 맞음\n'
-                    '  (OK 없으면 pose 미적용 — launch 터미널에서 start_trajectory 오류 확인)'
+                    '  1) 차가 있는 구간에 "2D Pose Estimate" 클릭 (방향까지)\n'
+                    '  2) "Localization OK" 확인 → 스캔이 벽에 맞는지 확인\n'
+                    '  (안 맞으면 다시 클릭. 자동 점프 없음)'
                 )
             elif not self._wait_for_rviz:
                 x, y, yaw = self._fallback_pose
@@ -501,7 +510,6 @@ def main(args=None):
     except KeyboardInterrupt:
         pass
     finally:
-        # shutdown()은 Ctrl+C 시 timer 콜백 대기로 멈출 수 있음.
         try:
             executor.remove_node(node)
         except Exception:

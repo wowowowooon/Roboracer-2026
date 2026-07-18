@@ -33,7 +33,7 @@ from path_following.track_sliding import (
 # ============================================================
 CFG = {
     "csv_path": "",
-    "reverse_track_direction": True,  # 200005 raceline: False (True면 hdg_err ~140° 반대)
+    "reverse_track_direction": False,  # 200005 raceline: False (True면 hdg_err ~140° 반대)
     "path_window_size": 140,
     "path_anchor_half_width": 120,
     "map_frame": "map",
@@ -41,21 +41,15 @@ CFG = {
     "tf_lookup_timeout_sec": 0.2,
     "local_path_topic": "/local_path",
     "planner_path_override_topic": "/planner_path_override_active",
-    "planner_speed_scale_topic": "/planner/speed_scale",
     "measured_speed_topic": "/vehicle/speed_mps",
     "measured_speed_stale_sec": 0.3,
     "measured_speed_filter_alpha": 0.25,
+    # control_node 텔레메트리: 목표속도/실측/duty 표시용 (속도명령은 control_node 전담)
+    "telemetry_topic": "/vehicle/telemetry",
+    "telemetry_stale_sec": 0.5,
     "drive_topic": "/drive",
     "tracked_path_topic": "/waypoint_tracked_path",
     "timer_period_ms": 30,
-    # /drive.speed 는 발행하지 않음(0). 실제 속도는 control_node auto_cruise.
-    "publish_drive_speed": False,
-    "nominal_speed": 1.6,
-    "use_planner_speed_scale": True,
-    "planner_speed_stale_sec": 0.75,
-    "max_drive_speed": 1.6,
-    "speed_smooth_alpha": 0.2,
-    "speed_slew_mps": 1.0,
     "max_steering_angle": 0.6981,  # ±40° — control_node / ESP S±1.0 과 동일
     "steering_smooth_alpha": 0.35,
     "wheelbase": 0.33,
@@ -66,7 +60,7 @@ CFG = {
     "stanley_heading_min_weight": 0.25,
     # 곡률 피드포워드: δ = δ_ff(κ) + Stanley. 직선용 stanley_k 는 유지.
     "enable_steer_ff": True,
-    "ff_gain": 2.0,              # δ_ff = ff_gain * ff_sign * atan(L·κ)
+    "ff_gain": 1.3,              # δ_ff = ff_gain * ff_sign * atan(L·κ)
     "ff_sign": 1.0,              # 좌우 반대면 -1.0
     "ff_lookahead_m": 0.8,       # best_i 기준 앞쪽 평균 곡률 구간 [m]
     "ff_kappa_clip": 2.5,        # |κ| 상한 [1/m] (스파이크 방지)
@@ -141,30 +135,21 @@ class StanleyWaypointFollowNode(Node):
 
         self.local_path_topic = self.get_parameter("local_path_topic").value
         self.gate_topic = self.get_parameter("planner_path_override_topic").value
-        self.speed_scale_topic = self.get_parameter("planner_speed_scale_topic").value
         self.measured_speed_topic = self.get_parameter("measured_speed_topic").value
+        self.telemetry_topic = self.get_parameter("telemetry_topic").value
         self.drive_topic = self.get_parameter("drive_topic").value
         self.tracked_path_topic = self.get_parameter("tracked_path_topic").value
 
         self.timer_period = float(self.get_parameter("timer_period_ms").value) / 1000.0
 
-        self.publish_drive_speed = param_bool(
-            self.get_parameter("publish_drive_speed").value
-        )
-        self.nominal_speed = float(self.get_parameter("nominal_speed").value)
-        _ups = self.get_parameter("use_planner_speed_scale").value
-        self.use_planner_speed_scale = param_bool(_ups)
-        self.planner_speed_stale_ns = int(
-            float(self.get_parameter("planner_speed_stale_sec").value) * 1e9
-        )
-        self.max_drive_speed = float(self.get_parameter("max_drive_speed").value)
-        self.speed_smooth_alpha = float(self.get_parameter("speed_smooth_alpha").value)
-        self.speed_slew_mps = float(self.get_parameter("speed_slew_mps").value)
         self.measured_speed_stale_ns = int(
             float(self.get_parameter("measured_speed_stale_sec").value) * 1e9
         )
         self.measured_speed_filter_alpha = float(
             self.get_parameter("measured_speed_filter_alpha").value
+        )
+        self.telemetry_stale_ns = int(
+            float(self.get_parameter("telemetry_stale_sec").value) * 1e9
         )
 
         self.max_steering = float(self.get_parameter("max_steering_angle").value)
@@ -218,15 +203,18 @@ class StanleyWaypointFollowNode(Node):
         self._planner_override_active = False
         self._planner_gate_recv_ns = 0
 
-        self._planner_speed_scale = 1.0
-        self._planner_speed_recv_ns = 0
-
         self._measured_speed_mps = 0.0
         self._filtered_speed_mps = 0.0
         self._measured_speed_recv_ns = 0
         self._measured_speed_initialized = False
 
-        self._last_speed_cmd: float | None = None
+        # control_node /vehicle/telemetry snapshot
+        self._ctrl_target_speed_mps = 0.0
+        self._ctrl_measured_speed_mps = 0.0
+        self._ctrl_vesc_duty = 0.0
+        self._ctrl_auto = False
+        self._telemetry_recv_ns = 0
+
         self._last_steering_cmd = 0.0
         self._last_heading_err = 0.0
         self._last_cte_term = 0.0
@@ -250,11 +238,12 @@ class StanleyWaypointFollowNode(Node):
             self._cb_measured_speed,
             10,
         )
-
-        if self.use_planner_speed_scale:
-            self.create_subscription(
-                Float64, self.speed_scale_topic, self._cb_speed_scale, 10
-            )
+        self.create_subscription(
+            Float64MultiArray,
+            self.telemetry_topic,
+            self._cb_vehicle_telemetry,
+            10,
+        )
 
         self.drive_pub = self.create_publisher(AckermannDriveStamped, self.drive_topic, 10)
 
@@ -289,8 +278,9 @@ class StanleyWaypointFollowNode(Node):
         self.get_logger().info(
             f"Stanley waypoint follower | CSV={self.csv_path}, "
             f"points={len(csv_points)}, reverse_track={reverse_track}, "
-            f"drive={self.drive_topic}, "
+            f"drive={self.drive_topic} (steer-only), "
             f"measured_speed={self.measured_speed_topic}, "
+            f"telemetry={self.telemetry_topic}, "
             f"stanley_k={self.stanley_k}, soft={self.stanley_softening}, "
             f"hdg_blend={self.stanley_heading_cte_blend_m:.2f}m, "
             f"steer_ff={self.enable_steer_ff} gain={self.ff_gain:.2f} "
@@ -306,9 +296,20 @@ class StanleyWaypointFollowNode(Node):
         self._planner_override_active = bool(msg.data)
         self._planner_gate_recv_ns = self.get_clock().now().nanoseconds
 
-    def _cb_speed_scale(self, msg: Float64) -> None:
-        self._planner_speed_scale = float(msg.data)
-        self._planner_speed_recv_ns = self.get_clock().now().nanoseconds
+    def _cb_vehicle_telemetry(self, msg: Float64MultiArray) -> None:
+        """control_node /vehicle/telemetry 스냅샷.
+
+        layout (control_node._publish_telemetry):
+          2 current_duty, 6 autonomous, 10 measured_speed, 11 target_speed
+        """
+        data = msg.data
+        if len(data) < 12:
+            return
+        self._ctrl_vesc_duty = float(data[2])
+        self._ctrl_auto = bool(float(data[6]) >= 0.5)
+        self._ctrl_measured_speed_mps = abs(float(data[10]))
+        self._ctrl_target_speed_mps = abs(float(data[11]))
+        self._telemetry_recv_ns = self.get_clock().now().nanoseconds
 
     def _cb_measured_speed(self, msg: Float64) -> None:
         speed = float(msg.data)
@@ -329,7 +330,13 @@ class StanleyWaypointFollowNode(Node):
         self._measured_speed_mps = speed
         self._measured_speed_recv_ns = self.get_clock().now().nanoseconds
 
-    def _get_control_speed(self, fallback_speed: float) -> Tuple[float, bool]:
+    def _telemetry_alive(self) -> bool:
+        if self._telemetry_recv_ns <= 0:
+            return False
+        now_ns = self.get_clock().now().nanoseconds
+        return now_ns - self._telemetry_recv_ns < self.telemetry_stale_ns
+
+    def _get_control_speed(self) -> Tuple[float, bool]:
         now_ns = self.get_clock().now().nanoseconds
         speed_alive = (
             self._measured_speed_recv_ns > 0
@@ -338,7 +345,9 @@ class StanleyWaypointFollowNode(Node):
         )
         if speed_alive and self._measured_speed_initialized:
             return abs(self._filtered_speed_mps), True
-        return abs(fallback_speed), False
+        if self._telemetry_alive():
+            return abs(self._ctrl_measured_speed_mps), True
+        return 0.0, False
 
     def _get_pose_map(self) -> Tuple[float, float, float] | None:
         try:
@@ -374,38 +383,6 @@ class StanleyWaypointFollowNode(Node):
 
         self._path_poses = self.track.sliding_xy(x, y)
         return "CSV_TRACKING"
-
-    def _target_speed(self, mode: str) -> float:
-        scale = 1.0
-        now_ns = self.get_clock().now().nanoseconds
-
-        if self.use_planner_speed_scale:
-            speed_alive = (
-                self._planner_speed_recv_ns > 0
-                and now_ns - self._planner_speed_recv_ns < self.planner_speed_stale_ns
-            )
-
-            if speed_alive:
-                scale = max(0.05, min(4.0, self._planner_speed_scale))
-
-        v = self.nominal_speed * scale
-        v = min(v, self.max_drive_speed)
-        return max(0.0, v)
-
-    def _smooth_speed(self, target: float) -> float:
-        if self._last_speed_cmd is None:
-            self._last_speed_cmd = target
-            return target
-
-        alpha = max(0.0, min(1.0, self.speed_smooth_alpha))
-        filtered = self._last_speed_cmd + alpha * (target - self._last_speed_cmd)
-
-        max_step = max(0.0, self.speed_slew_mps) * self.timer_period
-        dv = filtered - self._last_speed_cmd
-        dv = max(-max_step, min(max_step, dv))
-
-        self._last_speed_cmd += dv
-        return max(0.0, self._last_speed_cmd)
 
     def _stanley_control(
         self,
@@ -510,7 +487,6 @@ class StanleyWaypointFollowNode(Node):
         ff_term: float,
         kappa_used: float,
         steering: float,
-        speed_cmd: float,
         control_speed: float,
         measured_speed_alive: bool,
     ) -> None:
@@ -520,16 +496,18 @@ class StanleyWaypointFollowNode(Node):
         if self._stanley_debug_accum < self._stanley_debug_period:
             return
         self._stanley_debug_accum = 0.0
-        speed_source = "MEASURED" if measured_speed_alive else "COMMAND_FALLBACK"
+        speed_source = "MEASURED" if measured_speed_alive else "ZERO_FALLBACK"
+        tel = "OK" if self._telemetry_alive() else "STALE"
         self.get_logger().info(
             f"stanley dbg [{mode}]: cte={cte:+.3f}m "
             f"hdg_err={math.degrees(heading_error):+.1f}deg "
             f"cte_term={math.degrees(cte_term):+.1f}deg "
             f"ff={math.degrees(ff_term):+.1f}deg kappa={kappa_used:+.3f} "
             f"steer={math.degrees(steering):+.1f}deg "
-            f"speed_cmd={speed_cmd:.2f} measured={self._measured_speed_mps:.2f} "
-            f"filtered={self._filtered_speed_mps:.2f} "
-            f"control_speed={control_speed:.2f} speed_source={speed_source}"
+            f"v_tgt={self._ctrl_target_speed_mps:.2f} "
+            f"v_act={self._ctrl_measured_speed_mps:.2f} "
+            f"duty={self._ctrl_vesc_duty:+.3f} tel={tel} "
+            f"v_ctrl={control_speed:.2f} speed_source={speed_source}"
         )
 
     def _maybe_log_status(
@@ -542,7 +520,6 @@ class StanleyWaypointFollowNode(Node):
         csv_x: float,
         csv_y: float,
         cte: float,
-        speed_cmd: float,
         measured_speed: float,
         control_speed: float,
         steering: float,
@@ -569,6 +546,18 @@ class StanleyWaypointFollowNode(Node):
         if steering_raw is not None:
             raw_part = f" steer_raw={math.degrees(steering_raw):+.1f}°"
 
+        if self._telemetry_alive():
+            mode_tag = "AUTO" if self._ctrl_auto else "MANUAL"
+            speed_part = (
+                f"v_tgt={self._ctrl_target_speed_mps:.2f}m/s "
+                f"v_act={self._ctrl_measured_speed_mps:.2f}m/s "
+                f"duty={self._ctrl_vesc_duty:+.3f} ({mode_tag})"
+            )
+        else:
+            speed_part = (
+                f"v_tgt=? v_act={measured_speed:.2f}m/s duty=? (NO_CTRL_TELEM)"
+            )
+
         if mode == "LOCAL_PATH":
             px = path_x if path_x is not None else csv_x
             py = path_y if path_y is not None else csv_y
@@ -581,8 +570,7 @@ class StanleyWaypointFollowNode(Node):
                 f"cte_term={math.degrees(self._last_cte_term):+.1f}° "
                 f"ff={math.degrees(self._last_ff_term):+.1f}° "
                 f"kappa={self._last_kappa_used:+.3f} "
-                f"v_cmd={speed_cmd:.2f}m/s v_meas={measured_speed:.2f}m/s "
-                f"v_ctrl={control_speed:.2f}m/s "
+                f"{speed_part} v_ctrl={control_speed:.2f}m/s "
                 f"steer={steer_deg:+.1f}°{raw_part}"
             )
             return
@@ -594,8 +582,7 @@ class StanleyWaypointFollowNode(Node):
             f"cte_term={math.degrees(self._last_cte_term):+.1f}° "
             f"ff={math.degrees(self._last_ff_term):+.1f}° "
             f"kappa={self._last_kappa_used:+.3f} "
-            f"v_cmd={speed_cmd:.2f}m/s v_meas={measured_speed:.2f}m/s "
-            f"v_ctrl={control_speed:.2f}m/s "
+            f"{speed_part} v_ctrl={control_speed:.2f}m/s "
             f"steer={steer_deg:+.1f}° mode={mode}"
         )
 
@@ -740,14 +727,11 @@ class StanleyWaypointFollowNode(Node):
         ]
         self.stanley_debug_pub.publish(msg)
 
-    def _publish_drive(self, speed: float, steering: float) -> None:
-        # 실제 속도는 control_node. /drive 에는 조향만 (publish_drive_speed=False).
-        if self.publish_drive_speed and abs(speed) < 1e-6:
-            self._last_speed_cmd = None
-
+    def _publish_drive(self, steering: float) -> None:
+        # 속도는 control_node 전담. /drive 에는 조향만 넣는다.
         msg = AckermannDriveStamped()
         msg.header.stamp = self.get_clock().now().to_msg()
-        msg.drive.speed = float(speed) if self.publish_drive_speed else 0.0
+        msg.drive.speed = 0.0
         msg.drive.steering_angle = float(steering)
         self.drive_pub.publish(msg)
 
@@ -773,7 +757,7 @@ class StanleyWaypointFollowNode(Node):
         pose = self._get_pose_map()
 
         if pose is None:
-            self._publish_drive(0.0, 0.0)
+            self._publish_drive(0.0)
             self._maybe_log_status(
                 pose_ok=False,
                 x=0.0,
@@ -782,7 +766,6 @@ class StanleyWaypointFollowNode(Node):
                 csv_x=0.0,
                 csv_y=0.0,
                 cte=0.0,
-                speed_cmd=0.0,
                 measured_speed=self._filtered_speed_mps,
                 control_speed=0.0,
                 steering=0.0,
@@ -796,7 +779,7 @@ class StanleyWaypointFollowNode(Node):
         mode = self._select_mode_and_path(x, y)
 
         if mode == "STOP" or len(self._path_poses) < 2:
-            self._publish_drive(0.0, 0.0)
+            self._publish_drive(0.0)
             self._maybe_log_status(
                 pose_ok=True,
                 x=x,
@@ -805,7 +788,6 @@ class StanleyWaypointFollowNode(Node):
                 csv_x=csv_x,
                 csv_y=csv_y,
                 cte=0.0,
-                speed_cmd=0.0,
                 measured_speed=self._filtered_speed_mps,
                 control_speed=0.0,
                 steering=0.0,
@@ -815,9 +797,7 @@ class StanleyWaypointFollowNode(Node):
 
         self._publish_tracked_path()
 
-        target_speed = self._target_speed(mode)
-        speed_cmd = self._smooth_speed(target_speed)
-        control_speed, measured_speed_alive = self._get_control_speed(speed_cmd)
+        control_speed, measured_speed_alive = self._get_control_speed()
 
         (
             steering_raw,
@@ -846,7 +826,6 @@ class StanleyWaypointFollowNode(Node):
             ff_term,
             kappa_used,
             steering_raw,
-            speed_cmd,
             control_speed,
             measured_speed_alive,
         )
@@ -885,7 +864,7 @@ class StanleyWaypointFollowNode(Node):
             kappa_used,
         )
 
-        self._publish_drive(speed_cmd, steering_cmd)
+        self._publish_drive(steering_cmd)
 
         self._maybe_log_status(
             pose_ok=True,
@@ -895,7 +874,6 @@ class StanleyWaypointFollowNode(Node):
             csv_x=csv_x,
             csv_y=csv_y,
             cte=cte,
-            speed_cmd=speed_cmd,
             measured_speed=self._filtered_speed_mps,
             control_speed=control_speed,
             steering=steering_cmd,

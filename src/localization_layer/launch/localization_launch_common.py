@@ -263,8 +263,8 @@ def build_localization_cartographer_nodes(context):
                 '-configuration_directory', config_dir,
                 '-configuration_basename', config_basename,
                 '-load_state_filename', pbstream_filename,
-                '-load_frozen_state', 'true',
-                '-start_trajectory_with_default_topics', 'false',
+                '-load_frozen_state=true',
+                '-start_trajectory_with_default_topics=false',
             ],
             remappings=[
                 ('imu', imu_topic_str),
@@ -294,6 +294,9 @@ def build_localization_cartographer_nodes(context):
                             'initial_pose_x': initial_pose_x,
                             'initial_pose_y': initial_pose_y,
                             'initial_pose_yaw': initial_pose_yaw,
+                            # OFF: auto refine/relock was snapping into unknown / outside walls.
+                            # Cartographer matches pbstream; rosmap is only for RViz.
+                            'refine_with_scan_matching': False,
                         }],
                     ),
                 ],

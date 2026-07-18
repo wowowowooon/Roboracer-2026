@@ -72,8 +72,8 @@ CFG = {
     "speed_topic": "/vehicle/speed_mps",
     # AUTO closed-loop speed control (/drive.speed is target speed [m/s])
     "max_auto_duty": 0.3, # 0.2 최대 5당 0.1
-    "max_target_speed_mps": 1.0, # m/s 속도
-    "speed_ff_duty_per_mps": 3.0 / 14.2,  #분자를 5당 1
+    "max_target_speed_mps": 4.0, # m/s 속도 
+    "speed_ff_duty_per_mps": 5.0 / 14.2,  #듀티가 0.05늘때마다 1늘리기
     "auto_duty_output_sign": -1.0,  # 이 차량은 전진 목표속도 -> 음수 VESC raw duty
     "speed_kp": 0.04,
     "speed_ki": 0.015,

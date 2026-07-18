@@ -81,7 +81,7 @@ def generate_launch_description():
     maps_dir = '/home/nvidia/f1tenth_ajou/maps'
     default_pbstream = os.path.join(
         maps_dir,
-        'cartographer_map_20260718_203831.pbstream',
+        'cartographer_map_20260719_001538.pbstream',
     )
 
     return LaunchDescription([
@@ -115,7 +115,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             'cartographer_startup_delay_sec',
             default_value='6.0',
-            description='Delay after sensor start before Cartographer (IMU must publish first)',
+            description='Delay after sensor start before Cartographer',
         ),
         DeclareLaunchArgument(
             'enable_initial_pose_reset',
@@ -158,10 +158,10 @@ def generate_launch_description():
             description='Launch RViz on this machine (needs DISPLAY; use false over SSH)',
         ),
         LogInfo(msg=(
-            '=== 210518 맵 localization (루프 클로저 ON, 자동 시작) ===\n'
+            '=== 001538 맵 localization (LiDAR-only) ===\n'
             '  ros2 launch localization_layer cartographer_localization_launch.py\n'
-            '  → 매핑 원점(_origin.yaml)에서 자동 Localization OK\n'
-            '  수동 보정: wait_for_rviz_initial_pose:=true + RViz 2D Pose Estimate'
+            '  → origin에서 자동 start_trajectory (Localization OK 확인)\n'
+            '  안 맞으면: wait_for_rviz_initial_pose:=true + RViz 2D Pose Estimate'
         )),
         OpaqueFunction(function=_launch_setup),
     ])
