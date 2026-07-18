@@ -539,7 +539,7 @@ def build_arg_parser():
     parser.add_argument("--loop-hz", default=50.0, type=float, help="control loop rate")
     parser.add_argument("--log-hz", default=20.0, type=float, help="CSV log rate")
     parser.add_argument("--print-hz", default=1.0, type=float, help="terminal print rate")
-    parser.add_argument("--max-duty", default=0.20, type=float, help="absolute duty clamp")
+    parser.add_argument("--max-duty", default=0.50, type=float, help="absolute duty clamp")
     parser.add_argument("--ramp-step", default=0.002, type=float, help="duty change per loop")
     # 3974-2500KV RC car sensored BLDC is assumed to be 4-pole, so pole_pairs=2.
     # Verify with motor spec or wheel RPM test.
@@ -763,4 +763,4 @@ if __name__ == "__main__":
 
 
 # Example:
-# python3 vesc_interactive_duty_logger.py --port /dev/ttyACM0 --baud 115200 --max-duty 0.20 --pole-pairs 2 --gear-ratio 12 --wheel-diameter 0.10
+# python3 vesc_interactive_duty_logger.py --port /dev/ttyACM0 --baud 115200 --max-duty 0.50 --pole-pairs 2 --gear-ratio 12 --wheel-diameter 0.10
