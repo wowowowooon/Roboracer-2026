@@ -733,6 +733,42 @@ def estimate_track_perimeter_px(free: np.ndarray) -> float:
     return float(2.0 * np.sqrt(np.pi * area))
 
 
+def _path_radial_stats(path: list) -> tuple[float, float, float]:
+    pts = np.array(path, dtype=float)
+    cen = pts.mean(axis=0)
+    radii = np.linalg.norm(pts - cen, axis=1)
+    return (
+        float(np.median(radii)),
+        float(np.percentile(radii, 90)),
+        float(np.max(radii)),
+    )
+
+
+def _spur_excursion_px(path: list) -> float:
+    """가까운 점이 경로상 멀리 떨어져 있으면 그 사이 lobe(꼬임/스퍼) 깊이."""
+    if len(path) < 20:
+        return 0.0
+    pts = np.array(path, dtype=float)
+    n = len(pts)
+    worst = 0.0
+    max_span = min(80, n // 3)
+    for i in range(n):
+        for span in range(10, max_span):
+            j = (i + span) % n
+            if float(np.linalg.norm(pts[i] - pts[j])) > 3.5:
+                continue
+            if j > i:
+                mid = pts[i : j + 1]
+            else:
+                mid = np.vstack([pts[i:], pts[: j + 1]])
+            if len(mid) < 5:
+                continue
+            dmax = float(np.max(np.linalg.norm(mid - pts[i], axis=1)))
+            if dmax > worst:
+                worst = dmax
+    return worst
+
+
 def _score_centerline_candidate(
     path: list,
     free: np.ndarray,
@@ -762,11 +798,23 @@ def _score_centerline_candidate(
     min_len = 0.45 * estimate_track_perimeter_px(free)
     if length < min_len:
         return -1e9
+
+    # 루프클로저 스퍼/꼬임: 긴 경로·바깥 tip·out-and-back lobe 를 강하게 감점
+    median_r, p90_r, max_r = _path_radial_stats(path)
+    target_len = max(min_len, 2.0 * np.pi * median_r)
+    length_term = min(length, target_len * 1.08) * 0.20
+    excess_len = max(0.0, length - target_len * 1.08)
+    tip_pen = max(0.0, max_r - p90_r) * 18.0
+    spur_pen = max(0.0, _spur_excursion_px(path) - 8.0) * 12.0
+
     return (
         min_clear * 12.0
         + mean_clear * 8.0
-        + length * 0.25
-        + len(path) * 0.05
+        + length_term
+        - excess_len * 0.55
+        - tip_pen
+        - spur_pen
+        + len(path) * 0.02
     )
 
 
@@ -864,14 +912,37 @@ def ridge_medial_thin(free: np.ndarray, use_ridge: bool = True) -> np.ndarray:
     return sk
 
 
+def finalize_centerline_path(
+    path: list,
+    free: np.ndarray,
+    *,
+    step_px: float,
+    smooth_window: int,
+) -> list:
+    """리샘플·스무딩 후 self-intersection 이 생기면 스무딩을 단계적으로 줄인다."""
+    if len(path) < 3:
+        return path
+    resampled = resample_closed_polyline_rc(path, step_px)
+    if smooth_window <= 0:
+        return resampled
+    for win in range(smooth_window, -1, -1):
+        cand = smooth_ma(resampled, win) if win > 0 else resampled
+        if count_self_intersections(cand, closed=True) == 0:
+            if count_segments_crossing_occupied(cand, free, closed=True) == 0:
+                return cand
+    return resampled
+
+
 def choose_best_centerline(
     free: np.ndarray,
     *,
     use_ridge: bool = True,
     include_full_skeleton: bool = True,
     img_gray: np.ndarray | None = None,
+    step_px: float = 1.0,
+    smooth_window: int = 3,
 ) -> tuple[list, str]:
-    """여러 방법 후보 중 자기교차·비주행 침범 없고 벽 이격이 큰 폐루프 선택."""
+    """여러 방법 후보 중 자기교차·스퍼·비주행 침범 없는 폐루프 선택."""
     dist_to_wall = distance_transform_edt(free > 0)
     candidates: list[tuple[str, list]] = []
 
@@ -900,10 +971,14 @@ def choose_best_centerline(
     best_name = ""
     for name, raw in candidates:
         path = refine_centerline_path(raw, free, dist_to_wall, min_clear_px=1.5)
-        score = _score_centerline_candidate(path, free, dist_to_wall)
+        # 최종 출력과 동일하게 리샘플·스무딩한 뒤 점수 (스무딩으로 꼬이는 후보 배제)
+        finalized = finalize_centerline_path(
+            path, free, step_px=step_px, smooth_window=smooth_window
+        )
+        score = _score_centerline_candidate(finalized, free, dist_to_wall)
         if score > best_score:
             best_score = score
-            best_path = path
+            best_path = finalized
             best_name = name
 
     if best_path:
@@ -1031,7 +1106,7 @@ def main() -> int:
     script_dir = os.path.dirname(os.path.abspath(__file__))
     ws_root = os.path.abspath(os.path.join(script_dir, "..", "..", ".."))
     default_map = os.path.join(
-        ws_root, "maps", "cartographer_map_20260716_195826_rosmap.yaml"
+        ws_root, "maps", "cartographer_map_20260718_203831_rosmap.yaml"
     )
     parser.add_argument(
         "--map",
@@ -1164,21 +1239,23 @@ def main() -> int:
     skel = ridge_medial_thin(free, use_ridge=not args.no_ridge)
     print(f"  skeleton pixels={int(skel.sum())}")
 
+    step_px = max(0.5, args.resample_step_m / resolution)
     path_rc, method = choose_best_centerline(
         free,
         use_ridge=not args.no_ridge,
         include_full_skeleton=True,
         img_gray=img_gray,
+        step_px=step_px,
+        smooth_window=args.smooth_window,
     )
     if len(path_rc) < 3:
         print("ERROR: could not extract a closed loop.", file=sys.stderr)
         return 1
-    print(f"  chosen method={method}, points={len(path_rc)}, self_ix={count_self_intersections(path_rc)}")
-
-    step_px = max(0.5, args.resample_step_m / resolution)
-    path_rc = resample_closed_polyline_rc(path_rc, step_px)
-    if args.smooth_window > 0:
-        path_rc = smooth_ma(path_rc, args.smooth_window)
+    print(
+        f"  chosen method={method}, points={len(path_rc)}, "
+        f"self_ix={count_self_intersections(path_rc)}, "
+        f"spur={_spur_excursion_px(path_rc):.1f}px"
+    )
 
     world = [
         pixel_to_world(r, c, height, resolution, ox, oy) for r, c in path_rc

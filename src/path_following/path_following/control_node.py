@@ -40,7 +40,7 @@ CFG = {
     # Stanley max_drive_speed / max_steering_angle 과 맞추면 1:1 스케일
     "max_speed_mps": 5.0,
     "max_steering_angle_rad": 0.6981,  # ±40° — ESP normToAngle: S±1 → 50°/130°
-    "max_duty": 0.20,           # VESC duty 상한 20% (송신기 풀스틱 = 최대 20%)
+    "max_duty": 0.15,           # MANUAL VESC duty 상한 50% (송신기 풀스틱)
     "speed_scale": 1.0,         # 추가 감쇠 (1.0=끔)
     "min_move_duty": 0.08,      # 정지마찰 극복용 최소 duty (speed>threshold 일 때)
     "min_move_speed_mps": 0.10,
@@ -71,9 +71,9 @@ CFG = {
     "telemetry_topic": "/vehicle/telemetry",  # drive_monitor.py 구독
     "speed_topic": "/vehicle/speed_mps",
     # AUTO closed-loop speed control (/drive.speed is target speed [m/s])
-    "max_auto_duty": 0.10, # 0.2 최대 5당 0.1
+    "max_auto_duty": 0.3, # 0.2 최대 5당 0.1
     "max_target_speed_mps": 1.0, # m/s 속도
-    "speed_ff_duty_per_mps": 1.0 / 14.2,  #분자를 5당 1
+    "speed_ff_duty_per_mps": 3.0 / 14.2,  #분자를 5당 1
     "auto_duty_output_sign": -1.0,  # 이 차량은 전진 목표속도 -> 음수 VESC raw duty
     "speed_kp": 0.04,
     "speed_ki": 0.015,

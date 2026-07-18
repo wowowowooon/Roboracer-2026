@@ -57,6 +57,15 @@ CSV_COLUMNS = [
     "fault_code",
     "duty_limit_active",
     "limit_reason",
+    "cross_track_error_m",
+    "heading_error_rad",
+    "heading_term_rad",
+    "cross_track_term_rad",
+    "stanley_steering_sum_rad",
+    "raw_steering_cmd_rad",
+    "filtered_or_limited_steering_cmd_rad",
+    "stanley_speed_mps",
+    "closest_path_index",
 ]
 
 TOPIC_KEYS = ("vesc", "vehicle", "rc", "safety")
@@ -132,6 +141,9 @@ class CsvLoggerNode(Node):
         self._row_count = 0
         self._last_vehicle_speed = None
         self._last_vehicle_stamp = None
+        # Replaced as one object by the callback; the writer never sees a
+        # partially updated Stanley control-cycle snapshot.
+        self._latest_stanley: Dict[str, float] | None = None
 
         output_root = os.path.abspath(
             os.path.expanduser(str(self.get_parameter("output_root").value))
@@ -163,6 +175,9 @@ class CsvLoggerNode(Node):
         )
         self.create_subscription(
             Float64MultiArray, "/safety/state", self._on_safety_state, 10
+        )
+        self.create_subscription(
+            Float64MultiArray, "/stanley/debug", self._on_stanley_debug, 10
         )
         if bool(self.get_parameter("subscribe_legacy_telemetry").value):
             self.create_subscription(
@@ -299,6 +314,26 @@ class CsvLoggerNode(Node):
         # Legacy command fallback. Speed is not duty, so do not mix them.
         self._update(target_steering=float(msg.drive.steering_angle))
 
+    def _on_stanley_debug(self, msg: Float64MultiArray) -> None:
+        """Atomically cache one /stanley/debug control-cycle snapshot.
+
+        Array units are m, rad, rad, rad, rad, rad, rad, m/s, index.
+        """
+        if len(msg.data) < 9:
+            self.get_logger().warning(
+                f"Ignoring /stanley/debug with {len(msg.data)} values; expected 9"
+            )
+            return
+        values = [float(value) for value in msg.data[:9]]
+        if not all(math.isfinite(value) for value in values):
+            return
+        self._latest_stanley = dict(
+            zip(
+                CSV_COLUMNS[-9:],
+                values,
+            )
+        )
+
     def _on_legacy_telemetry(self, msg: Float64MultiArray) -> None:
         """Adapt control_node's existing /vehicle/telemetry array."""
         d: List[float] = list(msg.data)
@@ -364,6 +399,9 @@ class CsvLoggerNode(Node):
             return
 
         row = dict(self._latest)
+        stanley = self._latest_stanley
+        if stanley is not None:
+            row.update(stanley)
         row["time_sec"] = now_monotonic - self._start_monotonic
         row["ros_time_sec"] = self.get_clock().now().nanoseconds * 1e-9
         for key in TOPIC_KEYS:
@@ -404,6 +442,7 @@ class CsvLoggerNode(Node):
             "  - /rc/state",
             "  - /control/state",
             "  - /safety/state",
+            "  - /stanley/debug       # [m, rad, rad, rad, rad, rad, rad, m/s, index]",
             "  - /vehicle/telemetry  # legacy fallback",
             "  - /drive              # legacy fallback",
         ]

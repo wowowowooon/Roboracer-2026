@@ -446,12 +446,40 @@ ros2 run path_following drive_monitor
 
 젯슨 실제 확인
 ros2 launch foxglove_bridge foxglove_bridge_launch.xml port:=8765
-ws://192.168.137.161:8765
+
+
+ws://192.168.137.20:8765
 
 로거 노드
 source /opt/ros/humble/setup.bash
 source /home/nvidia/f1tenth_ajou/install/setup.bash
 ros2 launch path_following csv_logger_launch.py
+
+
+맵핑
+cd /home/nvidia/f1tenth_ajou
+source install/setup.bash
+ros2 launch localization_layer cartographer_mapping_launch.py
+
+
+Stanley 제어 텔레메트리는 `/stanley/debug` (`std_msgs/Float64MultiArray`)로
+각 제어 주기마다 한 메시지로 발행된다. 배열 순서와 단위는 다음과 같다.
+
+0. `cross_track_error_m` [m]
+1. `heading_error_rad` [rad]
+2. `heading_term_rad` [rad]
+3. `cross_track_term_rad` [rad]
+4. `stanley_steering_sum_rad` [rad, saturation 전]
+5. `raw_steering_cmd_rad` [rad, Stanley saturation 후]
+6. `filtered_or_limited_steering_cmd_rad` [rad, smoothing/rate limit 후]
+7. `stanley_speed_mps` [m/s, Stanley 분모에 사용]
+8. `closest_path_index` [현재 선택된 경로 배열의 segment index]
+
+
+직진 노드
+source /opt/ros/humble/setup.bash
+source /home/nvidia/f1tenth_ajou/install/setup.bash
+ros2 run path_following straight_drive_publisher
 
 
 
@@ -488,4 +516,3 @@ cd /home/nvidia/f1tenth_ajou
 git add src/ README.md .gitignore
 git commit -m "path_following 수정"
 git push roboracer
-

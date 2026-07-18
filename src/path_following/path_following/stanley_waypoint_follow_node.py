@@ -3,7 +3,7 @@
 Stanley controller waypoint follower — CSV 슬라이딩 + /local_path override.
 
 Pure Pursuit 버전(waypoint_follow_node)과 별도 executable.
-기본 CSV·TF·속도 스케일·회피 게이트 구조는 동일, 조향만 Stanley.
+기본 CSV·TF·속도 스케일·회피 게이트 구조는 동일, 조향은 Stanley + 곡률 FF.
 """
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ from rclpy.node import Node
 from ackermann_msgs.msg import AckermannDriveStamped
 from geometry_msgs.msg import PoseStamped
 from nav_msgs.msg import Path
-from std_msgs.msg import Bool, Float64, String
+from std_msgs.msg import Bool, Float64, Float64MultiArray, String
 from tf2_ros import Buffer, TransformException, TransformListener
 
 from path_following.track_sliding import (
@@ -59,11 +59,17 @@ CFG = {
     "max_steering_angle": 0.6981,  # ±40° — control_node / ESP S±1.0 과 동일
     "steering_smooth_alpha": 0.35,
     "wheelbase": 0.33,
-    "stanley_k": 1.5,
+    "stanley_k": 0.5,
     "stanley_softening": 0.12,
     # |cte|가 클수록 heading_error 가중치↓ (직선 평행주행 시 상쇄 방지)
     "stanley_heading_cte_blend_m": 0.08,
     "stanley_heading_min_weight": 0.25,
+    # 곡률 피드포워드: δ = δ_ff(κ) + Stanley. 직선용 stanley_k 는 유지.
+    "enable_steer_ff": True,
+    "ff_gain": 2.0,              # δ_ff = ff_gain * ff_sign * atan(L·κ)
+    "ff_sign": 1.0,              # 좌우 반대면 -1.0
+    "ff_lookahead_m": 0.8,       # best_i 기준 앞쪽 평균 곡률 구간 [m]
+    "ff_kappa_clip": 2.5,        # |κ| 상한 [1/m] (스파이크 방지)
     "stanley_debug_log_hz": 2.0,
     "status_log_hz": 2.0,
     "planner_gate_stale_sec": 0.15,  # override False 미수신 시 빠르게 CSV 복귀
@@ -176,6 +182,11 @@ class StanleyWaypointFollowNode(Node):
             0.0,
             min(1.0, float(self.get_parameter("stanley_heading_min_weight").value)),
         )
+        self.enable_steer_ff = param_bool(self.get_parameter("enable_steer_ff").value)
+        self.ff_gain = float(self.get_parameter("ff_gain").value)
+        self.ff_sign = float(self.get_parameter("ff_sign").value)
+        self.ff_lookahead_m = max(0.0, float(self.get_parameter("ff_lookahead_m").value))
+        self.ff_kappa_clip = max(0.0, float(self.get_parameter("ff_kappa_clip").value))
 
         self.gate_stale_ns = int(
             float(self.get_parameter("planner_gate_stale_sec").value) * 1e9
@@ -219,6 +230,8 @@ class StanleyWaypointFollowNode(Node):
         self._last_steering_cmd = 0.0
         self._last_heading_err = 0.0
         self._last_cte_term = 0.0
+        self._last_ff_term = 0.0
+        self._last_kappa_used = 0.0
         dbg_hz = max(0.0, float(self.get_parameter("stanley_debug_log_hz").value))
         self._stanley_debug_period = 1.0 / dbg_hz if dbg_hz > 0.0 else 0.0
         self._stanley_debug_accum = 0.0
@@ -245,12 +258,25 @@ class StanleyWaypointFollowNode(Node):
 
         self.drive_pub = self.create_publisher(AckermannDriveStamped, self.drive_topic, 10)
 
-        # New publishers for CSV logging
-        self.raw_steer_cmd_pub = self.create_publisher(Float64, "/control/raw_steer_cmd", 10)
-        self.filtered_steer_cmd_pub = self.create_publisher(Float64, "/control/filtered_steer_cmd", 10)
-        self.cte_pub = self.create_publisher(Float64, "/control/cross_track_error", 10)
-        self.heading_error_pub = self.create_publisher(Float64, "/control/heading_error", 10)
-        self.path_curvature_pub = self.create_publisher(Float64, "/control/path_curvature", 10)
+        self.stanley_debug_pub = self.create_publisher(
+            Float64MultiArray, "/stanley/debug", 10
+        )
+        # Existing scalar diagnostics retained for current consumers.
+        self.raw_steer_cmd_pub = self.create_publisher(
+            Float64, "/control/raw_steer_cmd", 10
+        )
+        self.filtered_steer_cmd_pub = self.create_publisher(
+            Float64, "/control/filtered_steer_cmd", 10
+        )
+        self.cte_pub = self.create_publisher(
+            Float64, "/control/cross_track_error", 10
+        )
+        self.heading_error_pub = self.create_publisher(
+            Float64, "/control/heading_error", 10
+        )
+        self.path_curvature_pub = self.create_publisher(
+            Float64, "/control/path_curvature", 10
+        )
 
         self.tracked_path_pub = None
         if self.publish_tracked_path:
@@ -267,6 +293,9 @@ class StanleyWaypointFollowNode(Node):
             f"measured_speed={self.measured_speed_topic}, "
             f"stanley_k={self.stanley_k}, soft={self.stanley_softening}, "
             f"hdg_blend={self.stanley_heading_cte_blend_m:.2f}m, "
+            f"steer_ff={self.enable_steer_ff} gain={self.ff_gain:.2f} "
+            f"sign={self.ff_sign:.1f} lookahead={self.ff_lookahead_m:.2f}m "
+            f"kappa_clip={self.ff_kappa_clip:.2f}, "
             f"steering_rate_limit={self.steering_rate_limit_radps:.2f} rad/s"
         )
 
@@ -386,9 +415,9 @@ class StanleyWaypointFollowNode(Node):
         yaw: float,
         speed: float,
         mode: str,
-    ) -> Tuple[float, float, float, float]:
+    ) -> Tuple[float, float, float, float, float, float, float, int]:
         if len(path) < 2:
-            return 0.0, 0.0, x, y, 0.0, 0.0
+            return 0.0, 0.0, x, y, 0.0, 0.0, 0.0, 0, 0.0, 0.0
 
         # Ackermann 조향은 전륜 기준 — PP와 동일 wheelbase
         px = x + self.wheelbase * math.cos(yaw)
@@ -440,13 +469,37 @@ class StanleyWaypointFollowNode(Node):
         # 조향 부호 (실차 ESP 서보 실측과 동일, 추가 반전 없음):
         #   +steering = 좌, -steering = 우
         # cte>0(경로 오른쪽) → 좌회전(+)으로 복귀
-        steering = hdg_w * heading_error + cte_term
+        heading_term = hdg_w * heading_error
+
+        kappa_used = 0.0
+        ff_term = 0.0
+        if self.enable_steer_ff:
+            kappa_used = self._lookahead_curvature(path, best_i)
+            # 자전거 모델: δ_ff = atan(L·κ). +κ(좌로 휨) → +조향(좌).
+            ff_term = (
+                self.ff_gain
+                * self.ff_sign
+                * math.atan(self.wheelbase * kappa_used)
+            )
+
+        steering = ff_term + heading_term + cte_term
 
         # Stanley 조향값은 원형 각도가 아니라 bounded control input 이므로
         # wrap_pi()로 다시 감싸면 반응이 과하게 휘어질 수 있다.
         steering = max(-self.max_steering, min(self.max_steering, steering))
 
-        return steering, cte, best_qx, best_qy, heading_error, cte_term
+        return (
+            steering,
+            cte,
+            best_qx,
+            best_qy,
+            heading_error,
+            heading_term,
+            cte_term,
+            best_i,
+            ff_term,
+            kappa_used,
+        )
 
     def _maybe_log_stanley_debug(
         self,
@@ -454,6 +507,8 @@ class StanleyWaypointFollowNode(Node):
         cte: float,
         heading_error: float,
         cte_term: float,
+        ff_term: float,
+        kappa_used: float,
         steering: float,
         speed_cmd: float,
         control_speed: float,
@@ -470,6 +525,7 @@ class StanleyWaypointFollowNode(Node):
             f"stanley dbg [{mode}]: cte={cte:+.3f}m "
             f"hdg_err={math.degrees(heading_error):+.1f}deg "
             f"cte_term={math.degrees(cte_term):+.1f}deg "
+            f"ff={math.degrees(ff_term):+.1f}deg kappa={kappa_used:+.3f} "
             f"steer={math.degrees(steering):+.1f}deg "
             f"speed_cmd={speed_cmd:.2f} measured={self._measured_speed_mps:.2f} "
             f"filtered={self._filtered_speed_mps:.2f} "
@@ -523,6 +579,8 @@ class StanleyWaypointFollowNode(Node):
                 f"cte={cte:+.2f}m "
                 f"hdg_err={math.degrees(self._last_heading_err):+.1f}° "
                 f"cte_term={math.degrees(self._last_cte_term):+.1f}° "
+                f"ff={math.degrees(self._last_ff_term):+.1f}° "
+                f"kappa={self._last_kappa_used:+.3f} "
                 f"v_cmd={speed_cmd:.2f}m/s v_meas={measured_speed:.2f}m/s "
                 f"v_ctrl={control_speed:.2f}m/s "
                 f"steer={steer_deg:+.1f}°{raw_part}"
@@ -534,6 +592,8 @@ class StanleyWaypointFollowNode(Node):
             f"csv=({csv_x:.2f}, {csv_y:.2f}) lat={lat:.2f}m cte={cte:+.2f}m "
             f"hdg_err={math.degrees(self._last_heading_err):+.1f}° "
             f"cte_term={math.degrees(self._last_cte_term):+.1f}° "
+            f"ff={math.degrees(self._last_ff_term):+.1f}° "
+            f"kappa={self._last_kappa_used:+.3f} "
             f"v_cmd={speed_cmd:.2f}m/s v_meas={measured_speed:.2f}m/s "
             f"v_ctrl={control_speed:.2f}m/s "
             f"steer={steer_deg:+.1f}° mode={mode}"
@@ -554,49 +614,61 @@ class StanleyWaypointFollowNode(Node):
         self._last_steering_cmd = out
         return out
 
-    def _compute_path_curvature(self, path: List[Tuple[float, float]], nearest_idx: int) -> float:
-        """
-        경로의 곡률을 계산한다. nearest_idx 근처 3개 점을 사용.
-
-        부호: 양수 = 좌회전, 음수 = 우회전 (전진 방향 기준)
-        """
+    def _compute_path_curvature(
+        self, path: List[Tuple[float, float]], nearest_idx: int
+    ) -> float:
+        """Calculate signed path curvature near nearest_idx (3-point)."""
         if len(path) < 3 or nearest_idx < 0 or nearest_idx >= len(path) - 2:
-            return 0.0  # 곡률 계산 불가능
-
-        # nearest_idx, nearest_idx+1, nearest_idx+2 사용
-        p0 = path[nearest_idx]
-        p1 = path[nearest_idx + 1]
-        p2 = path[nearest_idx + 2]
-
-        x0, y0 = p0
-        x1, y1 = p1
-        x2, y2 = p2
-
-        # 점들 사이 거리
-        dx1 = x1 - x0
-        dy1 = y1 - y0
+            return 0.0
+        x0, y0 = path[nearest_idx]
+        x1, y1 = path[nearest_idx + 1]
+        x2, y2 = path[nearest_idx + 2]
+        dx1, dy1 = x1 - x0, y1 - y0
+        dx2, dy2 = x2 - x1, y2 - y1
         d1 = math.sqrt(dx1 * dx1 + dy1 * dy1)
-
-        dx2 = x2 - x1
-        dy2 = y2 - y1
         d2 = math.sqrt(dx2 * dx2 + dy2 * dy2)
-
         if d1 < 1e-6 or d2 < 1e-6:
             return 0.0
-
-        # yaw 각도
         yaw1 = math.atan2(dy1, dx1)
         yaw2 = math.atan2(dy2, dx2)
-
-        # yaw 변화
         dyaw = wrap_pi(yaw2 - yaw1)
         avg_dist = (d1 + d2) / 2.0
-
         if avg_dist < 1e-6:
             return 0.0
+        return dyaw / avg_dist
 
-        curvature = dyaw / avg_dist  # 1/m
-        return curvature
+    def _lookahead_curvature(
+        self, path: List[Tuple[float, float]], nearest_idx: int
+    ) -> float:
+        """best_i 부터 앞쪽 ff_lookahead_m 구간의 평균 signed curvature."""
+        if len(path) < 3 or nearest_idx < 0:
+            return 0.0
+
+        samples: List[float] = []
+        traveled = 0.0
+        i = nearest_idx
+        max_i = len(path) - 3
+
+        while i <= max_i:
+            kappa = self._compute_path_curvature(path, i)
+            samples.append(kappa)
+
+            x0, y0 = path[i]
+            x1, y1 = path[i + 1]
+            traveled += math.hypot(x1 - x0, y1 - y0)
+            if traveled >= self.ff_lookahead_m:
+                break
+            i += 1
+
+        if not samples:
+            return 0.0
+
+        kappa_used = sum(samples) / float(len(samples))
+        if self.ff_kappa_clip > 0.0:
+            kappa_used = max(
+                -self.ff_kappa_clip, min(self.ff_kappa_clip, kappa_used)
+            )
+        return kappa_used
 
     def _publish_control_diagnostics(
         self,
@@ -604,11 +676,9 @@ class StanleyWaypointFollowNode(Node):
         filtered_steer: float,
         cte: float,
         heading_err: float,
-        path: List[Tuple[float, float]],
-        nearest_idx: int,
+        kappa_used: float,
     ) -> None:
-        """현재 Stanley 제어 진단 값들을 topic으로 publish."""
-        # Normalize steering to [-1, 1] based on max_steering
+        """Publish the existing normalized/scalar control diagnostics."""
         if abs(self.max_steering) > 1e-6:
             raw_norm = raw_steer / self.max_steering
             filtered_norm = filtered_steer / self.max_steering
@@ -619,19 +689,56 @@ class StanleyWaypointFollowNode(Node):
         msg = Float64()
         msg.data = float(raw_norm)
         self.raw_steer_cmd_pub.publish(msg)
-
         msg.data = float(filtered_norm)
         self.filtered_steer_cmd_pub.publish(msg)
-
         msg.data = float(cte)
         self.cte_pub.publish(msg)
-
         msg.data = float(heading_err)
         self.heading_error_pub.publish(msg)
-
-        curvature = self._compute_path_curvature(path, nearest_idx)
-        msg.data = float(curvature)
+        msg.data = float(kappa_used)
         self.path_curvature_pub.publish(msg)
+
+    def _publish_stanley_debug(
+        self,
+        cte: float,
+        heading_error: float,
+        heading_term: float,
+        cross_track_term: float,
+        stanley_fb_sum: float,
+        raw_steering: float,
+        filtered_or_limited_steering: float,
+        speed: float,
+        closest_path_index: int,
+        kappa_used: float,
+        ff_term: float,
+    ) -> None:
+        """Publish one coherent control-cycle snapshot.
+
+        Float64MultiArray layout and units:
+          0 cte [m], 1 heading error [rad], 2 heading term [rad],
+          3 cross-track term [rad], 4 Stanley FB sum (hdg+cte) [rad],
+          5 raw command after saturation (FF+FB) [rad],
+          6 command after smoothing/rate limiting [rad], 7 speed [m/s],
+          8 closest path segment index [-],
+          9 kappa_used [1/m], 10 delta_ff [rad], 11 total_before_sat [rad].
+        """
+        total_before_sat = ff_term + stanley_fb_sum
+        msg = Float64MultiArray()
+        msg.data = [
+            float(cte),
+            float(heading_error),
+            float(heading_term),
+            float(cross_track_term),
+            float(stanley_fb_sum),
+            float(raw_steering),
+            float(filtered_or_limited_steering),
+            float(speed),
+            float(closest_path_index),
+            float(kappa_used),
+            float(ff_term),
+            float(total_before_sat),
+        ]
+        self.stanley_debug_pub.publish(msg)
 
     def _publish_drive(self, speed: float, steering: float) -> None:
         # 실제 속도는 control_node. /drive 에는 조향만 (publish_drive_speed=False).
@@ -712,7 +819,18 @@ class StanleyWaypointFollowNode(Node):
         speed_cmd = self._smooth_speed(target_speed)
         control_speed, measured_speed_alive = self._get_control_speed(speed_cmd)
 
-        steering_raw, cte, path_x, path_y, heading_err, cte_term = self._stanley_control(
+        (
+            steering_raw,
+            cte,
+            path_x,
+            path_y,
+            heading_err,
+            heading_term,
+            cte_term,
+            closest_path_index,
+            ff_term,
+            kappa_used,
+        ) = self._stanley_control(
             self._path_poses,
             x,
             y,
@@ -725,6 +843,8 @@ class StanleyWaypointFollowNode(Node):
             cte,
             heading_err,
             cte_term,
+            ff_term,
+            kappa_used,
             steering_raw,
             speed_cmd,
             control_speed,
@@ -732,33 +852,37 @@ class StanleyWaypointFollowNode(Node):
         )
         self._last_heading_err = heading_err
         self._last_cte_term = cte_term
+        self._last_ff_term = ff_term
+        self._last_kappa_used = kappa_used
 
         steering_smoothed = self._smooth_steering(steering_raw)
         steering_cmd = self._rate_limit_steering(steering_smoothed)
 
-        # Publish control diagnostics for CSV logging
-        # Find nearest path index for curvature calculation
-        nearest_idx = 0
-        if len(self._path_poses) >= 2:
-            best_d2 = float("inf")
-            px = x + self.wheelbase * math.cos(yaw)
-            py = y + self.wheelbase * math.sin(yaw)
-            for i in range(len(self._path_poses) - 1):
-                ax, ay = self._path_poses[i]
-                bx, by = self._path_poses[i + 1]
-                qx, qy, _ = closest_point_on_segment(px, py, ax, ay, bx, by)
-                d2 = (px - qx) ** 2 + (py - qy) ** 2
-                if d2 < best_d2:
-                    best_d2 = d2
-                    nearest_idx = i
+        stanley_fb_sum = heading_term + cte_term
+        try:
+            self._publish_stanley_debug(
+                cte,
+                heading_err,
+                heading_term,
+                cte_term,
+                stanley_fb_sum,
+                steering_raw,
+                steering_cmd,
+                control_speed,
+                closest_path_index,
+                kappa_used,
+                ff_term,
+            )
+        except Exception as exc:
+            # Telemetry is observational and must never interrupt /drive.
+            self.get_logger().warning(f"Failed to publish /stanley/debug: {exc}")
 
         self._publish_control_diagnostics(
             steering_raw,
             steering_cmd,
             cte,
             heading_err,
-            self._path_poses,
-            nearest_idx,
+            kappa_used,
         )
 
         self._publish_drive(speed_cmd, steering_cmd)

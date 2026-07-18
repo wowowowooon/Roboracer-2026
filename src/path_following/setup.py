@@ -33,6 +33,7 @@ setup(
             'vehicle_measurement_node = path_following.vehicle_measurement_node:main',
             'telemetry_dummy_publisher = path_following.telemetry_dummy_publisher:main',
             'drive_monitor = path_following.drive_monitor:main',
+            'straight_drive_publisher = path_following.straight_drive_publisher:main',
         ],
     },
 )
