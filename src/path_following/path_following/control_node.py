@@ -3,8 +3,8 @@
 실차 하드웨어 제어: /drive (AckermannDriveStamped) → ESP32 조향 + VESC duty.
 
 CH5 (PPM index [4] ONLY) 로 수동/자율:
-  - CH5 <= 1300 (1000, 자율): /drive.steering → ESP, 속도는 max_target_speed_mps PI→VESC
-  - CH5 >= 1700 (2000, 수동): CH1→ESP, CH2→VESC
+  - CH5 >= 1700 (2000, 자율): /drive.steering → ESP, 속도는 max_target_speed_mps PI→VESC
+  - CH5 <= 1300 (1000, 수동): CH1→ESP, CH2→VESC
 
 ESP → Jetson: RC,ch1_us,ch2_us,ch5_us,0  (raw PWM us, 1000~2000)
 
@@ -40,7 +40,7 @@ CFG = {
     # Stanley max_drive_speed / max_steering_angle 과 맞추면 1:1 스케일
     "max_speed_mps": 5.0,
     "max_steering_angle_rad": 0.6981,  # ±40° — ESP normToAngle: S±1 → 50°/130°
-    "max_duty": 0.15,           # MANUAL VESC duty 상한 50% (송신기 풀스틱)
+    "max_duty": 0.4,           # MANUAL VESC duty 상한 50% (송신기 풀스틱)
     "speed_scale": 1.0,         # 추가 감쇠 (1.0=끔)
     "min_move_duty": 0.08,      # 정지마찰 극복용 최소 duty (speed>threshold 일 때)
     "min_move_speed_mps": 0.10,
@@ -58,8 +58,8 @@ CFG = {
     "enable_keyboard_estop": True,
     "estop_reset_key": "r",
     # RC (ESP -> RC,ch1_us,ch2_us,mode_us,0)  raw PWM us
-    "ch5_manual_us": 1300,        # CH5 <= 1300 자율(1000)
-    "ch5_auto_us": 1700,          # CH5 >= 1700 수동(2000)
+    "ch5_auto_us": 1700,          # CH5 >= 1700 자율(2000)
+    "ch5_manual_us": 1300,        # CH5 <= 1300 수동(1000)
     "rc_center_ch2": 1500,
     "rc_min_val": 0,
     "rc_max_val": 3000,
@@ -71,9 +71,9 @@ CFG = {
     "telemetry_topic": "/vehicle/telemetry",  # drive_monitor.py 구독
     "speed_topic": "/vehicle/speed_mps",
     # AUTO closed-loop speed control (/drive.speed is target speed [m/s])
-    "max_auto_duty": 0.3, # 0.2 최대 5당 0.1
-    "max_target_speed_mps": 4.0, # m/s 속도 
-    "speed_ff_duty_per_mps": 5.0 / 14.2,  #듀티가 0.05늘때마다 1늘리기
+    "max_auto_duty": 0.45, # 0.2 최대 5당 0.1
+    "max_target_speed_mps": 2.0, # m/s 속도 
+    "speed_ff_duty_per_mps": 1.0 / 14.2,  #듀티가 0.05늘때마다 1늘리기
     "auto_duty_output_sign": -1.0,  # 이 차량은 전진 목표속도 -> 음수 VESC raw duty
     "speed_kp": 0.04,
     "speed_ki": 0.015,
@@ -245,8 +245,8 @@ class VehicleControlNode(Node):
         )
         self.get_logger().info("Output: ESP32 steering + VESC duty (CH5 mode switch)")
         self.get_logger().info(
-            f"RC auto: CH5<={self._ch5_manual_us} -> /drive->VESC + S:->ESP, "
-            f"CH5>={self._ch5_auto_us} -> CH2->VESC (manual)"
+            f"RC auto: CH5>={self._ch5_auto_us} -> /drive->VESC + S:->ESP (auto), "
+            f"CH5<={self._ch5_manual_us} -> CH2->VESC (manual)"
         )
         self.get_logger().info(
             f"AUTO speed PI: target={self._max_target_speed_mps:.2f} m/s "
@@ -394,10 +394,10 @@ class VehicleControlNode(Node):
         ch5 = self._rc_ch5
         if ch5 <= 0:
             return self._mode_auto_latched
-        if ch5 <= self._ch5_manual_us:
+        if ch5 >= self._ch5_auto_us:
             self._mode_auto_latched = True
             return True
-        if ch5 >= self._ch5_auto_us:
+        if ch5 <= self._ch5_manual_us:
             self._mode_auto_latched = False
             return False
         return self._mode_auto_latched
