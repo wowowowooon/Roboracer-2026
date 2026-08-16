@@ -1,0 +1,11 @@
+map_frame: map
+relative_to_trajectory_id: 0
+initial_pose:
+  x: 0.07887876656636186
+  y: -0.0016374977894944322
+  z: 0.0
+  yaw: -0.0006867338463426343
+pbstream: /home/nvidia/f1tenth_ajou/maps/cartographer_map_20260816_233227.pbstream
+ros_map_yaml: /home/nvidia/f1tenth_ajou/maps/cartographer_map_20260816_233227.yaml
+note: Localization should start from this map-frame pose so waypoint CSV coordinates
+  match the saved Cartographer map.
