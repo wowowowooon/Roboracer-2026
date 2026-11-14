@@ -15,11 +15,12 @@ jobs:
         run: |
           apt-get update
           apt-get install -y --no-install-recommends \
-            ros-humble-ackermann-msgs ros-humble-visualization-msgs \
-            python3-pytest python3-numpy python3-scipy python3-yaml python3-pil
+            ros-humble-ackermann-msgs ros-humble-visualization-msgs ros-humble-tf2-ros \
+            python3-pytest python3-numpy python3-scipy python3-yaml python3-pil \
+            python3-serial python3-skimage
       - name: Run unit tests
         shell: bash
         run: |
           source /opt/ros/humble/setup.bash
           cd src/path_following
-          python3 -m pytest -q test
+          python3 -m pytest -q -rfE test
