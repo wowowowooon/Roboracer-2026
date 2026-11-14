@@ -34,7 +34,7 @@
 <table>
   <tr>
     <td width="38%"><img src="docs/images/car.jpg" alt="A:UTO 차량. Jetson Orin NX, SLAMTEC LiDAR, VESC를 얹은 1/10 섀시"></td>
-    <td><img src="docs/images/track_lines.png" alt="Cartographer 맵 위 센터라인과 최소곡률 레이스라인. 색은 목표 속도"></td>
+    <td><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/track_lines_dark.png"><img src="docs/images/track_lines_light.png" alt="Cartographer 맵 위 센터라인과 최소곡률 레이스라인. 색은 목표 속도"></picture></td>
   </tr>
   <tr>
     <td align="center">A:UTO 차량</td>
@@ -108,7 +108,7 @@ min  Σ ‖x_{i-1} − 2x_i + x_{i+1}‖²     s.t.  lo_i ≤ α_i ≤ hi_i
 3) 정방향 패스 v_i = min(v_i, √(v_{i-1}² + 2·a_accel·ds))   ← 코너 탈출 가속
 ```
 
-<p align="center"><img src="docs/images/speed_profile.png" width="760" alt="레이스라인 진행거리에 따른 목표 속도"></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/speed_profile_dark.png"><img src="docs/images/speed_profile_light.png" width="760" alt="레이스라인 진행거리에 따른 목표 속도"></picture></p>
 
 연습 트랙(`maps/cartographer_map_20260822_193736`)에서 `generate_raceline_from_centerline.py` 실행 결과:
 
@@ -144,7 +144,7 @@ min  Σ ‖x_{i-1} − 2x_i + x_{i+1}‖²     s.t.  lo_i ≤ α_i ≤ hi_i
 a_lat ≈ v² · 5.77 · Δd / L²   →   L = v · √(5.77 · Δd / a_lat)
 ```
 
-<p align="center"><img src="docs/images/offset_maneuver.png" width="760" alt="속도 3, 5, 7 m/s에서 같은 장애물을 피하는 횡오프셋 기동"></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/offset_maneuver_dark.png"><img src="docs/images/offset_maneuver_light.png" width="760" alt="속도 3, 5, 7 m/s에서 같은 장애물을 피하는 횡오프셋 기동"></picture></p>
 
 같은 장애물이라도 7 m/s에서는 더 멀리서 완만하게 틀어서, 횡가속은 3.0 m/s²로 같고 조향은 1.2°에 그칩니다.
 위 그림은 `offset_maneuver.plan_maneuver()`를 그대로 호출해 그렸습니다 ([tools/make_figures.py](tools/make_figures.py)).

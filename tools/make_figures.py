@@ -3,9 +3,11 @@
 
     python3 tools/make_figures.py
 
-- track_lines.png      : Cartographer 맵 위 센터라인 / 최소곡률 레이스라인 (속도 색)
-- speed_profile.png    : 레이스라인 진행거리 s 에 따른 목표 속도
-- offset_maneuver.png  : 같은 장애물을 속도별로 피하는 횡오프셋 기동 d(s)
+- track_lines_*.png      : Cartographer 맵 위 센터라인 / 최소곡률 레이스라인 (속도 색)
+- speed_profile_*.png    : 레이스라인 진행거리 s 에 따른 목표 속도
+- offset_maneuver_*.png  : 같은 장애물을 속도별로 피하는 횡오프셋 기동 d(s)
+
+각각 _light / _dark 두 벌, 투명 배경.
 
 외부 데이터 없이 maps/, src/path_following/config/, offset_maneuver.py 만 쓴다.
 """
@@ -36,33 +38,75 @@ sys.path.insert(0, PKG)
 from path_following import offset_maneuver as om  # noqa: E402
 from path_following import vehicle_geometry as vg  # noqa: E402
 
-# reference palette (light)
-SURFACE = "#fcfcfb"
-INK = "#0b0b0b"
-INK_2 = "#52514e"
-GRID = "#e4e3df"
-SERIES = ["#2a78d6", "#eb6834", "#1baf7a"]
-SEQ = LinearSegmentedColormap.from_list(
-    "blue", ["#9ec5f4", "#5598e7", "#2a78d6", "#1c5cab", "#0d366b"]
-)
+# GitHub README 는 라이트/다크 테마가 있어서 두 벌을 투명 배경으로 뽑고
+# <picture> 로 고른다. 값은 dataviz reference palette 의 light/dark 스텝.
+THEMES = {
+    "light": dict(
+        SURFACE="#ffffff",
+        INK="#1f2328",
+        INK_2="#59636e",
+        GRID="#d1d9e0",
+        WALL=(0x1F, 0x23, 0x28),
+        SERIES=["#2a78d6", "#eb6834", "#1baf7a"],
+        SEQ=["#9ec5f4", "#5598e7", "#2a78d6", "#1c5cab", "#0d366b"],
+    ),
+    "dark": dict(
+        SURFACE="#0d1117",
+        INK="#f0f6fc",
+        INK_2="#9198a1",
+        GRID="#3d444d",
+        WALL=(0xF0, 0xF6, 0xFC),
+        SERIES=["#3987e5", "#d95926", "#199e70"],
+        SEQ=["#184f95", "#2a78d6", "#5598e7", "#9ec5f4", "#cde2fb"],
+    ),
+}
+THEME = "light"
 
-plt.rcParams.update(
-    {
-        "font.family": "DejaVu Sans",
-        "font.size": 10,
-        "axes.edgecolor": GRID,
-        "axes.labelcolor": INK_2,
-        "xtick.color": INK_2,
-        "ytick.color": INK_2,
-        "axes.facecolor": SURFACE,
-        "figure.facecolor": SURFACE,
-        "axes.grid": True,
-        "grid.color": GRID,
-        "grid.linewidth": 0.6,
-        "axes.spines.top": False,
-        "axes.spines.right": False,
-    }
-)
+
+def apply_theme(name):
+    global THEME, SURFACE, INK, INK_2, GRID, WALL, SERIES, SEQ
+    THEME = name
+    th = THEMES[name]
+    SURFACE, INK, INK_2, GRID, WALL, SERIES = (
+        th["SURFACE"], th["INK"], th["INK_2"], th["GRID"], th["WALL"], th["SERIES"]
+    )
+    SEQ = LinearSegmentedColormap.from_list("seq", th["SEQ"])
+    plt.rcParams.update(
+        {
+            "font.family": "DejaVu Sans",
+            "font.size": 10,
+            "text.color": INK,
+            "axes.edgecolor": GRID,
+            "axes.labelcolor": INK_2,
+            "xtick.color": INK_2,
+            "ytick.color": INK_2,
+            "axes.facecolor": "none",
+            "figure.facecolor": "none",
+            "savefig.facecolor": "none",
+            "axes.grid": True,
+            "grid.color": GRID,
+            "grid.linewidth": 0.6,
+            "axes.spines.top": False,
+            "axes.spines.right": False,
+            "legend.facecolor": SURFACE,
+            "legend.edgecolor": GRID,
+            "legend.framealpha": 0.9,
+        }
+    )
+
+
+def save(fig, stem):
+    fig.savefig(os.path.join(OUT, f"{stem}_{THEME}.png"), dpi=160, transparent=True)
+    plt.close(fig)
+
+
+def map_overlay(img):
+    """점유 격자 → 벽만 잉크색으로 남긴 RGBA. 빈 공간은 투명."""
+    occ = 1.0 - img.astype(float) / 255.0          # 0 = free, 1 = wall
+    rgba = np.zeros(img.shape + (4,))
+    rgba[..., :3] = np.array(WALL) / 255.0
+    rgba[..., 3] = np.clip(occ, 0.0, 1.0) * 0.55
+    return rgba
 
 
 def load_xyv(path):
@@ -96,7 +140,7 @@ def fig_track():
     xmax, ymax = allxy.max(0) + pad
 
     fig, ax = plt.subplots(figsize=(8.0, 8.0 * (ymax - ymin) / (xmax - xmin) + 0.6))
-    ax.imshow(img, cmap="gray", extent=extent, origin="upper", vmin=0, vmax=255, alpha=0.55)
+    ax.imshow(map_overlay(img), extent=extent, origin="upper", interpolation="bilinear")
     c = np.vstack([center, center[:1]])
     ax.plot(c[:, 0], c[:, 1], color=INK_2, lw=1.2, ls=(0, (4, 3)), label="Centerline (wall-to-wall)")
 
@@ -130,7 +174,7 @@ def fig_track():
     cb = fig.colorbar(lc, ax=ax, fraction=0.035, pad=0.02)
     cb.set_label("target speed [m/s]", color=INK_2)
     cb.outline.set_edgecolor(GRID)
-    ax.legend(loc="upper left", frameon=True, facecolor=SURFACE, edgecolor=GRID, fontsize=9)
+    ax.legend(loc="upper left", fontsize=9)
 
     _, Lc = arc_length(center)
     _, Lr = arc_length(race)
@@ -141,15 +185,14 @@ def fig_track():
         loc="left",
     )
     fig.tight_layout()
-    fig.savefig(os.path.join(OUT, "track_lines.png"), dpi=160)
-    plt.close(fig)
+    save(fig, "track_lines")
 
 
 def fig_speed():
     race, v = load_xyv(os.path.join(PKG, "config", "raceline.csv"))
     s, L = arc_length(race)
     fig, ax = plt.subplots(figsize=(8.0, 2.8))
-    ax.fill_between(s, 0, v, color=SERIES[0], alpha=0.12, lw=0)
+    ax.fill_between(s, 0, v, color=SERIES[0], alpha=0.15, lw=0)
     ax.plot(s, v, color=SERIES[0], lw=2)
     i = int(np.argmin(v))
     ax.annotate(
@@ -171,8 +214,7 @@ def fig_speed():
         loc="left",
     )
     fig.tight_layout()
-    fig.savefig(os.path.join(OUT, "speed_profile.png"), dpi=160)
-    plt.close(fig)
+    save(fig, "speed_profile")
 
 
 def fig_maneuver():
@@ -227,9 +269,6 @@ def fig_maneuver():
     ax.set_ylabel("lateral offset d [m]")
     ax.legend(
         loc="upper right",
-        frameon=True,
-        facecolor=SURFACE,
-        edgecolor=GRID,
         prop={"family": "DejaVu Sans Mono", "size": 8.5},
     )
     ax.set_title(
@@ -239,15 +278,16 @@ def fig_maneuver():
         loc="left",
     )
     fig.tight_layout()
-    fig.savefig(os.path.join(OUT, "offset_maneuver.png"), dpi=160)
-    plt.close(fig)
+    save(fig, "offset_maneuver")
 
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    fig_track()
-    fig_speed()
-    fig_maneuver()
+    for name in THEMES:
+        apply_theme(name)
+        fig_track()
+        fig_speed()
+        fig_maneuver()
     print("wrote", sorted(os.listdir(OUT)))
 
 
