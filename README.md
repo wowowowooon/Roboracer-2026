@@ -16,11 +16,11 @@
 | **기간** | 2026.07 – 2026.08 (실차 개발·튜닝) |
 | **플랫폼** | Jetson Orin NX · SLAMTEC 2D LiDAR · IMU · VESC(구동) · ESP32(조향 서보) |
 | **스택** | ROS 2 Humble · Python · NumPy/SciPy · Cartographer(로컬라이제이션) |
-| **내 역할** | **Path Following 파트 담당** — 레이스라인 생성, Stanley 추종, 회피 계획, AEB, 주행 로깅 |
+| **내 역할** | **Path Following 파트 단독 담당** — 레이스라인 생성, Stanley 추종, 회피 계획, AEB, 주행 로깅 |
 
 > 이 레포는 팀 전체 코드 중 **제가 담당한 `path_following` 패키지만** 정리한 포트폴리오입니다.
 > 센서·로컬라이제이션 등 나머지 계층은 팀 레포 [Roboracer-AJOU/jetson_code](https://github.com/Roboracer-AJOU/jetson_code)에 있습니다.
-> `path_following`은 팀원 조은재와 함께 개발했고, 공동 작업 내역은 커밋 기록에 그대로 남아 있습니다.
+> `path_following`은 제가 혼자 설계·구현·튜닝했습니다. 팀 레포에서는 팀원 계정으로 대표 커밋된 부분이 있어 커밋 작성자가 섞여 보일 수 있습니다.
 
 ---
 
@@ -48,7 +48,7 @@
 
 ```mermaid
 flowchart LR
-    subgraph team["팀 공동 (다른 파트)"]
+    subgraph team["팀원 담당 (다른 파트)"]
         LIDAR["2D LiDAR /scan"]
         LOC["Cartographer 로컬라이제이션<br/>map → base_link TF"]
     end
