@@ -1,24 +1,46 @@
-# RoboRacer 2026 — Path Following
+# A:UTO · RoboRacer 2026 — Path Following
 
 **1/10 스케일 자율주행 레이싱카의 경로 생성 · 경로 추종 · 장애물 회피 스택** (ROS 2 Humble, Jetson Orin NX 실차)
 
 [![tests](https://github.com/wowowowooon/Roboracer-2026/actions/workflows/tests.yml/badge.svg)](https://github.com/wowowowooon/Roboracer-2026/actions/workflows/tests.yml)
 
 <p align="center">
-  <img src="docs/images/track_lines.png" width="760" alt="Cartographer 맵 위 센터라인과 최소곡률 레이스라인. 색은 목표 속도">
+  <img src="docs/images/team.jpg" width="760" alt="IFAC 2026 제29회 Roboracer 자율주행 레이싱 대회 현장의 A:UTO 팀과 차량">
 </p>
 
 | | |
 |---|---|
-| **프로젝트** | 아주대학교 RoboRacer(구 F1TENTH) 팀 — 1/10 스케일 자율주행 레이싱 |
+| **대회** | **IFAC 2026 제29회 Roboracer Autonomous Racing Competition** (부산, 2026.08) |
+| **결과** | **본선 진출 · 32강** |
+| **팀** | 아주대학교 **A:UTO** — 1/10 스케일 자율주행 레이싱 (RoboRacer, 구 F1TENTH) |
 | **기간** | 2026.07 – 2026.08 (실차 개발·튜닝) |
-| **플랫폼** | Jetson Orin NX · 2D LiDAR · IMU · VESC(구동) · ESP32(조향 서보) |
+| **플랫폼** | Jetson Orin NX · SLAMTEC 2D LiDAR · IMU · VESC(구동) · ESP32(조향 서보) |
 | **스택** | ROS 2 Humble · Python · NumPy/SciPy · Cartographer(로컬라이제이션) |
 | **내 역할** | **Path Following 파트 담당** — 레이스라인 생성, Stanley 추종, 회피 계획, AEB, 주행 로깅 |
 
 > 이 레포는 팀 전체 코드 중 **제가 담당한 `path_following` 패키지만** 정리한 포트폴리오입니다.
 > 센서·로컬라이제이션 등 나머지 계층은 팀 레포 [Roboracer-AJOU/jetson_code](https://github.com/Roboracer-AJOU/jetson_code)에 있습니다.
 > `path_following`은 팀원 조은재와 함께 개발했고, 공동 작업 내역은 커밋 기록에 그대로 남아 있습니다.
+
+---
+
+## 대회 주행 영상
+
+| 예선 | 32강 |
+|---|---|
+| [![예선 영상](https://img.youtube.com/vi/vGqDLhgokSY/hqdefault.jpg)](https://www.youtube.com/watch?v=vGqDLhgokSY&t=4020s) | [![32강 영상](https://img.youtube.com/vi/TbJKPkBp7L4/hqdefault.jpg)](https://www.youtube.com/watch?v=TbJKPkBp7L4&t=3652s) |
+| [1차 — AMSLab(계명대) vs A:UTO](https://www.youtube.com/watch?v=vGqDLhgokSY&t=4020s) `1:07:00`<br>[2차 — 규슈공업대학(일본) vs A:UTO](https://www.youtube.com/watch?v=vGqDLhgokSY&t=19260s) `5:21:00`<br>[3차 — AMSLab(계명대) vs A:UTO](https://www.youtube.com/watch?v=vGqDLhgokSY&t=23514s) `6:31:54` | [32강 — InTheEnd(숭실대) vs A:UTO](https://www.youtube.com/watch?v=TbJKPkBp7L4&t=3652s) `1:00:52` |
+
+<table>
+  <tr>
+    <td width="38%"><img src="docs/images/car.jpg" alt="A:UTO 차량. Jetson Orin NX, SLAMTEC LiDAR, VESC를 얹은 1/10 섀시"></td>
+    <td><img src="docs/images/track_lines.png" alt="Cartographer 맵 위 센터라인과 최소곡률 레이스라인. 색은 목표 속도"></td>
+  </tr>
+  <tr>
+    <td align="center">A:UTO 차량</td>
+    <td align="center">연습 트랙 맵 위 센터라인 / 최소곡률 레이스라인 (색 = 목표 속도)</td>
+  </tr>
+</table>
 
 ---
 
@@ -88,7 +110,7 @@ min  Σ ‖x_{i-1} − 2x_i + x_{i+1}‖²     s.t.  lo_i ≤ α_i ≤ hi_i
 
 <p align="center"><img src="docs/images/speed_profile.png" width="760" alt="레이스라인 진행거리에 따른 목표 속도"></p>
 
-현재 트랙(`maps/cartographer_map_20260822_193736`)에서 `generate_raceline_from_centerline.py` 실행 결과:
+연습 트랙(`maps/cartographer_map_20260822_193736`)에서 `generate_raceline_from_centerline.py` 실행 결과:
 
 | | 센터라인 | **최소곡률 레이스라인** |
 |---|---|---|
@@ -136,7 +158,7 @@ a_lat ≈ v² · 5.77 · Δd / L²   →   L = v · √(5.77 · Δd / a_lat)
 - **커밋**: 한 번 그린 기동은 붙들고, 장애물이 바뀌거나 크게 벗어났을 때만 다시 그립니다.
 - **실패 시 폴백**: 기동이 실패하면 FGM → 감속/`TRAILING`(앞차 추종) 순으로 내려갑니다.
 
-현재 트랙의 레이스라인 777개 지점 전부에 정면 장애물을 놓고 잰 결과 (`scripts/check_offset_budget.py`):
+연습 트랙의 레이스라인 777개 지점 전부에 정면 장애물을 놓고 잰 결과 (`scripts/check_offset_budget.py`):
 
 | 결과 | 비율 |
 |---|---|
