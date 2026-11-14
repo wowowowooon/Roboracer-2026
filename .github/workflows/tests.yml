@@ -1,0 +1,25 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-22.04
+    container: ros:humble-ros-base
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            ros-humble-ackermann-msgs ros-humble-visualization-msgs \
+            python3-pytest python3-numpy python3-scipy python3-yaml python3-pil
+      - name: Run unit tests
+        shell: bash
+        run: |
+          source /opt/ros/humble/setup.bash
+          cd src/path_following
+          python3 -m pytest -q test
