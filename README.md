@@ -13,7 +13,7 @@
 | **대회** | **IFAC 2026 제29회 Roboracer Autonomous Racing Competition** (부산, 2026.08) |
 | **결과** | **본선 진출 · 32강** |
 | **팀** | 아주대학교 **A:UTO** — 1/10 스케일 자율주행 레이싱 (RoboRacer, 구 F1TENTH) |
-| **기간** | 2026.07 – 2026.08 (실차 개발·튜닝) |
+| **기간** | 2025.12 – 2026.08 (대회 준비 · 실차 개발 · 튜닝) |
 | **플랫폼** | Jetson Orin NX · SLAMTEC 2D LiDAR · IMU · VESC(구동) · ESP32(조향 서보) |
 | **스택** | ROS 2 Humble · Python · NumPy/SciPy · Cartographer(로컬라이제이션) |
 | **내 역할** | **Path Following 파트 단독 담당** — 레이스라인 생성, Stanley 추종, 회피 계획, AEB, 주행 로깅 |
